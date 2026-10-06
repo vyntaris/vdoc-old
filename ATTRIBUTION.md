@@ -47,6 +47,7 @@ Generated-in-code art is original and has no file to list: the UI icon set (`cra
 | `docs/images/design.png` | VDoc contributors | screenshot of VDoc itself (sample document written for VDoc, rendered by `ui_shot`) | MIT OR Apache-2.0 | Original; no Microsoft UI or assets |
 | `docs/images/dark.png` | VDoc contributors | screenshot of VDoc itself (sample document written for VDoc, rendered by `ui_shot`) | MIT OR Apache-2.0 | Original; no Microsoft UI or assets |
 | `docs/images/backstage.png` | VDoc contributors | screenshot of VDoc itself (sample document written for VDoc, rendered by `ui_shot`) | MIT OR Apache-2.0 | Original; no Microsoft UI or assets |
+| `docs/images/layout.png` | VDoc contributors | screenshot of VDoc itself (sample document written for VDoc, rendered by `ui_shot`) | MIT OR Apache-2.0 | Original; no Microsoft UI or assets |
 | `docs/brand/LICENSE-brand.txt` | ArtCraft Team | craftrules `assets/brand/` | ArtCraft trademark, `docs/brand/LICENSE-brand.txt` | Not open source; usable unmodified only |
 | `docs/brand/artcraft-logo-white.png` | ArtCraft Team | craftrules `assets/brand/` | ArtCraft trademark, `docs/brand/LICENSE-brand.txt` | Not open source; usable unmodified only |
 | `docs/brand/artcraft-logo-white.svg` | ArtCraft Team | craftrules `assets/brand/` | ArtCraft trademark, `docs/brand/LICENSE-brand.txt` | Not open source; usable unmodified only |
