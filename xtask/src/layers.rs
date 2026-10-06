@@ -30,28 +30,24 @@ impl Class {
     }
 }
 
-/// The layering table. Names are package names without the `designcraft-`
+/// The layering table. Names are package names without the `vdoc-`
 /// prefix.
 pub const TABLE: &[(&str, Class)] = &[
     ("geom", Class::Layer(0)),
-    ("color", Class::Layer(0)),
     ("doc", Class::Layer(1)),
     ("fonts", Class::Layer(1)),
-    ("compose", Class::Layer(2)),
-    ("images", Class::Layer(2)),
+    ("layout", Class::Layer(2)),
+    ("docx", Class::Layer(2)),
+    ("formats", Class::Layer(2)),
     ("render", Class::Layer(3)),
     ("pdf", Class::Layer(3)),
-    ("idml", Class::Layer(3)),
-    ("epub", Class::Layer(3)),
-    ("textimport", Class::Layer(3)),
-    ("format", Class::Layer(3)),
-    ("tools", Class::Layer(4)),
-    ("engine", Class::Layer(5)),
+    ("proof", Class::Layer(3)),
+    ("engine", Class::Layer(4)),
+    ("mcp", Class::Layer(5)),
     ("ui-egui", Class::Layer(6)),
-    ("mcp", Class::Layer(6)),
     ("testkit", Class::Testkit),
-    // L7 apps and tooling
-    ("designcraft", Class::Exempt),
+    // apps and tooling
+    ("vdoc", Class::Exempt),
     ("cli", Class::Exempt),
     ("web", Class::Exempt),
     ("xtask", Class::Exempt),
@@ -61,7 +57,7 @@ pub const TABLE: &[(&str, Class)] = &[
 /// The L0 foundation is a small chain: `raster` builds on `color` and
 /// `geom`, which the §3 diagram draws on one line. The GPU backend (`gpu`)
 /// reuses the CPU reference (`compose`) for LUTs and parity tests.
-pub const INTRA_LAYER_ORDER: &[&[&str]] = &[&["geom", "color"], &["doc", "fonts"]];
+pub const INTRA_LAYER_ORDER: &[&[&str]] = &[&["doc", "fonts"]];
 
 fn intra_layer_allowed(from: &str, to: &str) -> bool {
     let (from, to) = (short_name(from), short_name(to));
@@ -79,7 +75,7 @@ pub const UI_CRATES: &[&str] = &["egui", "eframe", "winit", "egui_kittest", "rfd
 pub const UI_MIN_LAYER: u8 = 6;
 
 pub fn short_name(pkg: &str) -> &str {
-    pkg.strip_prefix("designcraft-").unwrap_or(pkg)
+    pkg.strip_prefix("vdoc-").unwrap_or(pkg)
 }
 
 pub fn classify(pkg: &str) -> Option<Class> {
@@ -137,7 +133,7 @@ impl std::fmt::Display for Violation {
                 write!(f, "{krate}: standalone crate must not depend on workspace crate {dep}")
             }
             Violation::TestkitAsNormalDep { krate } => {
-                write!(f, "{krate}: designcraft-testkit may only be a dev-dependency")
+                write!(f, "{krate}: vdoc-testkit may only be a dev-dependency")
             }
             Violation::UiBelowL6 { krate, dep, layer } => {
                 write!(f, "{krate} (L{layer}) depends on UI crate `{dep}`; UI toolkits are only allowed in L6+")
@@ -245,76 +241,76 @@ mod tests {
     #[test]
     fn clean_downward_graph_passes() {
         let g = [
-            c("designcraft-geom", &[("kurbo", Normal, false)]),
-            c("designcraft-doc", &[("designcraft-geom", Normal, true)]),
-            c("designcraft-engine", &[("designcraft-doc", Normal, true), ("designcraft-testkit", Dev, true)]),
-            c("designcraft-ui-egui", &[("designcraft-engine", Normal, true), ("egui", Normal, false)]),
-            c("designcraft-cli", &[("designcraft-ui-egui", Normal, true)]),
+            c("vdoc-geom", &[("kurbo", Normal, false)]),
+            c("vdoc-doc", &[("vdoc-geom", Normal, true)]),
+            c("vdoc-engine", &[("vdoc-doc", Normal, true), ("vdoc-testkit", Dev, true)]),
+            c("vdoc-ui-egui", &[("vdoc-engine", Normal, true), ("egui", Normal, false)]),
+            c("vdoc-cli", &[("vdoc-ui-egui", Normal, true)]),
         ];
         assert!(check(&g).is_empty(), "{:?}", check(&g));
     }
 
     #[test]
     fn upward_dependency_flagged() {
-        let v = check(&[c("designcraft-doc", &[("designcraft-engine", Normal, true)])]);
-        assert!(matches!(v[..], [Violation::Upward { from: 1, to: 5, .. }]));
+        let v = check(&[c("vdoc-doc", &[("vdoc-engine", Normal, true)])]);
+        assert!(matches!(v[..], [Violation::Upward { from: 1, to: 4, .. }]));
     }
 
     #[test]
     fn sideways_dependency_flagged() {
-        let v = check(&[c("designcraft-compose", &[("designcraft-images", Normal, true)])]);
+        let v = check(&[c("vdoc-layout", &[("vdoc-docx", Normal, true)])]);
         assert!(matches!(v[..], [Violation::Upward { from: 2, to: 2, .. }]));
     }
 
     #[test]
     fn l0_foundation_chain_allowed_one_way() {
-        assert!(check(&[c("designcraft-color", &[("designcraft-geom", Normal, true)])]).is_empty());
-        let v = check(&[c("designcraft-geom", &[("designcraft-color", Normal, true)])]);
-        assert!(matches!(v[..], [Violation::Upward { from: 0, to: 0, .. }]));
+        assert!(check(&[c("vdoc-doc", &[("vdoc-geom", Normal, true)])]).is_empty());
+        let v = check(&[c("vdoc-geom", &[("vdoc-doc", Normal, true)])]);
+        assert!(matches!(v[..], [Violation::Upward { from: 0, to: 1, .. }]));
     }
 
     #[test]
     fn self_dev_dependency_ignored() {
-        assert!(check(&[c("designcraft-doc", &[("designcraft-doc", Dev, true)])]).is_empty());
+        assert!(check(&[c("vdoc-doc", &[("vdoc-doc", Dev, true)])]).is_empty());
     }
 
     #[test]
     fn upward_dev_dependency_flagged() {
-        let v = check(&[c("designcraft-geom", &[("designcraft-doc", Dev, true)])]);
+        let v = check(&[c("vdoc-geom", &[("vdoc-doc", Dev, true)])]);
         assert!(matches!(v[..], [Violation::Upward { kind: Dev, .. }]));
     }
 
     #[test]
     fn ui_crates_below_l6_flagged() {
         for dep in ["egui", "eframe", "winit", "egui_kittest", "rfd", "bevy_ecs", "bevy"] {
-            let v = check(&[c("designcraft-engine", &[(dep, Normal, false)])]);
-            assert!(matches!(v[..], [Violation::UiBelowL6 { layer: 5, .. }]), "{dep}");
+            let v = check(&[c("vdoc-engine", &[(dep, Normal, false)])]);
+            assert!(matches!(v[..], [Violation::UiBelowL6 { layer: 4, .. }]), "{dep}");
         }
-        assert!(check(&[c("designcraft-engine", &[("egui_extras_not", Normal, false)])]).is_empty());
-        assert!(check(&[c("designcraft-mcp", &[("winit", Normal, false)])]).is_empty());
+        assert!(check(&[c("vdoc-engine", &[("egui_extras_not", Normal, false)])]).is_empty());
+        assert!(!check(&[c("vdoc-mcp", &[("winit", Normal, false)])]).is_empty());
     }
 
     #[test]
     fn unregistered_crate_is_error() {
-        let v = check(&[c("designcraft-mystery", &[])]);
-        assert!(matches!(&v[..], [Violation::Unregistered { krate }] if krate == "designcraft-mystery"));
+        let v = check(&[c("vdoc-mystery", &[])]);
+        assert!(matches!(&v[..], [Violation::Unregistered { krate }] if krate == "vdoc-mystery"));
         assert!(v[0].to_string().contains("register"));
     }
 
     #[test]
     fn testkit_only_as_dev_dependency() {
-        let v = check(&[c("designcraft-render", &[("designcraft-testkit", Normal, true)])]);
+        let v = check(&[c("vdoc-render", &[("vdoc-testkit", Normal, true)])]);
         assert!(matches!(v[..], [Violation::TestkitAsNormalDep { .. }]));
-        assert!(check(&[c("designcraft-render", &[("designcraft-testkit", Dev, true)])]).is_empty());
+        assert!(check(&[c("vdoc-render", &[("vdoc-testkit", Dev, true)])]).is_empty());
         // testkit itself may use anything up to L5 but not L6 crates.
-        assert!(check(&[c("designcraft-testkit", &[("designcraft-engine", Normal, true)])]).is_empty());
-        assert!(!check(&[c("designcraft-testkit", &[("designcraft-ui-egui", Normal, true)])]).is_empty());
+        assert!(check(&[c("vdoc-testkit", &[("vdoc-engine", Normal, true)])]).is_empty());
+        assert!(!check(&[c("vdoc-testkit", &[("vdoc-ui-egui", Normal, true)])]).is_empty());
     }
 
     #[test]
     fn apps_and_xtask_exempt() {
-        for app in ["designcraft", "designcraft-cli", "designcraft-web", "xtask"] {
-            assert!(check(&[c(app, &[("egui", Normal, false), ("designcraft-ui-egui", Normal, true)])]).is_empty());
+        for app in ["vdoc", "vdoc-cli", "vdoc-web", "xtask"] {
+            assert!(check(&[c(app, &[("egui", Normal, false), ("vdoc-ui-egui", Normal, true)])]).is_empty());
         }
     }
 
@@ -322,17 +318,17 @@ mod tests {
     fn metadata_parsing() {
         let meta: Value = serde_json::from_str(
             r#"{"packages":[
-                {"name":"designcraft-doc","dependencies":[
-                    {"name":"designcraft-geom","kind":null,"path":"/x/crates/geom"},
+                {"name":"vdoc-doc","dependencies":[
+                    {"name":"vdoc-geom","kind":null,"path":"/x/crates/geom"},
                     {"name":"serde","kind":null},
                     {"name":"proptest","kind":"dev"}]},
-                {"name":"designcraft-geom","dependencies":[]}
+                {"name":"vdoc-geom","dependencies":[]}
             ]}"#,
         )
         .unwrap();
         let g = from_metadata(&meta).unwrap();
         assert_eq!(g.len(), 2);
-        let doc = g.iter().find(|c| c.name == "designcraft-doc").unwrap();
+        let doc = g.iter().find(|c| c.name == "vdoc-doc").unwrap();
         assert!(doc.deps[0].workspace && !doc.deps[1].workspace);
         assert_eq!(doc.deps[2].kind, Dev);
         assert!(check(&g).is_empty());

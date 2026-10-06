@@ -1,0 +1,16 @@
+[package]
+name = "vdoc-mcp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "VDoc MCP server: every command as a tool, headless or bridged to the running app"
+
+[lints]
+workspace = true
+
+[dependencies]
+vdoc-doc = { workspace = true }
+vdoc-engine = { workspace = true }
+vdoc-render = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }

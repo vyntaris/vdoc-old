@@ -1,0 +1,21 @@
+[package]
+name = "vdoc-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish = false
+description = "VDoc command line: convert, inspect, render, run commands, MCP server"
+
+[[bin]]
+name = "vdoc-cli"
+path = "src/main.rs"
+
+[lints]
+workspace = true
+
+[dependencies]
+vdoc-doc = { workspace = true }
+vdoc-engine = { workspace = true }
+vdoc-render = { workspace = true }
+vdoc-mcp = { workspace = true }
+serde_json = { workspace = true }

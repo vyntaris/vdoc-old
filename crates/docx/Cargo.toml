@@ -1,0 +1,21 @@
+[package]
+name = "vdoc-docx"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "VDoc DOCX (OOXML WordprocessingML) reader and writer"
+
+[lints]
+workspace = true
+
+[dependencies]
+vdoc-doc = { workspace = true }
+vdoc-geom = { workspace = true }
+quick-xml = { workspace = true }
+zip = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+image = { workspace = true }
