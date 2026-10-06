@@ -15,8 +15,10 @@ vdoc-fonts = { workspace = true }
 vdoc-layout = { workspace = true }
 vdoc-render = { workspace = true }
 vdoc-proof = { workspace = true }
+vdoc-docx = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
 log = { workspace = true }
 regex = { workspace = true }
+image = { workspace = true }
