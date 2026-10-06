@@ -373,7 +373,7 @@ fn word_count(s: &mut Session, _: &Value) -> CmdResult {
 /// Issues (spelling + grammar) in one paragraph as positions.
 fn para_issues(s: &Session, story: StoryRef, path: &vdoc_doc::Path) -> Vec<(Pos, Pos, vdoc_proof::Issue)> {
     let Some(p) = s.doc.para(story, path) else { return Vec::new() };
-    let text: String = p.text.chars().map(|c| if c == vdoc_doc::para::OBJ { ' ' } else { c }).collect();
+    let text = vdoc_layout::para::proof_text(p);
     let mut v: Vec<vdoc_proof::Issue> = vdoc_proof::check_spelling(&text);
     v.extend(vdoc_proof::check_grammar(&text));
     v.sort_by_key(|i| i.start);
