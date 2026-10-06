@@ -1,0 +1,20 @@
+[package]
+name = "vdoc-formats"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "VDoc import/export: plain text, Markdown, HTML, RTF and OpenDocument Text"
+
+[lints]
+workspace = true
+
+[dependencies]
+vdoc-doc = { workspace = true }
+vdoc-geom = { workspace = true }
+image = { workspace = true }
+quick-xml = { workspace = true }
+zip = { workspace = true }
+log = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }

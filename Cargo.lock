@@ -4876,8 +4876,10 @@ dependencies = [
  "vdoc-doc",
  "vdoc-docx",
  "vdoc-fonts",
+ "vdoc-formats",
  "vdoc-geom",
  "vdoc-layout",
+ "vdoc-pdf",
  "vdoc-proof",
  "vdoc-render",
 ]
