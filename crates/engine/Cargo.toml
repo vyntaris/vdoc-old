@@ -14,6 +14,7 @@ vdoc-doc = { workspace = true }
 vdoc-fonts = { workspace = true }
 vdoc-layout = { workspace = true }
 vdoc-render = { workspace = true }
+vdoc-proof = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 thiserror = { workspace = true }
