@@ -1,0 +1,21 @@
+[package]
+name = "vdoc-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "VDoc engine: session, selection, undo, the command registry (every action is a command), Word's command catalog, file I/O dispatch"
+
+[lints]
+workspace = true
+
+[dependencies]
+vdoc-geom = { workspace = true }
+vdoc-doc = { workspace = true }
+vdoc-fonts = { workspace = true }
+vdoc-layout = { workspace = true }
+vdoc-render = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+regex = { workspace = true }
