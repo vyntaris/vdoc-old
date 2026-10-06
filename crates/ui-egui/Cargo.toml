@@ -1,0 +1,25 @@
+[package]
+name = "vdoc-ui-egui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "VDoc egui front end (Word-style ribbon UI); swappable: nothing below depends on it"
+
+[lints]
+workspace = true
+
+[dependencies]
+vdoc-geom = { workspace = true }
+vdoc-doc = { workspace = true }
+vdoc-fonts = { workspace = true }
+vdoc-layout = { workspace = true }
+vdoc-render = { workspace = true }
+vdoc-engine = { workspace = true }
+egui = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+
+[dev-dependencies]
+egui_kittest = { workspace = true, features = ["wgpu", "snapshot"] }
+image = { workspace = true }
