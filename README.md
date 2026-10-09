@@ -160,6 +160,25 @@ can check their work through `inspect_document` without screenshots. See [docs/m
 and the [control protocol](docs/control-protocol.md). Macros record any sequence of commands and
 play it back (`tools.recordMacro`, `tools.macros`).
 
+## Logs
+
+The desktop app writes its log records to standard error and to `logs/vdoc.log` next to its
+preferences: on Linux `$XDG_CONFIG_HOME/vdoc/logs/` (by default `~/.config/vdoc/logs/`),
+on macOS `~/Library/Application Support/VDoc/logs/`, on Windows `%APPDATA%\VDoc\logs\`.
+A start from a desktop menu or the Dock has no terminal, so this file is what to attach to a bug
+report: unreadable parts of a .docx, pictures or fonts a PDF export had to leave out and panics the
+command guard recovered from land there. Each launch moves the previous log to `vdoc.1.log`
+(and that one to `vdoc.2.log`), so the log of a run that crashed survives the next start; a
+log stops growing at 16 MiB. `--version` writes no file, and runs with `VDOC_NO_PREFS` (agents'
+test runs) log to standard error only. Document text is never logged; a panic message leaves out
+the text it quotes.
+
+By default VDoc's own crates log at `info` and everything else at `warn`. `RUST_LOG` replaces
+that with env_logger-style directives, for example `RUST_LOG=debug`,
+`RUST_LOG=warn,vdoc_docx=trace` or `RUST_LOG=info,wgpu_core=warn`; a directive ending in `*`
+covers every target starting with it (`vdoc*=debug`). The logger is
+`apps/vdoc/src/logging.rs`.
+
 ## Architecture
 
 | Layer | Crate | Job |

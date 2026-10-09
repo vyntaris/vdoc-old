@@ -11,6 +11,7 @@
 mod control_server;
 #[cfg(any(target_os = "windows", test))]
 mod graphics;
+mod logging;
 
 use vdoc_engine::Session;
 use vdoc_ui_egui::{Services, UiState, WordApp, window_geometry::WindowGeometry};
@@ -55,8 +56,18 @@ fn prefs_path() -> Option<std::path::PathBuf> {
     base.map(|b| b.join("ui.json"))
 }
 
+/// Where the log files live: `logs` in the preferences folder (see `logging`).
+fn log_dir() -> Option<std::path::PathBuf> {
+    Some(prefs_path()?.parent()?.join("logs"))
+}
+
+/// Runs without preferences (`VDOC_NO_PREFS`, agents' test runs) neither read nor write them.
+fn prefs_enabled() -> bool {
+    std::env::var_os("VDOC_NO_PREFS").is_none()
+}
+
 fn load_prefs(app: &mut WordApp) {
-    if std::env::var_os("VDOC_NO_PREFS").is_some() {
+    if !prefs_enabled() {
         return;
     }
     if let Some(p) = prefs_path()
@@ -69,7 +80,7 @@ fn load_prefs(app: &mut WordApp) {
 
 /// The saved window geometry, read before the window opens (`load_prefs` runs after).
 fn saved_window() -> Option<WindowGeometry> {
-    if std::env::var_os("VDOC_NO_PREFS").is_some() {
+    if !prefs_enabled() {
         return None;
     }
     let bytes = std::fs::read(prefs_path()?).ok()?;
@@ -77,7 +88,7 @@ fn saved_window() -> Option<WindowGeometry> {
 }
 
 fn save_prefs(app: &WordApp) {
-    if std::env::var_os("VDOC_NO_PREFS").is_some() {
+    if !prefs_enabled() {
         return;
     }
     if let Some(p) = prefs_path() {
@@ -117,7 +128,15 @@ fn app_icon() -> Option<egui::IconData> {
     eframe::icon_data::from_png_bytes(png).map_err(|e| log::warn!("app icon: {e}")).ok()
 }
 
+/// The commit the build came from (short), or `dev`.
+fn build_sha() -> &'static str {
+    option_env!("VDOC_BUILD_SHA").map(|s| s.get(..8).unwrap_or(s)).unwrap_or("dev")
+}
+
 fn main() -> eframe::Result {
+    // First, so the panic hook and every start-up warning are recorded (`logging`).
+    let logger = logging::install();
+    logging::install_panic_hook();
     let mut control_port: Option<u16> = std::env::var("VDOC_CONTROL_PORT").ok().and_then(|p| p.parse().ok());
     let mut files = Vec::new();
     let mut sample = false;
@@ -127,14 +146,24 @@ fn main() -> eframe::Result {
             "--control" => control_port = args.next().and_then(|p| p.parse().ok()),
             "--sample" => sample = true,
             "--version" => {
-                println!(
-                    "vdoc {} ({})",
-                    env!("CARGO_PKG_VERSION"),
-                    option_env!("VDOC_BUILD_SHA").map(|s| s.get(..8).unwrap_or(s)).unwrap_or("dev")
-                );
+                println!("vdoc {} ({})", env!("CARGO_PKG_VERSION"), build_sha());
                 return Ok(());
             }
             _ => files.push(a),
+        }
+    }
+    // The log file lives in the settings directory, next to the preferences; opened after the
+    // arguments, so `--version` leaves no file behind. Records logged until now are written to it
+    // first. Runs without preferences (agents' test runs) log to standard error only, so they
+    // don't rotate away the user's own logs.
+    if let Some(logger) = logger {
+        match log_dir().filter(|_| prefs_enabled()) {
+            Some(dir) => match logger.attach_dir(&dir) {
+                Ok(path) => log::info!("VDoc {} ({}), log file {}", env!("CARGO_PKG_VERSION"), build_sha(), path.display()),
+                // Standard error only by now (`attach_dir` gave up on the file); unlike `eprintln!`, never panics.
+                Err(e) => log::warn!("no log file: {e}"),
+            },
+            None => logger.no_file(),
         }
     }
     let mut options = eframe::NativeOptions {
@@ -174,7 +203,7 @@ fn main() -> eframe::Result {
             }
             for f in files {
                 if let Err(e) = app.run("file.open", serde_json::json!({"path": f})) {
-                    eprintln!("vdoc: {f}: {e}");
+                    log::warn!("{f}: {e}");
                 }
             }
             Ok(Box::new(App(app, restored)))
