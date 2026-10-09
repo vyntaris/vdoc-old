@@ -57,8 +57,7 @@ fn load_prefs(app: &mut WordApp) {
         && let Ok(bytes) = std::fs::read(&p)
         && let Ok(ui) = serde_json::from_slice::<UiState>(&bytes)
     {
-        app.ui = ui;
-        app.ui.backstage = false;
+        app.apply_prefs(ui);
     }
 }
 
@@ -70,7 +69,7 @@ fn save_prefs(app: &WordApp) {
         if let Some(dir) = p.parent() {
             let _ = std::fs::create_dir_all(dir);
         }
-        if let Ok(bytes) = serde_json::to_vec_pretty(&app.ui) {
+        if let Ok(bytes) = serde_json::to_vec_pretty(&app.prefs()) {
             let _ = std::fs::write(&p, bytes);
         }
     }

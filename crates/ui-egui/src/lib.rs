@@ -55,6 +55,8 @@ pub struct UiState {
     pub dark: bool,
     pub nav_tab: String,
     pub show_discord: bool,
+    /// User name (File › Options) for comments and tracked changes; empty keeps the default.
+    pub author: String,
 }
 
 impl Default for UiState {
@@ -68,6 +70,7 @@ impl Default for UiState {
             dark: false,
             nav_tab: "headings".into(),
             show_discord: true,
+            author: String::new(),
         }
     }
 }
@@ -128,6 +131,24 @@ impl WordApp {
     pub fn with_control(mut self, rx: std::sync::mpsc::Receiver<ControlRequest>) -> Self {
         self.control_rx = Some(rx);
         self
+    }
+
+    /// Preferences to save between runs: the UI state plus the current user name.
+    pub fn prefs(&self) -> UiState {
+        let mut ui = self.ui.clone();
+        ui.author = self.session.author.clone();
+        ui
+    }
+
+    /// Restore preferences saved by [`WordApp::prefs`].
+    pub fn apply_prefs(&mut self, ui: UiState) {
+        self.ui = ui;
+        self.ui.backstage = false;
+        // The session owns the name from here on; `prefs` copies it back when saving.
+        let author = std::mem::take(&mut self.ui.author);
+        if !author.trim().is_empty() {
+            self.session.author = author;
+        }
     }
 
     /// Run a command; UI-level commands (`ui.*`) are handled here, the rest by the engine.
@@ -512,5 +533,34 @@ mod tests {
         frame(vec![mod_key(egui::Key::Minus)]);
         frame(Vec::new());
         assert_eq!(ctx.zoom_factor(), 1.0);
+    }
+
+    fn app() -> WordApp {
+        WordApp::new(Session::new(vdoc_doc::Document::new()), Services::default())
+    }
+
+    #[test]
+    fn user_name_survives_restart() {
+        let mut first = app();
+        first.run("file.setAuthor", json!({"name": "Ada Lovelace"})).unwrap();
+        let saved = serde_json::to_vec(&first.prefs()).unwrap();
+
+        let mut second = app();
+        second.apply_prefs(serde_json::from_slice(&saved).unwrap());
+        assert_eq!(second.session.author, "Ada Lovelace");
+
+        // A later rename is what gets saved next, not the name loaded at startup.
+        second.run("file.setAuthor", json!({"name": "Grace Hopper"})).unwrap();
+        assert_eq!(second.prefs().author, "Grace Hopper");
+    }
+
+    #[test]
+    fn prefs_without_user_name_keep_default() {
+        let mut a = app();
+        let default = a.session.author.clone();
+        a.apply_prefs(serde_json::from_str(r#"{"dark": true, "backstage": true}"#).unwrap());
+        assert_eq!(a.session.author, default);
+        assert!(a.ui.dark);
+        assert!(!a.ui.backstage);
     }
 }
