@@ -45,6 +45,29 @@ fn typing_enter_undo() {
 }
 
 #[test]
+fn joined_commands_are_one_undo_step() {
+    let mut s = s();
+    run(&mut s, "text.insert", json!({"text": "Hello"}));
+    run(&mut s, "para.indents", json!({"left": 9.0}));
+    run(&mut s, "para.indents", json!({"left": 18.0}));
+    for x in [27.0, 36.0] {
+        s.join_next_undo();
+        run(&mut s, "para.indents", json!({"left": x}));
+    }
+    let indent = |s: &Session| s.doc.para_at(&s.sel.focus).and_then(|p| p.props.indent_left);
+    assert_eq!(indent(&s), Some(36.0));
+    // One undo reverts the whole second drag, not just its last frame.
+    run(&mut s, "edit.undo", json!({}));
+    assert_eq!(indent(&s), Some(9.0));
+    run(&mut s, "edit.undo", json!({}));
+    assert_eq!(indent(&s), None);
+    assert_eq!(text(&s), "Hello");
+    run(&mut s, "edit.redo", json!({}));
+    run(&mut s, "edit.redo", json!({}));
+    assert_eq!(indent(&s), Some(36.0));
+}
+
+#[test]
 fn backspace_and_delete() {
     let mut s = s();
     run(&mut s, "text.insert", json!({"text": "abc"}));
