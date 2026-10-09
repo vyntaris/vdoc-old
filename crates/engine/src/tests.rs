@@ -119,6 +119,27 @@ fn styles_and_lists() {
 }
 
 #[test]
+fn applying_a_heading_clears_list_numbering() {
+    // Applying a heading (or Title/Normal) to a numbered paragraph removes its direct list
+    // numbering. A dead `&& id == "Normal"` term used to let only Normal clear it, so headings
+    // kept the numbering.
+    for style_cmd in ["para.heading1", "para.heading2", "para.normal"] {
+        let mut s = s();
+        run(&mut s, "text.insert", json!({"text": "item"}));
+        run(&mut s, "para.bullets", json!({}));
+        assert!(
+            s.doc.para_at(&Pos::body(0, 0)).unwrap().props.numbering.is_some_and(|n| n.num != 0),
+            "{style_cmd}: expected list numbering before applying the style"
+        );
+        run(&mut s, style_cmd, json!({}));
+        assert!(
+            !s.doc.para_at(&Pos::body(0, 0)).unwrap().props.numbering.is_some_and(|n| n.num != 0),
+            "{style_cmd}: should clear direct list numbering"
+        );
+    }
+}
+
+#[test]
 fn find_replace() {
     let mut s = s();
     run(&mut s, "document.setText", json!({"text": "cat dog cat\nCat bird"}));
