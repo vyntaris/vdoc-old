@@ -5,12 +5,21 @@
 //! the menus, ribbon, shortcuts, control channel and MCP all reach the same behaviour.
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 
+/// An English UI string in the current interface language ([`i18n::t`]).
+#[macro_export]
+macro_rules! tl {
+    ($s:expr) => {
+        $crate::i18n::t($s)
+    };
+}
+
 pub mod backstage;
 pub mod canvas;
 pub mod chrome;
 pub mod control;
 pub mod credits;
 pub mod dialogs;
+pub mod i18n;
 pub mod icons;
 pub mod keys;
 pub mod panes;
@@ -60,6 +69,8 @@ pub struct UiState {
     pub author: String,
     /// Desktop: the main window's size and position, restored at the next launch.
     pub window: Option<window_geometry::WindowGeometry>,
+    /// Interface language: `auto` (follow the system) or a code from [`i18n::LANGUAGES`].
+    pub language: String,
 }
 
 impl Default for UiState {
@@ -75,6 +86,7 @@ impl Default for UiState {
             show_discord: true,
             author: String::new(),
             window: None,
+            language: i18n::AUTO.into(),
         }
     }
 }
@@ -96,6 +108,8 @@ pub struct WordApp {
     pending_shots: Vec<(u64, Option<String>, std::sync::mpsc::Sender<Value>, f64)>,
     pub(crate) synthetic: Vec<egui::Event>,
     styled: bool,
+    /// The CJK face order the installed UI fonts use (Chinese first, or Japanese first).
+    fonts_hans: bool,
     fonts_frames: u32,
     applied_dark: Option<bool>,
     pub frame_ms: f64,
@@ -122,6 +136,7 @@ impl WordApp {
             pending_shots: Vec::new(),
             synthetic: Vec::new(),
             styled: false,
+            fonts_hans: false,
             fonts_frames: 0,
             applied_dark: None,
             frame_ms: 0.0,
@@ -260,6 +275,20 @@ impl WordApp {
                 self.ui.dark = p.get("value").and_then(Value::as_bool).unwrap_or(!self.ui.dark);
                 json!({"dark": self.ui.dark})
             }
+            "ui.language" => {
+                // `auto` (follow the system) or a language code; anything else is an error.
+                if let Some(v) = s("value") {
+                    match i18n::normalize_pref(v) {
+                        Some(code) => self.ui.language = code.to_string(),
+                        None => {
+                            let codes: Vec<&str> = i18n::Lang::all().map(i18n::Lang::code).collect();
+                            return Some(Err(format!("unknown language `{v}`; use auto or one of {}", codes.join(", "))));
+                        }
+                    }
+                }
+                let lang = i18n::Lang::from_pref(&self.ui.language);
+                json!({"language": self.ui.language, "effective": lang.code(), "available": i18n::Lang::all().map(|l| json!({"code": l.code(), "name": l.name()})).collect::<Vec<_>>()})
+            }
             "ui.openFileDialog" => {
                 self.open_dialog();
                 json!({})
@@ -323,8 +352,12 @@ impl WordApp {
 
     /// Per-frame logic before layout: control requests, screenshots, shortcuts, file drops.
     pub fn logic(&mut self, ctx: &egui::Context) {
-        if !self.styled {
-            theme::install_fonts(ctx);
+        let lang = i18n::Lang::from_pref(&self.ui.language);
+        i18n::set_current(lang);
+        // Chinese text wants the Chinese face before the Japanese one (one glyph style per line).
+        if !self.styled || lang.prefers_hans() != self.fonts_hans {
+            theme::install_fonts_for(ctx, lang.prefers_hans());
+            self.fonts_hans = lang.prefers_hans();
             // Mod with -, = and 0 are Word shortcuts (optional hyphen, subscript, paragraph spacing);
             // egui's keyboard zoom would also scale the whole window on them. Zoom is View › Zoom.
             ctx.options_mut(|o| o.zoom_with_keyboard = false);
@@ -390,6 +423,7 @@ impl WordApp {
     pub fn ui(&mut self, ui: &mut egui::Ui) {
         let t0 = now_ms();
         let ctx = ui.ctx().clone();
+        i18n::set_current(i18n::Lang::from_pref(&self.ui.language));
         // Fonts installed by `logic` take effect on the next frame.
         if self.fonts_frames < 2 {
             self.fonts_frames += 1;
