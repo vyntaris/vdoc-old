@@ -13,13 +13,19 @@ mod control_server;
 mod graphics;
 
 use vdoc_engine::Session;
-use vdoc_ui_egui::{Services, UiState, WordApp};
+use vdoc_ui_egui::{Services, UiState, WordApp, window_geometry::WindowGeometry};
 
-struct App(WordApp);
+/// The app, and the restored window geometry until the first frame has checked it.
+struct App(WordApp, Option<WindowGeometry>);
 
 impl eframe::App for App {
     fn logic(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
         self.0.logic(ctx);
+        let prev = self.0.ui.window;
+        self.0.ui.window = ctx.input(|i| WindowGeometry::track(prev, i.viewport(), i.viewport_rect().size()));
+        if let Some(pos) = self.1.take().and_then(|g| ctx.input(|i| g.rescue_position(i.viewport()))) {
+            ctx.send_viewport_cmd(egui::ViewportCommand::OuterPosition(pos));
+        }
         if self.0.quit_requested {
             ctx.send_viewport_cmd(egui::ViewportCommand::Close);
         }
@@ -59,6 +65,15 @@ fn load_prefs(app: &mut WordApp) {
     {
         app.apply_prefs(ui);
     }
+}
+
+/// The saved window geometry, read before the window opens (`load_prefs` runs after).
+fn saved_window() -> Option<WindowGeometry> {
+    if std::env::var_os("VDOC_NO_PREFS").is_some() {
+        return None;
+    }
+    let bytes = std::fs::read(prefs_path()?).ok()?;
+    serde_json::from_slice::<UiState>(&bytes).ok()?.window?.sanitized()
 }
 
 fn save_prefs(app: &WordApp) {
@@ -140,6 +155,10 @@ fn main() -> eframe::Result {
     // Before eframe creates the wgpu instance: default Windows to DirectX 12 only (see graphics.rs).
     #[cfg(target_os = "windows")]
     graphics::configure(&mut options, eframe::wgpu::Backends::from_env());
+    let restored = saved_window();
+    if let Some(window) = restored {
+        options.viewport = window.apply(options.viewport);
+    }
     eframe::run_native(
         "VDoc",
         options,
@@ -147,6 +166,7 @@ fn main() -> eframe::Result {
             let doc = if sample { vdoc_engine::sample::sample_document() } else { vdoc_doc::Document::new() };
             let mut app = WordApp::new(Session::new(doc), services());
             load_prefs(&mut app);
+            app.ui.window = restored;
             app.integrated_titlebar = cfg!(target_os = "macos");
             if let Some(port) = control_port {
                 let rx = control_server::start(port, cc.egui_ctx.clone());
@@ -157,7 +177,7 @@ fn main() -> eframe::Result {
                     eprintln!("vdoc: {f}: {e}");
                 }
             }
-            Ok(Box::new(App(app)))
+            Ok(Box::new(App(app, restored)))
         }),
     )
 }
