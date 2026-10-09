@@ -121,6 +121,26 @@ fn lists_get_labels_and_indent() {
 }
 
 #[test]
+fn symbol_font_bullet_without_the_font_draws_a_bullet() {
+    // Word's default bullet: U+F0B7 in Symbol.
+    let mut d = Document::from_text("one");
+    let id = d.numbering.add_list(vdoc_doc::ListKind::BulletChar('\u{F0B7}'));
+    for a in &mut d.numbering.abstracts {
+        if let Some(l) = a.levels.first_mut() {
+            l.chr.font = Some("Symbol".into());
+        }
+    }
+    d.format_paragraphs(&Pos::body(0, 0), &Pos::body(0, 0), &|p| p.numbering = Some(vdoc_doc::props::NumRef { num: id, level: 0 })).unwrap();
+    let l = lay(&d);
+    let label = l.pages[0].items.iter().find_map(|it| if let Placed::Lines { para, .. } = it { para.label.clone() } else { None }).unwrap();
+    // Where a real Symbol font with the private-use code is installed (Windows), the code stays.
+    let symbol = vdoc_fonts::word::resolve("Symbol", false, false);
+    let expected = if symbol.substituted || !symbol.face.covers('\u{F0B7}') { "\u{2022}" } else { "\u{F0B7}" };
+    assert_eq!(label.text, expected);
+    assert_eq!(label.glyphs.len(), 1);
+}
+
+#[test]
 fn tables_lay_out_cells() {
     let mut d = Document::from_text("before\nafter");
     let mut t = Table::new(2, 3, 468.0);
