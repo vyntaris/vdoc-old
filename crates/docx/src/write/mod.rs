@@ -69,6 +69,10 @@ pub(crate) struct Writer<'d> {
     pending_mark: Option<&'static str>,
     /// The note being written (is footnote, part id): its reference to itself is the mark above.
     current_note: Option<(bool, u32)>,
+    /// Writing a TOC heading: its TOC field stays open so the entries become the field's result.
+    toc_hold_end: bool,
+    /// Close the open TOC field at the end of the paragraph being written.
+    toc_end_here: bool,
     /// Media keys actually referenced by a written drawing.
     used_media: std::collections::BTreeSet<String>,
 }
@@ -91,6 +95,8 @@ pub fn write(doc: &Document) -> Result<Vec<u8>, DocxError> {
         para_ids: HashMap::new(),
         pending_mark: None,
         current_note: None,
+        toc_hold_end: false,
+        toc_end_here: false,
         used_media: Default::default(),
     };
     wr.assign_media();
