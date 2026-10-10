@@ -19,7 +19,7 @@ use std::collections::HashMap;
 
 use serde_json::Value;
 
-pub use session::{FindState, MathEdit, Prefs, Selection, Session, ViewState};
+pub use session::{EditSnapshot, FindState, MathEdit, Prefs, Selection, Session, ViewState};
 pub use vdoc_doc as doc;
 pub use vdoc_layout as layout;
 pub use vdoc_render as render;
