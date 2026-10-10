@@ -1152,6 +1152,89 @@
 	Insert a new equation (Alt+=)	Umetni novu jednačinu (Alt+=)
 	Leave the equation (Esc)	Napusti jednačinu (Esc)
 	getartcraft.com/apps/vdoc	getartcraft.com/apps/vdoc
+
+# Columns, Symbol and Field dialogs (#321).
+	(All)	(Sve)
+	(none)	(nema)
+	(normal text)	(običan tekst)
+	1/4 Em Space	Razmak od 1/4 em
+	A mail merge field	Polje za spajanje pošte
+	A numbered sequence (figures, tables…)	Numerisani niz (slike, tabele…)
+	A table of contents	Sadržaj
+	Apply to:	Primeni na:
+	Categories:	Kategorije:
+	Character	Znak
+	Character code:	Kod znaka:
+	Col #:	Kolona br.:
+	Copyright	Znak autorskog prava
+	Date and Time	Datum i vreme
+	Date formats:	Formati datuma:
+	Description:	Opis:
+	Document Information	Informacije o dokumentu
+	Double Closing Quote	Zatvoreni dvostruki navodnik
+	Double Opening Quote	Otvoreni dvostruki navodnik
+	Ellipsis	Tri tačke
+	Em Dash	Duga crta
+	En Dash	Srednja crta
+	Em Space	Em razmak
+	En Space	En razmak
+	Equal column width	Jednaka širina kolona
+	Field Codes	Kodovi polja
+	Field code:	Kod polja:
+	Field codes:	Kodovi polja:
+	Field name:	Naziv polja:
+	Field names:	Nazivi polja:
+	Field properties	Svojstva polja
+	Field…	Polje…
+	Format:	Format:
+	Hide Codes	Sakrij kodove
+	Index and Tables	Indeksi i tabele
+	Line between	Linija između kolona
+	Links and References	Veze i reference
+	Mail Merge	Spajanje pošte
+	More Columns…	Još kolona…
+	More Symbols…	Još simbola…
+	No-Width Non Break	Nedeljivi znak nulte širine
+	No-Width Optional Break	Opcioni prelom nulte širine
+	Paragraph Mark	Znak pasusa
+	Pick a field from the list	Izaberite polje
+	Preserve formatting during updates	Sačuvaj oblikovanje pri ažuriranju
+	Presets	Unapred zadato
+	Recently used symbols:	Nedavno korišćeni simboli:
+	Registered	Registrovani žig
+	Section Mark	Znak paragrafa
+	Sequence name:	Naziv niza:
+	Shortcut key:	Prečica na tastaturi:
+	Single Closing Quote	Zatvoreni jednostruki navodnik
+	Single Opening Quote	Otvoreni jednostruki navodnik
+	Spacing:	Razmak:
+	Special Characters	Specijalni znakovi
+	Subset:	Podskup:
+	The time right now	Trenutno vreme
+	When this document was first created	Datum kada je dokument napravljen
+	When this document was most recently printed	Datum kada je dokument poslednji put odštampan
+	When this document was most recently saved	Datum kada je dokument poslednji put sačuvan
+	The document has no bookmarks yet.	Dokument još nema obeleživače.
+	Who the document properties name as author	Autor dokumenta
+	Name of the file this document is saved as	Ime datoteke dokumenta
+	Title from the document properties	Naslov dokumenta
+	How many pages the whole document has	Broj stranica u dokumentu
+	How many pages this section has	Broj stranica u odeljku
+	Number of the page the field sits on	Broj trenutne stranice
+	Number of the section the field sits in	Broj trenutnog odeljka
+	How many words the document holds	Broj reči u dokumentu
+	Page on which a bookmarked passage falls	Broj stranice obeleživača
+	Copy of the text a bookmark marks	Tekst obeleživača
+	This field has no options.	Ovo polje nema opcija.
+	This font has no characters to show.	Ovaj font nema znakove za prikaz.
+	This point forward	Od ovog mesta nadalje
+	This section	Ovaj odeljak
+	The date it is today	Današnji datum
+	Trademark	Žig
+	Type the field's name and its switches, for example PAGE \\* roman.	Unesite naziv polja i njegove prekidače, na primer PAGE \\* roman.
+	Whole document	Ceo dokument
+	Width and spacing	Širina i razmak
+	from Unicode (hex)	iz Unicode (heks.)
 	Rotation	Rotacija
 	Rotation:	Rotacija:
 	Rotate Right 90°	Rotiraj udesno za 90°
