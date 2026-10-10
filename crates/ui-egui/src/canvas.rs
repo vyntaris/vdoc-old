@@ -202,6 +202,18 @@ pub fn geometry(app: &WordApp, l: &DocLayout, avail: egui::Vec2) -> Geometry {
     Geometry { rects, size, scale, cols }
 }
 
+/// While a fit mode (Page Width, One Page, Multiple Pages) sizes the page, keep the session's zoom
+/// equal to what is shown, as Word does. Zoom In/Out, the Zoom dialog and `view.state` then start
+/// from the visible zoom; before, they stepped from the stale manual zoom, so Zoom In from a 163%
+/// Page Width jumped to 110% (issue #67).
+pub fn sync_fit_zoom(app: &mut WordApp, scale: f32) {
+    let v = &mut app.session.view;
+    if v.fit.is_empty() || v.read_mode || v.mode != vdoc_layout::ViewMode::Print || !scale.is_finite() {
+        return;
+    }
+    v.zoom = (scale / PX_PER_PT).clamp(0.1, 5.0);
+}
+
 /// Fingerprint of a page's content for the texture cache.
 fn page_key(app: &WordApp, page: &Page, scale_px: f32, dim_body: bool) -> u64 {
     let mut h = std::collections::hash_map::DefaultHasher::new();
@@ -270,6 +282,7 @@ pub fn show(app: &mut WordApp, ui: &mut Ui) {
     }
     let geo = geometry(app, &layout, area.size() - vec2(14.0, 0.0));
     app.canvas.scale = geo.scale;
+    sync_fit_zoom(app, geo.scale);
     // Zooming or resizing reflowed the pages into a different number of columns: the caret's page
     // moved, so bring it back into view rather than leave the reader somewhere else.
     if geo.cols != app.canvas.cols {
