@@ -788,6 +788,21 @@
 	Scroll ribbon left	Прокрутити стрічку ліворуч
 	Scroll ribbon right	Прокрутити стрічку праворуч
 	Character Border	Межа символу
+# Zotero integration
+	Zotero	Zotero
+	Citations	Цитати
+	Document	Документ
+	Add/Edit\nCitation	Додати/змінити\nцитату
+	Add\nNote	Додати\nпримітку
+	Add/Edit\nBibliography	Додати/змінити\nбібліографію
+	Refresh	Оновити
+	Document\nPreferences	Параметри\nдокумента
+	Unlink\nCitations	Від'єднати\nцитати
+	Waiting for Zotero…	Очікування Zotero…
+	Zotero: done	Zotero: готово
+	Zotero: cancelled	Zotero: скасовано
+	Yes	Так
+	No	Ні
 	AutoSave documents you have saved in VDoc	Автоматично зберігати документи, збережені у VDoc
 	AutoSave failed: {error}. Save the document to turn AutoSave back on.	Не вдалося виконати автозбереження: {error}. Збережіть документ, щоб знову ввімкнути автозбереження.
 	Couldn't download {name}: {error}	Не вдалося завантажити {name}: {error}

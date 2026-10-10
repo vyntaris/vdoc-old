@@ -4865,6 +4865,7 @@ dependencies = [
  "vdoc-engine",
  "vdoc-mcp",
  "vdoc-render",
+ "vdoc-zotero",
 ]
 
 [[package]]
@@ -5036,6 +5037,7 @@ dependencies = [
  "vdoc-geom",
  "vdoc-layout",
  "vdoc-render",
+ "vdoc-zotero",
 ]
 
 [[package]]
@@ -5054,6 +5056,20 @@ dependencies = [
  "vdoc-doc",
  "vdoc-engine",
  "vdoc-ui-egui",
+]
+
+[[package]]
+name = "vdoc-zotero"
+version = "0.4.0"
+dependencies = [
+ "log",
+ "proptest",
+ "serde_json",
+ "thiserror 2.0.21",
+ "vdoc-doc",
+ "vdoc-docx",
+ "vdoc-engine",
+ "vdoc-formats",
 ]
 
 [[package]]

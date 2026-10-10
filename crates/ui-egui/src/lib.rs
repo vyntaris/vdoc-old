@@ -30,6 +30,7 @@ pub mod ribbon;
 pub mod theme;
 pub mod widgets;
 pub mod window_geometry;
+pub mod zotero;
 
 use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
@@ -136,6 +137,10 @@ pub struct WordApp {
     pub autosave: bool,
     pub word_count: (u64, usize),
     last_autosave: f64,
+    /// Zotero commands in flight (`ui.zotero.*`).
+    pub zotero: zotero::ZoteroLink,
+    /// The egui context, once the first frame has run (background work wakes the UI with it).
+    pub(crate) ctx: Option<egui::Context>,
     /// The file the document was last explicitly saved to in this session; AutoSave writes only
     /// there. A file that was merely opened isn't rewritten until the user saves it: saving drops
     /// whatever VDoc can't represent (content controls, charts, macros…).
@@ -188,6 +193,8 @@ impl WordApp {
             autosave: true,
             word_count: (0, 0),
             last_autosave: 0.0,
+            zotero: zotero::ZoteroLink::default(),
+            ctx: None,
             autosave_path: None,
             change_picture_target: None,
         }
@@ -239,6 +246,13 @@ impl WordApp {
             self.change_picture_target = None;
         }
         if let Some(r) = self.ui_command(id, &params) {
+            return r;
+        }
+        let ctx = self.ctx.clone();
+        if let Some(r) = zotero::command(self, id, &params, ctx.as_ref()) {
+            if let Err(e) = &r {
+                self.status(e.clone());
+            }
             return r;
         }
         // Web: saving and exporting become downloads.
@@ -566,7 +580,11 @@ impl WordApp {
             theme::apply(ctx, &if dark { theme::Tokens::dark() } else { theme::Tokens::light() });
             self.applied_dark = Some(dark);
         }
+        if self.ctx.is_none() {
+            self.ctx = Some(ctx.clone());
+        }
         self.drain_control(ctx);
+        zotero::poll(self, ctx);
         self.clear_stale_change_picture();
         self.drain_inbox();
         self.autosave_tick(now_ms());
@@ -665,6 +683,7 @@ impl WordApp {
             });
         }
         dialogs::show(self, &ctx);
+        zotero::show_alert(self, &ctx);
         crate::keytips::show(self, &ctx, ui);
         keys::global_shortcuts(self, &ctx);
         if let Some(url) = self.canvas.open_url.take() {

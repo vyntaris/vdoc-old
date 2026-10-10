@@ -18,4 +18,5 @@ vdoc-doc = { workspace = true }
 vdoc-engine = { workspace = true }
 vdoc-render = { workspace = true }
 vdoc-mcp = { workspace = true }
+vdoc-zotero = { workspace = true }
 serde_json = { workspace = true }
