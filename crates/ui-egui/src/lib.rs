@@ -116,6 +116,8 @@ pub struct WordApp {
     fonts_frames: u32,
     applied_dark: Option<bool>,
     pub frame_ms: f64,
+    /// The window title last sent; a viewport command schedules a repaint, so only send changes.
+    sent_title: String,
     pub quit_requested: bool,
     pub autosave: bool,
     pub word_count: (u64, usize),
@@ -143,6 +145,7 @@ impl WordApp {
             fonts_frames: 0,
             applied_dark: None,
             frame_ms: 0.0,
+            sent_title: String::new(),
             quit_requested: false,
             autosave: true,
             word_count: (0, 0),
@@ -453,7 +456,10 @@ impl WordApp {
             ctx.open_url(egui::OpenUrl::new_tab(url));
         }
         let title = format!("{}{} - VDoc", self.title_stem(), if self.session.dirty { " •" } else { "" });
-        ctx.send_viewport_cmd(egui::ViewportCommand::Title(title));
+        if title != self.sent_title {
+            ctx.send_viewport_cmd(egui::ViewportCommand::Title(title.clone()));
+            self.sent_title = title;
+        }
         self.frame_ms = now_ms() - t0;
     }
 
@@ -576,6 +582,30 @@ mod tests {
         frame(vec![mod_key(egui::Key::Minus)]);
         frame(Vec::new());
         assert_eq!(ctx.zoom_factor(), 1.0);
+    }
+
+    /// Issue #117: a viewport command schedules a repaint, so resending the title every frame kept
+    /// the app redrawing at the monitor's refresh rate while idle.
+    #[test]
+    fn window_title_is_sent_only_when_it_changes() {
+        let ctx = egui::Context::default();
+        let mut app = app();
+        let titles = |app: &mut WordApp| {
+            let out = ctx.run_ui(egui::RawInput::default(), |ui| {
+                app.logic(ui.ctx());
+                app.ui(ui);
+            });
+            let n = out.viewport_output.values().flat_map(|v| v.commands.iter()).filter(|c| matches!(c, egui::ViewportCommand::Title(_))).count();
+            out.drop_without_applying_deltas();
+            n
+        };
+        // The first frames only install fonts; the title goes out once, on the first full frame.
+        let first: usize = (0..4).map(|_| titles(&mut app)).sum();
+        assert_eq!(first, 1);
+        assert_eq!(titles(&mut app), 0);
+        assert_eq!(titles(&mut app), 0);
+        app.session.dirty = true;
+        assert_eq!(titles(&mut app), 1);
     }
 
     fn app() -> WordApp {
