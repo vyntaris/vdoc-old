@@ -138,6 +138,29 @@
 	Border Painter	边框刷
 	Border\nPainter	边框刷
 	Borders	边框
+	Tab stop position:	制表位位置：
+	Default tab stops:	默认制表位：
+	Tab stops to be cleared:	要清除的制表位：
+	All	全部
+	Decimal	小数点对齐
+	Bar	竖线对齐
+	Leader	前导符
+	Set	设置
+	Page Border	页面边框线
+	Apply to:	应用于：
+	Whole document	整篇文档
+	This section	本节
+	Fill	填充
+	Setting:	设置：
+	3-D	三维
+	Custom	自定义
+	Style:	样式：
+	Dot dash	点划线
+	Triple	三线
+	Between	段落之间
+	Borders and Shading	边框和底纹
+	Tabs…	制表位…
+	Borders and Shading…	边框和底纹…
 	Bottom Border	下框线
 	Bottom of Page	页面底端
 	Bottom:	下：
@@ -1107,7 +1130,6 @@
 	A mail merge field	邮件合并域
 	A numbered sequence (figures, tables…)	编号序列（图、表…）
 	A table of contents	目录
-	Apply to:	应用于：
 	Categories:	类别：
 	Character	字符
 	Character code:	字符代码：
@@ -1174,11 +1196,9 @@
 	This field has no options.	此域没有选项。
 	This font has no characters to show.	此字体没有可显示的字符。
 	This point forward	插入点之后
-	This section	本节
 	The date it is today	今天的日期
 	Trademark	商标
 	Type the field's name and its switches, for example PAGE \\* roman.	键入域名及其开关，例如 PAGE \\* roman。
-	Whole document	整篇文档
 	Width and spacing	宽度和间距
 	from Unicode (hex)	来自 Unicode（十六进制）
 	Shape Effects	形状效果

@@ -127,6 +127,29 @@
 	Border Painter	罫線の書式設定
 	Border\nPainter	罫線の書式設定
 	Borders	罫線
+	Tab stop position:	タブ位置:
+	Default tab stops:	既定のタブ間隔:
+	Tab stops to be cleared:	削除するタブ:
+	All	すべて
+	Decimal	小数点揃え
+	Bar	縦線
+	Leader	リーダー
+	Set	設定
+	Page Border	ページ罫線の設定
+	Apply to:	適用先:
+	Whole document	文書全体
+	This section	このセクション
+	Fill	塗りつぶし
+	Setting:	種類:
+	3-D	立体
+	Custom	カスタム
+	Style:	線種:
+	Dot dash	一点鎖線
+	Triple	三重線
+	Between	段落の間
+	Borders and Shading	罫線と網かけ
+	Tabs…	タブ…
+	Borders and Shading…	罫線と網かけ…
 	Bottom Border	下罫線
 	Bottom of Page	ページの下部
 	Bottom:	下:
@@ -1096,7 +1119,6 @@
 	A mail merge field	差し込み用のフィールド
 	A numbered sequence (figures, tables…)	連番 (図、表…)
 	A table of contents	目次
-	Apply to:	適用先:
 	Categories:	分類:
 	Character	文字
 	Character code:	文字コード:
@@ -1163,11 +1185,9 @@
 	This field has no options.	このフィールドにはオプションがありません。
 	This font has no characters to show.	このフォントには表示できる文字がありません。
 	This point forward	これ以降
-	This section	このセクション
 	The date it is today	今日の日付
 	Trademark	商標
 	Type the field's name and its switches, for example PAGE \\* roman.	フィールド名とスイッチを入力します (例: PAGE \\* roman)。
-	Whole document	文書全体
 	Width and spacing	幅と間隔
 	from Unicode (hex)	Unicode (16 進)
 	Shape Effects	図形の効果

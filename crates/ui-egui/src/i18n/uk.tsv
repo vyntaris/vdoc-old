@@ -123,6 +123,29 @@
 	Border Painter	Пензель меж
 	Border\nPainter	Пензель\nмеж
 	Borders	Межі
+	Tab stop position:	Позиція табуляції:
+	Default tab stops:	Типові позиції табуляції:
+	Tab stops to be cleared:	Позиції, які буде видалено:
+	All	Усі
+	Decimal	Десяткова
+	Bar	Риска
+	Leader	Заповнювач
+	Set	Встановити
+	Page Border	Межа сторінки
+	Apply to:	Застосувати до:
+	Whole document	Увесь документ
+	This section	Цей розділ
+	Fill	Колір заливки
+	Setting:	Тип:
+	3-D	Об'ємна
+	Custom	Власна
+	Style:	Стиль:
+	Dot dash	Штрихпунктирна
+	Triple	Потрійна
+	Between	Між абзацами
+	Borders and Shading	Межі й заливка
+	Tabs…	Табуляція…
+	Borders and Shading…	Межі й заливка…
 	Bottom Border	Нижня межа
 	Bottom Margin	Нижнє поле
 	Bottom of Page	Унизу сторінки
@@ -1108,7 +1131,6 @@
 	A mail merge field	Поле злиття
 	A numbered sequence (figures, tables…)	Нумерована послідовність (рисунки, таблиці…)
 	A table of contents	Зміст
-	Apply to:	Застосувати до:
 	Categories:	Категорії:
 	Character	Символ
 	Character code:	Код символу:
@@ -1175,11 +1197,9 @@
 	This field has no options.	Це поле не має параметрів.
 	This font has no characters to show.	Цей шрифт не має символів для показу.
 	This point forward	Від цього місця
-	This section	Цей розділ
 	The date it is today	Сьогоднішня дата
 	Trademark	Торговельна марка
 	Type the field's name and its switches, for example PAGE \\* roman.	Введіть назву поля та його ключі, наприклад PAGE \\* roman.
-	Whole document	Увесь документ
 	Width and spacing	Ширина й інтервал
 	from Unicode (hex)	з Unicode (шістн.)
 	Shape Effects	Ефекти фігури

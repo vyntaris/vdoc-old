@@ -184,6 +184,29 @@
 	Border Painter	Kopiranje ivica
 	Border\nPainter	Kopiranje\nivica
 	Borders	Ivice
+	Tab stop position:	Položaj tabulatora:
+	Default tab stops:	Podrazumevani tabulatori:
+	Tab stops to be cleared:	Tabulatori za brisanje:
+	All	Svi
+	Decimal	Decimalni
+	Bar	Linija
+	Leader	Popuna
+	Set	Postavi
+	Page Border	Ivica strane
+	Apply to:	Primeni na:
+	Whole document	Ceo dokument
+	This section	Ovaj odeljak
+	Fill	Ispuna
+	Setting:	Vrsta:
+	3-D	3D
+	Custom	Prilagođeno
+	Style:	Stil:
+	Dot dash	Tačka-crta
+	Triple	Trostruko
+	Between	Između pasusa
+	Borders and Shading	Ivice i senčenje
+	Tabs…	Tabulatori…
+	Borders and Shading…	Ivice i senčenje…
 	Bottom Border	Donja ivica
 	Bottom of Page	Dno strane
 	Bottom:	Dole:
@@ -1161,7 +1184,6 @@
 	A mail merge field	Polje za spajanje pošte
 	A numbered sequence (figures, tables…)	Numerisani niz (slike, tabele…)
 	A table of contents	Sadržaj
-	Apply to:	Primeni na:
 	Categories:	Kategorije:
 	Character	Znak
 	Character code:	Kod znaka:
@@ -1228,11 +1250,9 @@
 	This field has no options.	Ovo polje nema opcija.
 	This font has no characters to show.	Ovaj font nema znakove za prikaz.
 	This point forward	Od ovog mesta nadalje
-	This section	Ovaj odeljak
 	The date it is today	Današnji datum
 	Trademark	Žig
 	Type the field's name and its switches, for example PAGE \\* roman.	Unesite naziv polja i njegove prekidače, na primer PAGE \\* roman.
-	Whole document	Ceo dokument
 	Width and spacing	Širina i razmak
 	from Unicode (hex)	iz Unicode (heks.)
 	Rotation	Rotacija

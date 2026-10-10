@@ -128,6 +128,29 @@
 	Border Painter	框線複製
 	Border\nPainter	框線複製
 	Borders	框線
+	Tab stop position:	定位點位置：
+	Default tab stops:	預設定位點間距：
+	Tab stops to be cleared:	要清除的定位點：
+	All	全部
+	Decimal	小數點對齊
+	Bar	豎線
+	Leader	前置字元
+	Set	設定
+	Page Border	頁面框線設定
+	Apply to:	套用至：
+	Whole document	整份文件
+	This section	本節
+	Fill	填滿
+	Setting:	設定：
+	3-D	立體
+	Custom	自訂
+	Style:	樣式：
+	Dot dash	點虛線
+	Triple	三線
+	Between	段落之間
+	Borders and Shading	框線及網底
+	Tabs…	定位點…
+	Borders and Shading…	框線及網底…
 	Bottom Border	下框線
 	Bottom of Page	頁面底端
 	Bottom:	下：
@@ -1097,7 +1120,6 @@
 	A mail merge field	合併列印欄位
 	A numbered sequence (figures, tables…)	編號序列（圖、表…）
 	A table of contents	目錄
-	Apply to:	套用至：
 	Categories:	類別：
 	Character	字元
 	Character code:	字元代碼：
@@ -1164,11 +1186,9 @@
 	This field has no options.	此功能變數沒有選項。
 	This font has no characters to show.	此字型沒有可顯示的字元。
 	This point forward	從這裡開始
-	This section	本節
 	The date it is today	今天的日期
 	Trademark	商標
 	Type the field's name and its switches, for example PAGE \\* roman.	輸入功能變數名稱及其參數，例如 PAGE \\* roman。
-	Whole document	整份文件
 	Width and spacing	寬度和間距
 	from Unicode (hex)	來自 Unicode（十六進位）
 	Shape Effects	圖案效果
