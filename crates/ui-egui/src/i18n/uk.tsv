@@ -108,6 +108,7 @@
 	Character Scale	Масштаб символів
 	Character Shading	Заливка символів
 	Character Spacing	Інтервал між символами
+	Characters	Символи
 	Characters (no spaces)	Символи (без пробілів)
 	Characters (with spaces)	Символи (з пробілами)
 	Chart	Діаграма
@@ -119,7 +120,12 @@
 	Citation Style	Стиль цитування
 	Citations & Bibliography	Цитати й бібліографія
 	Clear	Очистити
+	Clear All	Очистити все
 	Clear All Formatting	Очистити все форматування
+	Clear Character Formatting	Очистити форматування символів
+	Clear Character Style	Очистити стиль символів
+	Clear Formatting Level	Очистити рівень форматування
+	Clear Paragraph Formatting	Очистити форматування абзацу
 	Clipboard	Буфер обміну
 	Close	Закрити
 	Close Header and Footer	Закрити колонтитули
@@ -190,6 +196,7 @@
 	Dictate	Диктувати
 	Different First Page	Інша перша сторінка
 	Different Odd & Even Pages	Різні парні й непарні сторінки
+	Direct formatting	Пряме форматування
 	Discord	Discord
 	Discord community	Спільнота Discord
 	Display	Відображення
@@ -348,6 +355,7 @@
 	Insert\nFootnote	Вставити\nвиноску
 	Inside Borders	Внутрішні межі
 	Inspect Document	Перевірити документ
+	Inspect Styles at Selection	Переглянути стилі у виділенні
 	Interface language:	Мова інтерфейсу:
 	Italic	Курсив
 	Join the ArtCraft community on Discord	Приєднатися до спільноти ArtCraft у Discord
@@ -571,6 +579,7 @@
 	Research	Дослідження
 	Researcher	Дослідник
 	Reset Picture	Скинути зображення
+	Reset to Normal	Скинути до звичайного
 	Resolve	Вирішити
 	Resolved	Вирішено
 	Restart at 1	Почати з 1
@@ -686,6 +695,7 @@
 	Studio handbook (sample)	Посібник студії (приклад)
 	Style	Стиль
 	Style based on:	Стиль на основі:
+	Style Inspector	Інспектор стилів
 	Style Set	Набір стилів
 	Style: APA	Стиль: APA
 	Styles	Стилі
@@ -968,3 +978,30 @@
 	Whole Table	Уся таблиця
 	Fill color:	Колір заливки:
 	{count} items highlighted	Виділено елементів: {count}
+	{n} pt	{n} пт
+	Not {name}	Без: {name}
+	Level {n}	Рівень {n}
+	Body Text	Основний текст
+	{n} lines	Рядків: {n}
+	At least {n}	Щонайменше {n}
+	Exactly {n}	Точно {n}
+	Centered	По центру
+	Character spacing	Інтервал між символами
+	Don't add space between paragraphs of the same style	Не додавати інтервал між абзацами одного стилю
+	Don't hyphenate	Без перенесення слів
+	Double strikethrough	Подвійне закреслення
+	Drop cap	Буквиця
+	First line	Перший рядок
+	Font color	Колір шрифту
+	Highlight	Виділення кольором
+	Justified	За шириною
+	Left indent	Відступ ліворуч
+	Line spacing	Міжрядковий інтервал
+	Outline level	Рівень плану
+	Raised/lowered	Піднято/опущено
+	Right indent	Відступ праворуч
+	Scale	Масштаб
+	Space after	Інтервал після
+	Space before	Інтервал перед
+	Suppress line numbers	Без номерів рядків
+	Underline color	Колір підкреслення
