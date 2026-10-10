@@ -95,7 +95,7 @@ Every screenshot below is VDoc itself, rendered offscreen by its own UI test har
   1.4 ms; pages render on demand.
 - **Everywhere.** One Rust codebase for macOS, Windows, Linux, BSD and the web. No Electron, no
   Tauri: native [egui](https://github.com/emilk/egui) on the GPU.
-- **Built for agents.** Every action is a command with an id. The same 389 commands drive the
+- **Built for agents.** Every action is a command with an id. The same 422 commands drive the
   ribbon, keyboard shortcuts, the command search, a command-line tool, a JSON control channel and
   an MCP server.
 - **Private.** Spelling, grammar and everything else work offline.
@@ -120,8 +120,9 @@ Every screenshot below is VDoc itself, rendered offscreen by its own UI test har
 | **View** | Print layout, web layout, draft, read mode, focus, zoom, one/multiple pages, page width, Navigation pane, rulers, gridlines, dark mode; interface in English, 简体中文, 繁體中文, 日本語, Português (Brasil), Español or Українська (follows the system language by default) |
 | **Files** | .docx read/write (opens in Word), Word 97-2003 .doc import, PDF export, .odt, .rtf, .html, .md, .tex, .txt import/export, page images |
 
-The honest picture, area by area, is in [ROADMAP.md](ROADMAP.md) and the generated
-[feature parity report](docs/parity.md).
+The honest picture, area by area, is in [ROADMAP.md](ROADMAP.md), the
+[parity assessment](docs/target-app-parity.md) and the generated
+[feature checklist](docs/parity-checklist.md).
 
 ## Quick start
 
@@ -187,21 +188,22 @@ covers every target starting with it (`vdoc*=debug`). The logger is
 | L1 | `vdoc-doc`, `vdoc-fonts`, `vdoc-proof` | document model and editing; fonts and shaping; spelling, grammar, hyphenation |
 | L2 | `vdoc-layout`, `vdoc-docx`, `vdoc-formats` | line breaking, pagination, tables, notes, hit testing; OOXML; ODT/RTF/HTML/Markdown/TXT |
 | L3 | `vdoc-render`, `vdoc-pdf` | rasteriser (vello_cpu); PDF (krilla) |
-| L4 | `vdoc-engine` | session, undo, 389 commands, Word feature catalog |
+| L4 | `vdoc-engine` | session, undo, 422 commands, Word feature catalog |
 | L5 | `vdoc-mcp` | MCP server |
 | L6 | `vdoc-ui-egui` | the Word-style front end (swappable) |
 | apps | `vdoc`, `vdoc-cli`, `vdoc-web` | desktop, command line, browser |
 
-`cargo xtask ci` runs formatting, clippy, ~250 tests, the asset-attribution check, the layering
+`cargo xtask ci` runs formatting, clippy, ~800 tests, the asset-attribution check, the layering
 check and the wasm build. Contributor and agent instructions: [AGENTS.md](AGENTS.md).
 
 ## Roadmap
 
-VDoc covers 87% of Word's ribbon features with commands today; counting depth and
-fidelity, we estimate about 62% of real feature parity. An alpha for everyday writing is close:
-the remaining work is mostly testing against real-world .docx files, native printing and the
-first signed builds. Charts, SmartArt, the equation editor and the Draw tab come after.
-Details and estimates: [ROADMAP.md](ROADMAP.md).
+VDoc is in **alpha**. It covers 88% of Word's ribbon features with commands today; counting
+depth, file fidelity, stability and the rest, we estimate it is about 60% of the way to replacing
+all of Word for real work, about 55% for a typical professional's weekly work and about 63% for
+everyday essentials. Beta needs testing against real-world .docx files, keeping charts and SmartArt
+through a round trip, pagination closer to Word's, a stability sweep and native printing. Details
+and estimates: [ROADMAP.md](ROADMAP.md) and [where we fall short](docs/gaps.md).
 
 ## Downloads
 
