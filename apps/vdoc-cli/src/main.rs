@@ -10,7 +10,7 @@ const USAGE: &str = "\
 vdoc-cli — VDoc from the command line
 
 USAGE:
-  vdoc-cli convert <in> <out>            convert between formats (docx, pdf, odt, rtf, html, md, txt, json, png)
+  vdoc-cli convert <in> <out>            convert between formats (docx, pdf, odt, rtf, html, md, tex, txt, json, png)
   vdoc-cli info <file>                   pages, words, paragraphs, properties (JSON)
   vdoc-cli text <file>                   plain text
   vdoc-cli inspect <file>                document structure (JSON)
