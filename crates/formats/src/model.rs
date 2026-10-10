@@ -180,6 +180,8 @@ pub struct FTable {
     pub rows: Vec<Vec<Cell>>,
     /// Grid column widths in points (empty = equal widths).
     pub widths: Vec<f32>,
+    /// The source table had no borders (HTML default); the document table gets no grid style.
+    pub borderless: bool,
 }
 
 impl FTable {
@@ -426,6 +428,9 @@ impl Builder<'_> {
         let cols = t.cols().clamp(1, vdoc_doc::table::MAX_COLS);
         let width = self.doc.last_section.text_width().max(72.0);
         let mut tb = Table::new(rows.len(), cols, width);
+        if t.borderless {
+            tb.props.style = None;
+        }
         if t.widths.len() == cols && t.widths.iter().all(|w| w.is_finite() && *w > 1.0) {
             tb.grid = t.widths.iter().map(|w| w.clamp(6.0, 1584.0)).collect();
         }
@@ -704,7 +709,7 @@ fn flow_table(doc: &Document, t: &Table, depth: usize) -> FTable {
         }
         rows.push(cells);
     }
-    FTable { rows, widths: t.grid.clone() }
+    FTable { rows, widths: t.grid.clone(), borderless: false }
 }
 
 /// The document body as a flow.
@@ -980,7 +985,11 @@ mod tests {
 
     #[test]
     fn covered_cells_inserted() {
-        let mut t = FTable { rows: vec![vec![Cell { rowspan: 2, ..Default::default() }, Cell::default()], vec![Cell::default()]], widths: vec![] };
+        let mut t = FTable {
+            rows: vec![vec![Cell { rowspan: 2, ..Default::default() }, Cell::default()], vec![Cell::default()]],
+            widths: vec![],
+            borderless: false,
+        };
         t.insert_covered();
         assert_eq!(t.rows[1].len(), 2);
         assert!(t.rows[1][0].covered);

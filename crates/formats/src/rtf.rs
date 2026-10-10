@@ -850,7 +850,7 @@ impl Reader {
         }
         if !self.table.is_empty() {
             let rows = std::mem::take(&mut self.table);
-            self.body.push(FBlock::Table(FTable { rows, widths: Vec::new() }));
+            self.body.push(FBlock::Table(FTable { rows, widths: Vec::new(), borderless: false }));
         }
     }
 

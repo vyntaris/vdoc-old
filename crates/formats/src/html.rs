@@ -341,6 +341,25 @@ struct El {
 struct TableB {
     rows: Vec<Vec<Cell>>,
     row: Option<Vec<Cell>>,
+    /// The table or one of its cells asks for borders.
+    bordered: bool,
+}
+
+/// Whether an element's `border` attribute or `style` declares a visible border.
+fn declares_border(attrs: &[(String, String)], is_table: bool) -> bool {
+    if is_table && attr(attrs, "border").is_some_and(|b| b.trim().parse::<u32>().map(|n| n > 0).unwrap_or(b.trim().is_empty())) {
+        return true;
+    }
+    let Some(style) = attr(attrs, "style") else { return false };
+    style.split(';').any(|decl| {
+        let Some((name, value)) = decl.split_once(':') else { return false };
+        let name = name.trim().to_ascii_lowercase();
+        if !matches!(name.as_str(), "border" | "border-top" | "border-right" | "border-bottom" | "border-left") {
+            return false;
+        }
+        let value = value.trim().to_ascii_lowercase();
+        !value.is_empty() && !value.split_whitespace().any(|tok| matches!(tok, "none" | "hidden" | "0" | "0px" | "0pt"))
+    })
 }
 
 struct Builder {
@@ -750,7 +769,8 @@ impl Builder {
                     if let Some(r) = t.row.take() {
                         t.rows.push(r);
                     }
-                    let mut ft = FTable { rows: t.rows.into_iter().filter(|r| !r.is_empty()).collect(), widths: Vec::new() };
+                    let borderless = !t.bordered;
+                    let mut ft = FTable { rows: t.rows.into_iter().filter(|r| !r.is_empty()).collect(), widths: Vec::new(), borderless };
                     if !ft.rows.is_empty() {
                         ft.insert_covered();
                         self.container().push(FBlock::Table(ft));
@@ -959,7 +979,7 @@ impl Builder {
             preserve = true;
         }
         match kind {
-            ElKind::Table => self.tables.push(TableB { rows: Vec::new(), row: None }),
+            ElKind::Table => self.tables.push(TableB { rows: Vec::new(), row: None, bordered: declares_border(attrs, true) }),
             ElKind::Tr => {
                 if let Some(t) = self.tables.last_mut()
                     && let Some(r) = t.row.take()
@@ -969,6 +989,11 @@ impl Builder {
             }
             ElKind::Cell => {
                 let tb = self.find_open(|e| e.kind == ElKind::Tr, |e| e.kind == ElKind::Table).is_none();
+                if let Some(t) = self.tables.last_mut()
+                    && declares_border(attrs, false)
+                {
+                    t.bordered = true;
+                }
                 if tb && let Some(t) = self.tables.last_mut() {
                     // A cell without a row: start one.
                     if let Some(r) = t.row.take() {
@@ -1387,6 +1412,24 @@ mod tests {
                 FBlock::Table(t) => format!("table{}x{}", t.rows.len(), t.cols()),
             })
             .collect()
+    }
+
+    fn table_style(html: &str) -> Option<String> {
+        let doc = crate::model::to_doc(&parse(html));
+        doc.body.iter().find_map(|b| match &**b {
+            vdoc_doc::Block::Table(t) => Some(t.props.style.clone().unwrap_or_default()),
+            _ => None,
+        })
+    }
+
+    #[test]
+    fn borderless_tables_get_no_grid_style() {
+        assert_eq!(table_style("<table><tr><td>a<td>b</table>").as_deref(), Some(""));
+        assert_eq!(table_style("<table style='border:none'><tr><td style='border:0'>a</table>").as_deref(), Some(""));
+        assert_eq!(table_style("<table border=0><tr><td style='border: 0px none'>a</table>").as_deref(), Some(""));
+        assert_eq!(table_style("<table border=1><tr><td>a</table>").as_deref(), Some("TableGrid"));
+        assert_eq!(table_style("<table style='border:1px solid #000'><tr><td>a</table>").as_deref(), Some("TableGrid"));
+        assert_eq!(table_style("<table><tr><td style='border:1px solid #999'>a</table>").as_deref(), Some("TableGrid"));
     }
 
     #[test]
