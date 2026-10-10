@@ -420,6 +420,20 @@ fn track_changes_and_accept() {
 }
 
 #[test]
+fn replace_all_is_tracked() {
+    let mut s = s();
+    let original = "We walked towards the light, then towards home.";
+    run(&mut s, "document.setText", json!({"text": original}));
+    run(&mut s, "review.trackChanges", json!({"value": true}));
+    let r = run(&mut s, "edit.replaceAll", json!({"text": "towards", "with": "toward", "matchCase": true}));
+    assert_eq!(r["replaced"], 2);
+    let ch = run(&mut s, "review.changes", json!({}));
+    assert!(!ch.as_array().unwrap().is_empty(), "replace all must leave tracked revisions");
+    run(&mut s, "review.rejectAll", json!({}));
+    assert_eq!(text(&s), original);
+}
+
+#[test]
 fn comments() {
     let mut s = s();
     run(&mut s, "text.insert", json!({"text": "Some text here"}));

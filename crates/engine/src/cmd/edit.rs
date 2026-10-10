@@ -241,6 +241,12 @@ fn replace_all(s: &mut Session, v: &Value) -> CmdResult {
     let n = results.len();
     // Replace from the end so earlier positions stay valid.
     for (a, b) in results.into_iter().rev() {
+        if s.doc.settings.track_changes {
+            // Same path as a single replace, so the change is a reviewable revision.
+            s.sel = Selection { anchor: a, focus: b };
+            super::type_text(s, &with)?;
+            continue;
+        }
         let props = s.doc.para_at(&a).map(|p| p.props_of_char(a.off).clone()).unwrap_or_default();
         s.doc.delete_range(&a, &b)?;
         s.doc.insert_text(&a, &with, &props)?;
