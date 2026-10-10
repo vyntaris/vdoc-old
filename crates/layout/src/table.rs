@@ -468,7 +468,7 @@ pub fn split_row(row: &RowLayout, cut: f32) -> Option<(RowLayout, RowLayout)> {
                     }
                 }
             }
-            Placed::Image { rect, .. } | Placed::Shape { rect, .. } => {
+            Placed::Image { rect, .. } | Placed::Shape { rect, .. } | Placed::Graphic { rect, .. } => {
                 if rect.bottom() <= cut + 0.01 {
                     kept_any = true;
                 } else {
@@ -535,7 +535,7 @@ pub fn split_row(row: &RowLayout, cut: f32) -> Option<(RowLayout, RowLayout)> {
                     });
                 }
             }
-            Placed::Image { rect, .. } | Placed::Shape { rect, .. } | Placed::Object { rect, .. } => {
+            Placed::Image { rect, .. } | Placed::Shape { rect, .. } | Placed::Graphic { rect, .. } | Placed::Object { rect, .. } => {
                 if rect.bottom() <= cut + 0.01 {
                     a.push(it.clone());
                 } else {
