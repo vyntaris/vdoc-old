@@ -1178,6 +1178,12 @@
 	Insert a new equation (Alt+=)	Umetni novu jednačinu (Alt+=)
 	Leave the equation (Esc)	Napusti jednačinu (Esc)
 	getartcraft.com/apps/vdoc	getartcraft.com/apps/vdoc
+	Draw Ink	Crtaj mastilom
+	Erase Ink	Obriši mastilo
+	Hide Ink	Sakrij mastilo
+	Hide\nInk	Sakrij\nmastilo
+	Pens	Pera
+	Thickness	Debljina
 
 # Columns, Symbol and Field dialogs (#321).
 	(All)	(Sve)

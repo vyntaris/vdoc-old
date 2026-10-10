@@ -1182,6 +1182,12 @@
 	Insert a new equation (Alt+=)	Уметни нову једначину (Alt+=)
 	Leave the equation (Esc)	Напусти једначину (Esc)
 	getartcraft.com/apps/vdoc	getartcraft.com/apps/vdoc
+	Draw Ink	Цртај мастилом
+	Erase Ink	Обриши мастило
+	Hide Ink	Сакриј мастило
+	Hide\nInk	Сакриј\nмастило
+	Pens	Пера
+	Thickness	Дебљина
 
 # Columns, Symbol and Field dialogs (#321).
 	(All)	(Све)

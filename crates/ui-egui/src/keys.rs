@@ -234,6 +234,12 @@ pub fn canvas_events(app: &mut WordApp, ctx: &egui::Context) {
                     app.session.painter = None;
                     continue;
                 }
+                // Escape puts the pen or eraser down (back to selecting).
+                if key == Key::Escape && app.session.view.draw.mode != vdoc_engine::cmd::draw::DrawMode::Select {
+                    app.canvas.ink = None;
+                    let _ = app.run("draw.select", json!({}));
+                    continue;
+                }
                 if key == Key::Escape && crate::table_pen::stop(app) {
                     continue;
                 }

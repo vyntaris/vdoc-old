@@ -1113,6 +1113,12 @@
 	Leave the equation (Esc)	数式を終了 (Esc)
 	Preview	プレビュー
 	getartcraft.com/apps/vdoc	getartcraft.com/apps/vdoc
+	Draw Ink	インクで描く
+	Erase Ink	インクを消す
+	Hide Ink	インクを隠す
+	Hide\nInk	インクを\n隠す
+	Pens	ペン
+	Thickness	太さ
 
 # Columns, Symbol and Field dialogs (#321).
 	(All)	(すべて)
