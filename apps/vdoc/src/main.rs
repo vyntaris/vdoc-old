@@ -14,7 +14,10 @@ mod graphics;
 mod logging;
 
 use vdoc_engine::Session;
-use vdoc_ui_egui::{Services, UiState, WordApp, window_geometry::{WindowGeometry, take_rescue}};
+use vdoc_ui_egui::{
+    Services, UiState, WordApp,
+    window_geometry::{WindowGeometry, take_rescue},
+};
 
 /// The app, and the restored window geometry until the first frame has checked it.
 struct App(WordApp, Option<WindowGeometry>);
