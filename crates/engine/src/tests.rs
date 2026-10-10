@@ -68,6 +68,96 @@ fn joined_commands_are_one_undo_step() {
 }
 
 #[test]
+fn failed_command_keeps_undo_and_redo() {
+    // A command that fails after its undo checkpoint leaves the history exactly as it was:
+    // the redo stack survives, and no empty undo step is added.
+    for (id, params) in [("text.insert", json!({})), ("para.align", json!({"value": "bogus"}))] {
+        let mut s = s();
+        run(&mut s, "text.insert", json!({"text": "Hello"}));
+        run(&mut s, "edit.undo", json!({}));
+        assert!(s.can_redo());
+        assert!(s.run(id, &params).is_err(), "{id} should fail");
+        assert!(s.can_redo(), "{id}: redo lost");
+        assert!(!s.can_undo(), "{id}: failed command left an undo step");
+        run(&mut s, "edit.redo", json!({}));
+        assert_eq!(text(&s), "Hello", "{id}");
+    }
+
+    // At the undo limit, the oldest step is not evicted by a command that fails.
+    let mut s = s();
+    let steps = 600;
+    for i in 1..=steps {
+        run(&mut s, "para.indents", json!({"left": i as f32}));
+    }
+    let kept = s.undo_labels().len();
+    assert!(kept < steps, "the history should be at its limit");
+    assert!(s.run("para.align", &json!({"value": "bogus"})).is_err());
+    assert_eq!(s.undo_labels().len(), kept);
+    while s.can_undo() {
+        run(&mut s, "edit.undo", json!({}));
+    }
+    let indent = s.doc.para_at(&s.sel.focus).and_then(|p| p.props.indent_left);
+    assert_eq!(indent, Some((steps - kept) as f32));
+}
+
+#[test]
+fn failed_command_restores_history_changed_by_nested_commands() {
+    // `file.inspect` runs `review.deleteComment` (allowed in a comments-only document, and it
+    // checkpoints), then `review.acceptAll` (refused). The refusal must leave the undo and
+    // redo stacks exactly as they were, including at and next to the history limit, where the
+    // outer and nested checkpoints each evict the oldest step.
+    fn timeline(s: &mut Session) -> Vec<(Vec<String>, vdoc_doc::Document)> {
+        let mut out = Vec::new();
+        while s.can_redo() {
+            run(s, "edit.redo", json!({}));
+        }
+        loop {
+            // Comments are stamped with the time to the second, and the two sessions compared
+            // are built a moment apart, so leave the stamp out of the comparison.
+            let mut doc = s.doc.clone();
+            doc.comments.values_mut().for_each(|c| c.date.clear());
+            out.push((s.undo_labels(), doc));
+            if !s.can_undo() {
+                return out;
+            }
+            run(s, "edit.undo", json!({}));
+        }
+    }
+    let kept = {
+        let mut s = s();
+        for i in 1..=600 {
+            run(&mut s, "para.indents", json!({"left": i as f32}));
+        }
+        s.undo_labels().len()
+    };
+    // Below the limit there is room for a redo step too; at the limit an Undo would leave one free.
+    for (len, redo) in [(kept - 1, Some("New Comment")), (kept, None)] {
+        let session = || {
+            let mut s = s();
+            run(&mut s, "text.insert", json!({"text": "note"}));
+            for i in 1..=len + usize::from(redo.is_some()) - 4 {
+                run(&mut s, "para.indents", json!({"left": i as f32}));
+            }
+            run(&mut s, "review.restrict", json!({"mode": "comments"}));
+            run(&mut s, "review.newComment", json!({"text": "one"}));
+            run(&mut s, "review.newComment", json!({"text": "two"}));
+            if redo.is_some() {
+                run(&mut s, "edit.undo", json!({}));
+            }
+            assert_eq!(s.undo_labels().len(), len);
+            assert_eq!(s.redo_label(), redo);
+            s
+        };
+        let mut failed = session();
+        let err = failed.run("file.inspect", &json!({"remove": ["comments", "revisions"]}));
+        assert!(matches!(err, Err(crate::CmdError::Disabled(_))), "{len}: {err:?}");
+        assert_eq!(failed.undo_labels().len(), len, "{len}: undo steps");
+        assert_eq!(failed.redo_label(), redo, "{len}: redo step");
+        assert!(timeline(&mut failed) == timeline(&mut session()), "{len}: undo history changed");
+    }
+}
+
+#[test]
 fn backspace_and_delete() {
     let mut s = s();
     run(&mut s, "text.insert", json!({"text": "abc"}));
@@ -174,6 +264,90 @@ fn find_replace() {
     assert_eq!(text(&s), "fox dog fox\nCat bird");
     let r = run(&mut s, "edit.find", json!({"text": "\\b\\w{3}\\b", "regex": true, "matchCase": false}));
     assert_eq!(r["count"], 4);
+}
+
+#[test]
+fn replace_under_track_changes_skips_deleted_text() {
+    // Replace marks the match deleted and leaves it in the text; the next
+    // step must not find it again, or Replace never advances.
+    let mut s = s();
+    run(&mut s, "document.setText", json!({"text": "one cat two cat"}));
+    run(&mut s, "review.trackChanges", json!({"value": true}));
+    run(&mut s, "caret.docStart", json!({}));
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "cat"}))["count"], 2);
+    let mut remaining = Vec::new();
+    for _ in 0..4 {
+        remaining.push(run(&mut s, "edit.replace", json!({"text": "cat", "with": "dog"}))["remaining"].clone());
+    }
+    assert_eq!(remaining, [json!(1), json!(0), json!(0), json!(0)]);
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "cat"}))["count"], 0);
+    run(&mut s, "review.acceptAll", json!({}));
+    assert_eq!(text(&s), "one dog two dog");
+
+    // A match that runs across tracked-deleted text is not in the document.
+    let mut s = self::s();
+    run(&mut s, "document.setText", json!({"text": "cat"}));
+    run(&mut s, "review.trackChanges", json!({"value": true}));
+    run(&mut s, "select.range", json!({"anchor": {"block": 0, "off": 1}, "focus": {"block": 0, "off": 2}}));
+    run(&mut s, "text.delete", json!({}));
+    assert_eq!(text(&s), "cat", "the deletion is tracked, not applied");
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "cat"}))["count"], 0);
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "t"}))["count"], 1);
+
+    // Without Track Changes, Replace steps through every match as before.
+    let mut s = self::s();
+    run(&mut s, "document.setText", json!({"text": "one cat two cat"}));
+    run(&mut s, "caret.docStart", json!({}));
+    run(&mut s, "edit.find", json!({"text": "cat"}));
+    run(&mut s, "edit.replace", json!({"text": "cat", "with": "dog"}));
+    let r = run(&mut s, "edit.replace", json!({"text": "cat", "with": "dog"}));
+    assert_eq!(r["remaining"], 0);
+    assert_eq!(text(&s), "one dog two dog");
+}
+
+#[test]
+fn find_reads_the_text_around_tracked_deletions() {
+    // `edits` are (start, end) byte ranges deleted with Track Changes on, last first.
+    fn tracked(text: &str, edits: &[(usize, usize)]) -> Session {
+        let mut s = self::s();
+        run(&mut s, "document.setText", json!({"text": text}));
+        run(&mut s, "review.trackChanges", json!({"value": true}));
+        for (a, b) in edits {
+            run(&mut s, "select.range", json!({"anchor": {"block": 0, "off": a}, "focus": {"block": 0, "off": b}}));
+            run(&mut s, "text.delete", json!({}));
+        }
+        assert_eq!(text, self::text(&s), "the deletions are tracked, not applied");
+        s
+    }
+    let offs = |r: &serde_json::Value| -> Vec<(u64, u64)> {
+        r["matches"].as_array().unwrap().iter().map(|m| (m["start"]["off"].as_u64().unwrap(), m["end"]["off"].as_u64().unwrap())).collect()
+    };
+
+    // "aaa" with the first "a" deleted reads "aa": the rejected raw match 0..2 must not hide
+    // the live one at 1..3.
+    let mut s = tracked("aaa", &[(0, 1)]);
+    assert_eq!(offs(&run(&mut s, "edit.find", json!({"text": "aa"}))), [(1, 3)]);
+    assert_eq!(offs(&run(&mut s, "edit.find", json!({"text": "^a", "regex": true}))), [(1, 2)]);
+    assert_eq!(run(&mut s, "edit.replaceAll", json!({"text": "aa", "with": "b"}))["replaced"], 1);
+
+    // Whole words follow the live text: deleting the space joins "cat" and "fish"...
+    let mut s = tracked("cat fish", &[(3, 4)]);
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "fish", "wholeWord": true}))["count"], 0);
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "catfish", "wholeWord": true}))["count"], 0, "a match may not span a deletion");
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "fish", "wholeWord": false}))["count"], 1);
+    // ...and deleting the "X" leaves "fish" a word of its own.
+    let mut s = tracked("cat Xfish", &[(4, 5)]);
+    assert_eq!(offs(&run(&mut s, "edit.find", json!({"text": "FISH", "wholeWord": true}))), [(5, 9)]);
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "FISH", "wholeWord": true, "matchCase": true}))["count"], 0);
+
+    // Replace and the Find Next/Previous steps agree with Find.
+    let mut s = tracked("aaa aaa", &[(4, 5), (0, 1)]);
+    run(&mut s, "caret.docStart", json!({}));
+    assert_eq!(run(&mut s, "edit.find", json!({"text": "aa"}))["count"], 2);
+    assert_eq!(run(&mut s, "edit.findNext", json!({}))["index"], 1);
+    assert_eq!(run(&mut s, "edit.findPrevious", json!({}))["index"], 0);
+    let r = run(&mut s, "edit.replace", json!({"text": "aa", "with": "b"}));
+    assert_eq!(r["remaining"], 1);
 }
 
 #[test]
