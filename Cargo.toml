@@ -27,6 +27,7 @@ vdoc-mcp = { path = "crates/mcp" }
 vdoc-zotero = { path = "crates/zotero" }
 vdoc-control-key = { path = "crates/control-key" }
 vdoc-ui-egui = { path = "crates/ui-egui" }
+vdoc-metafile = { path = "crates/metafile" }
 
 # foundation
 kurbo = { version = "0.13", features = ["serde"] }

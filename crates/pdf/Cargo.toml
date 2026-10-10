@@ -13,6 +13,7 @@ vdoc-doc = { workspace = true }
 vdoc-geom = { workspace = true }
 vdoc-fonts = { workspace = true }
 vdoc-layout = { workspace = true }
+vdoc-metafile = { workspace = true }
 krilla = { workspace = true }
 kurbo = { workspace = true }
 image = { workspace = true }
