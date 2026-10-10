@@ -550,7 +550,14 @@ impl Reader<'_> {
         for k in root.els() {
             match k.name.as_str() {
                 "w:compat" => {
-                    let mode = k.children("w:compatSetting").find(|c| c.attr("w:name") == Some("compatibilityMode")).and_then(|c| c.attr("w:val"));
+                    // Only Word's own setting: another `w:uri` names a different application's.
+                    let mode = k
+                        .children("w:compatSetting")
+                        .find(|c| {
+                            c.attr("w:name") == Some("compatibilityMode")
+                                && c.attr("w:uri").is_none_or(|u| u == "http://schemas.microsoft.com/office/word")
+                        })
+                        .and_then(|c| c.attr("w:val"));
                     if let Some(m) = mode.and_then(u32_of) {
                         s.compat_mode = m.clamp(11, 99);
                     }

@@ -741,6 +741,18 @@ fn shapes_textboxes_equations_dropcaps_round_trip() {
 }
 
 #[test]
+fn compatibility_mode_round_trips() {
+    // New documents are Word 2013+ documents; an older file keeps its mode, so saving it doesn't
+    // change how Word lays it out.
+    assert_eq!(rt(&Document::new()).settings.compat_mode, vdoc_doc::COMPAT_MODE_CURRENT);
+    for mode in [11, 12, 14, 15] {
+        let mut d = Document::new();
+        d.settings.compat_mode = mode;
+        assert_eq!(rt(&d).settings.compat_mode, mode);
+    }
+}
+
+#[test]
 fn settings_core_theme_round_trip() {
     let mut d = Document::new();
     d.settings.track_changes = true;
@@ -903,17 +915,6 @@ fn char_border_written_between_u_and_shd() {
     assert_eq!(xml.matches(bdr).count(), 1, "{xml}");
     let at = xml.find(bdr).unwrap();
     assert!(xml.find("<w:u ").unwrap() < at && at < xml.find("<w:shd ").unwrap(), "{xml}");
-}
-
-#[test]
-fn compatibility_mode_round_trips() {
-    let mut d = Document::new();
-    assert_eq!(d.settings.compat_mode, 15, "new documents are Word 2013+ documents");
-    let back = vdoc_docx::read(&vdoc_docx::write(&d).unwrap()).unwrap();
-    assert_eq!(back.settings.compat_mode, 15);
-    d.settings.compat_mode = 14;
-    let back = vdoc_docx::read(&vdoc_docx::write(&d).unwrap()).unwrap();
-    assert_eq!(back.settings.compat_mode, 14);
 }
 
 #[test]
