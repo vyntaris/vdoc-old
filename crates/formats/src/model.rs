@@ -5,7 +5,7 @@
 use std::sync::Arc;
 
 use vdoc_doc::numbering::{AbstractNum, Level, ListKind, Num, levels_for};
-use vdoc_doc::para::{InlineObject, OBJ};
+use vdoc_doc::para::{InlineObject, OBJ, PAGE_BREAK};
 use vdoc_doc::props::{
     Border, BorderStyle, Borders, CellProps, CharProps, NumRef, ParaProps, RowProps, TextColor, Underline, VMerge, VertAlign,
 };
@@ -590,9 +590,11 @@ fn media_ext(key: &str, data: &[u8]) -> String {
     }
 }
 
-/// A document paragraph as a flow paragraph.
-pub fn flow_para(doc: &Document, p: &Paragraph) -> Para {
+/// A document paragraph as flow paragraphs: a page break character inside the text ends the
+/// paragraph, and the text after it starts a new one that carries `page_break`.
+pub fn flow_paras(doc: &Document, p: &Paragraph) -> Vec<Para> {
     let (kind, list) = para_kind(doc, p);
+    let mut done: Vec<Para> = Vec::new();
     let mut out = Para { kind, list, align: p.props.align, page_break: p.props.page_break_before.unwrap_or(false), inlines: Vec::new() };
     let in_code = kind == Kind::Code;
     let mut k = 0usize;
@@ -602,6 +604,20 @@ pub fn flow_para(doc: &Document, p: &Paragraph) -> Para {
         let f = fmt_of(doc, props, in_code);
         let mut buf = String::new();
         for c in text.chars() {
+            if c == PAGE_BREAK {
+                if !hidden {
+                    out.push_text(&std::mem::take(&mut buf), &f);
+                    let next = Para { kind, list: None, align: p.props.align, page_break: true, inlines: Vec::new() };
+                    let prev = std::mem::replace(&mut out, next);
+                    if prev.inlines.is_empty() {
+                        out.page_break |= prev.page_break;
+                        out.list = prev.list;
+                    } else {
+                        done.push(prev);
+                    }
+                }
+                continue;
+            }
             if c != OBJ {
                 buf.push(c);
                 continue;
@@ -638,14 +654,15 @@ pub fn flow_para(doc: &Document, p: &Paragraph) -> Para {
             out.push_text(&buf, &f);
         }
     }
-    out
+    done.push(out);
+    done
 }
 
 fn flow_blocks(doc: &Document, bl: &Blocks, depth: usize) -> Vec<FBlock> {
     let mut out = Vec::new();
     for b in bl {
         match &**b {
-            Block::Para(p) => out.push(FBlock::Para(flow_para(doc, p))),
+            Block::Para(p) => out.extend(flow_paras(doc, p).into_iter().map(FBlock::Para)),
             Block::Table(t) if depth < MAX_DEPTH => out.push(FBlock::Table(flow_table(doc, t, depth))),
             Block::Table(t) => {
                 for r in &t.rows {
