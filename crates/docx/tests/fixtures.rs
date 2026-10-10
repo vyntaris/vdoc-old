@@ -474,6 +474,11 @@ fn anchor_alignment_reference_areas_and_distances() {
 }
 
 #[test]
+fn documents_without_a_compatibility_mode_are_laid_out_as_word_2007() {
+    assert_eq!(read_body("<w:p/>").settings.compat_mode, vdoc_doc::LEGACY_COMPAT_MODE);
+}
+
+#[test]
 fn style_rfonts_without_ascii_inherits_doc_defaults_font() {
     // Issue #93: Normal names only East Asian / complex-script fonts, so Latin text keeps the
     // docDefaults font. A run hinted as East Asian still uses its East Asian font.

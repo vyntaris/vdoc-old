@@ -890,6 +890,44 @@ fn ensure_empty_and_table_end_document_is_valid() {
 }
 
 #[test]
+fn compatibility_mode_round_trips() {
+    let mut d = Document::new();
+    assert_eq!(d.settings.compat_mode, 15, "new documents are Word 2013+ documents");
+    let back = vdoc_docx::read(&vdoc_docx::write(&d).unwrap()).unwrap();
+    assert_eq!(back.settings.compat_mode, 15);
+    d.settings.compat_mode = 14;
+    let back = vdoc_docx::read(&vdoc_docx::write(&d).unwrap()).unwrap();
+    assert_eq!(back.settings.compat_mode, 14);
+}
+
+#[test]
+fn floating_tables_round_trip() {
+    use vdoc_doc::para::{Anchor, FloatAlign};
+    use vdoc_doc::props::TableFloat;
+    let mut d = Document::new();
+    let mut t = Table::new(1, 2, 200.0);
+    let f = TableFloat {
+        h_rel: Anchor::Margin,
+        v_rel: Anchor::Paragraph,
+        x: 0.0,
+        y: -1.65,
+        h_align: None,
+        v_align: None,
+        dist: [9.0, 0.0, 12.0, 3.0],
+        overlap: false,
+    };
+    t.props.float = Some(f);
+    let mut page = Table::new(1, 1, 100.0);
+    let centred =
+        TableFloat { h_rel: Anchor::Page, v_rel: Anchor::Margin, h_align: Some(FloatAlign::Center), y: 36.0, overlap: true, ..Default::default() };
+    page.props.float = Some(centred);
+    d.body = vec![Arc::new(Block::Table(t)), Arc::new(Block::Table(page)), para_block(Paragraph::with_text("after", CharProps::default()))];
+    let back = vdoc_docx::read(&vdoc_docx::write(&d).unwrap()).unwrap();
+    let floats: Vec<_> = back.body.iter().filter_map(|b| if let Block::Table(t) = &**b { t.props.float } else { None }).collect();
+    assert_eq!(floats, [f, centred]);
+}
+
+#[test]
 fn list_level_overrides_round_trip() {
     use vdoc_doc::numbering::{Counters, Level};
     use vdoc_doc::section::NumFormat;

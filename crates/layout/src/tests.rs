@@ -711,6 +711,90 @@ fn list_items_beside_a_float_in_a_cell_are_counted_once() {
 }
 
 #[test]
+fn compatibility_mode_decides_where_a_table_s_edge_sits() {
+    use vdoc_doc::props::{Border, BorderStyle, Borders};
+    let cell_text_x = |mode: u32| {
+        let mut d = Document::from_text("");
+        d.settings.compat_mode = mode;
+        let line = Some(Border { style: BorderStyle::Single, width: 0.5, color: None, space: 0.0 });
+        let mut t = Table::new(1, 1, 200.0);
+        t.props.borders = Some(Borders { top: line, left: line, bottom: line, right: line, between: line, inside_v: line });
+        t.rows[0].cells[0].blocks = vec![vdoc_doc::para_block(vdoc_doc::Paragraph::with_text("cell", Default::default()))];
+        d.body = vec![std::sync::Arc::new(vdoc_doc::Block::Table(t))];
+        let l = lay(&d);
+        l.pages[0].items.iter().find_map(|i| if let Placed::Lines { x, .. } = i { Some(*x) } else { None }).unwrap()
+    };
+    // Word 2013+: the border at the margin (moved in by half its width), the text a cell margin
+    // inside it. Earlier modes: the text at the margin, the border a cell margin outside it.
+    assert!((cell_text_x(15) - (72.0 + 0.25 + 5.4)).abs() < 0.01, "{}", cell_text_x(15));
+    assert!((cell_text_x(12) - 72.0).abs() < 0.01, "{}", cell_text_x(12));
+}
+
+#[test]
+fn floating_tables_take_no_room_and_text_wraps_beside_them() {
+    use vdoc_doc::para::Anchor;
+    use vdoc_doc::props::TableFloat;
+    let mut d = Document::from_text("Body text beside the narrow table.");
+    let cell = |t: &mut Table, text: &str| {
+        t.rows[0].cells[0].blocks = vec![vdoc_doc::para_block(vdoc_doc::Paragraph::with_text(text, Default::default()))]
+    };
+    let mut wide = Table::new(1, 1, 468.0);
+    cell(&mut wide, "Wide");
+    wide.props.float = Some(TableFloat { h_rel: Anchor::Margin, v_rel: Anchor::Paragraph, overlap: false, ..Default::default() });
+    let mut narrow = Table::new(1, 1, 200.0);
+    cell(&mut narrow, "Narrow");
+    narrow.props.float =
+        Some(TableFloat { h_rel: Anchor::Column, v_rel: Anchor::Paragraph, dist: [9.0, 0.0, 9.0, 0.0], overlap: false, ..Default::default() });
+    d.insert_block(StoryRef::Body, &Path::top(0), vdoc_doc::Block::Table(wide)).unwrap();
+    d.insert_block(StoryRef::Body, &Path::top(1), vdoc_doc::Block::Table(narrow)).unwrap();
+    let l = lay(&d);
+    let lines: Vec<(f32, f32, f32)> = l.pages[0]
+        .items
+        .iter()
+        .filter_map(|i| if let Placed::Lines { x, y, para, .. } = i { Some((*x, *y, para.lines[0].left)) } else { None })
+        .collect();
+    let [(wx, wy, _), (nx, ny, _), (bx, by, bleft)] = lines.as_slice() else { panic!("{lines:?}") };
+    // The wide table stands where the text is; the narrow one may not overlap it, so it goes
+    // right below, keeping its 9pt from the text's left edge.
+    assert!(*wy >= 72.0 && *wy < 80.0, "wide at {wy}");
+    assert!(*ny > *wy + 10.0, "narrow at {ny}, below the wide table at {wy}");
+    assert!((nx - wx - 9.0).abs() < 0.01, "narrow text at {nx}, wide text at {wx}");
+    // The paragraph doesn't wait below them: it runs beside the narrow table, level with it.
+    assert!((by - ny).abs() < 2.0, "body at {by}, narrow table text at {ny}");
+    assert!(bx + bleft > nx + 200.0, "body text at {}, right of the narrow table", bx + bleft);
+}
+
+#[test]
+fn a_floating_table_taller_than_a_page_runs_across_pages() {
+    use vdoc_doc::para::Anchor;
+    use vdoc_doc::props::TableFloat;
+    let mut d = Document::from_text("After the table.");
+    let mut t = Table::new(80, 1, 300.0);
+    for (i, r) in t.rows.iter_mut().enumerate() {
+        r.cells[0].blocks = vec![vdoc_doc::para_block(vdoc_doc::Paragraph::with_text(&format!("Row {i}"), Default::default()))];
+    }
+    t.props.float = Some(TableFloat { h_rel: Anchor::Margin, v_rel: Anchor::Paragraph, x: -30.0, overlap: false, ..Default::default() });
+    d.insert_block(StoryRef::Body, &Path::top(0), vdoc_doc::Block::Table(t)).unwrap();
+    let l = lay(&d);
+    assert!(l.pages.len() >= 2, "{} page(s)", l.pages.len());
+    // Every row is drawn on a page, none past a page's bottom margin, and all from the table's
+    // own left edge.
+    let mut rows = 0;
+    for p in &l.pages {
+        for it in &p.items {
+            if let Placed::Lines { x, y, story: StoryRef::Body, path, .. } = it
+                && path.0.len() > 1
+            {
+                rows += 1;
+                assert!(*y < 792.0 - 72.0, "row drawn at {y}, below the bottom margin");
+                assert!(*x < 72.0, "row text at {x}, not from the table's edge 30pt left of the margin");
+            }
+        }
+    }
+    assert_eq!(rows, 80);
+}
+
+#[test]
 fn no_line_break_right_after_a_slash() {
     // Word keeps "and/or" and web addresses whole on a line when they fit.
     let text = "word and/or https://example.org/keepers/log/winter ".repeat(40);
