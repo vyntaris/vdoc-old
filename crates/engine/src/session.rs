@@ -164,6 +164,21 @@ pub struct Session {
     pub read_aloud: crate::speech::ReadAloud,
     /// Preferences the front end saves between runs.
     pub prefs: Prefs,
+    /// Editing inside an equation: which one and the caret in it.
+    pub math: Option<MathEdit>,
+    /// Equations are typed in LaTeX rather than the linear format.
+    pub math_latex: bool,
+    /// Text typed into equations is normal (non-math) text.
+    pub math_normal_text: bool,
+}
+
+/// The equation being edited.
+#[derive(Clone, Debug, PartialEq)]
+pub struct MathEdit {
+    /// The equation object (its U+FFFC).
+    pub at: Pos,
+    /// The caret inside it.
+    pub pos: vdoc_doc::math_edit::MathPos,
 }
 
 /// Editing preferences that persist between runs (the front end saves and restores them).
@@ -222,6 +237,9 @@ impl Session {
             bib_style: "APA".into(),
             merge: Default::default(),
             ui_requests: Vec::new(),
+            math: None,
+            math_latex: false,
+            math_normal_text: false,
             prefs: Prefs::default(),
             read_aloud: Default::default(),
         }
@@ -360,6 +378,21 @@ impl Session {
     pub fn clamp_selection(&mut self) {
         self.sel.anchor = self.doc.clamp(&self.sel.anchor);
         self.sel.focus = self.doc.clamp(&self.sel.focus);
+        // The equation being edited must still be there (undo, edits elsewhere).
+        if let Some(m) = &self.math {
+            let eq = self.doc.para_at(&m.at).and_then(|p| match p.object_at(m.at.off) {
+                Some(vdoc_doc::InlineObject::Equation { math, .. }) => Some(vdoc_doc::math_edit::clamp(&math.nodes, &m.pos)),
+                _ => None,
+            });
+            match eq {
+                Some(pos) => {
+                    if let Some(m) = self.math.as_mut() {
+                        m.pos = pos;
+                    }
+                }
+                None => self.math = None,
+            }
+        }
     }
 
     /// Run a command by id with JSON params (the single entry point for the UI, CLI, MCP and
@@ -394,15 +427,24 @@ impl Session {
         if spec.mutates && !matches!(id, "edit.undo" | "edit.redo" | "edit.repeat") {
             self.last_command = Some((id.to_string(), params.clone()));
         }
+        // Typing, caret movement and selection outside the equation commands leave the equation.
+        if self.math.is_some()
+            && (id.starts_with("text.") || id.starts_with("caret.") || id.starts_with("select.") || id.starts_with("edit.paste"))
+            && let Some(m) = self.math.take()
+        {
+            let off = m.at.off + vdoc_doc::para::OBJ.len_utf8();
+            self.sel = Selection::caret(Pos { off, ..m.at });
+        }
         // The undo stacks are snapshotted whole, not as a length: commands run nested commands,
         // whose checkpoints, undos and redos (and evictions at the limit) must be put back too.
         let before_doc =
             if spec.mutates { Some((self.doc.clone(), self.sel.clone(), self.history.clone(), self.redo.clone(), self.typing_open)) } else { None };
-        if spec.mutates && spec.id != "text.insert" {
+        let typing = spec.id == "text.insert" || spec.id == "equation.type";
+        if spec.mutates && !typing {
             self.typing_open = false;
         }
         if spec.mutates {
-            let label = if spec.id == "text.insert" { "Typing" } else { spec.label };
+            let label = if typing { "Typing" } else { spec.label };
             if !join || self.history.is_empty() {
                 self.checkpoint(label);
             }
