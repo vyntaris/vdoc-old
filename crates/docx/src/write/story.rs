@@ -1019,7 +1019,7 @@ fn xfrm(w: &mut W, (x, y): (f32, f32), cw: f32, ch: f32, spin: vdoc_geom::Spin) 
 
 /// The `a:xfrm` attributes of a rotation and flips (ECMA-376 §20.1.7.6: `rot` in 60000ths of a
 /// degree, clockwise), none for an unturned object.
-fn spin_attrs(spin: vdoc_geom::Spin) -> Vec<(&'static str, String)> {
+pub(super) fn spin_attrs(spin: vdoc_geom::Spin) -> Vec<(&'static str, String)> {
     let mut a = Vec::new();
     let rot = (vdoc_geom::normalize_degrees(spin.deg) as f64 * 60_000.0).round() as i64 % 21_600_000;
     if rot != 0 {
