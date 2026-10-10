@@ -808,6 +808,29 @@
 	Zotero: cancelled	Zotero: cancelado
 	Yes	Sí
 	No	No
+# Read Aloud player
+	Move Past Citation	Mover después de la cita
+	Move Past\nCitation	Mover después\nde la cita
+	Next Sentence	Frase siguiente
+	Previous Sentence	Frase anterior
+	Next sentence	Frase siguiente
+	Previous sentence	Frase anterior
+	Play/Pause	Reproducir/pausar
+	Read Aloud Status	Estado de la lectura en voz alta
+	Reading Speed	Velocidad de lectura
+	Skip Citations and Bibliography	Omitir citas y bibliografía
+	Skip citations & bibliography	Omitir citas y bibliografía
+	Stop Reading	Detener la lectura
+	Don't read Zotero, Mendeley or EndNote citations and bibliographies	No leer las citas ni las bibliografías de Zotero, Mendeley o EndNote
+	Play	Reproducir
+	Pause	Pausar
+	Stop	Detener
+	Sentence	Frase
+	Paused	En pausa
+	Finished	Terminado
+	Stopped	Detenido
+	Speed	Velocidad
+	Normal speed	Velocidad normal
 	AutoSave documents you have saved in VDoc	Autoguardar los documentos que haya guardado en VDoc
 	AutoSave failed: {error}. Save the document to turn AutoSave back on.	Error de autoguardado: {error}. Guarde el documento para volver a activar el autoguardado.
 	Couldn't download {name}: {error}	No se pudo descargar {name}: {error}

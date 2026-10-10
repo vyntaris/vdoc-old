@@ -160,6 +160,8 @@ pub struct Session {
     pub merge: crate::cmd::mailings::MergeState,
     /// Requests from commands to the UI (open a dialog, scroll…), drained by the front end.
     pub ui_requests: Vec<Value>,
+    /// Read Aloud player (Review › Speech).
+    pub read_aloud: crate::speech::ReadAloud,
 }
 
 /// Maximum undo depth.
@@ -204,6 +206,7 @@ impl Session {
             bib_style: "APA".into(),
             merge: Default::default(),
             ui_requests: Vec::new(),
+            read_aloud: Default::default(),
         }
     }
 
