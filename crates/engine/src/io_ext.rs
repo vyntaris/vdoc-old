@@ -6,6 +6,7 @@ use vdoc_doc::Document;
 pub fn open(ext: &str, bytes: &[u8]) -> Option<Result<Document, String>> {
     match ext {
         "docx" | "docm" | "dotx" | "dotm" => Some(vdoc_docx::read(bytes).map_err(|e| e.to_string())),
+        "doc" | "dot" => Some(vdoc_docbin::read(bytes).map_err(|e| e.to_string())),
         other => vdoc_formats::import(other, bytes),
     }
 }

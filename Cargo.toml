@@ -17,6 +17,7 @@ vdoc-doc = { path = "crates/doc" }
 vdoc-fonts = { path = "crates/fonts" }
 vdoc-layout = { path = "crates/layout" }
 vdoc-docx = { path = "crates/docx" }
+vdoc-docbin = { path = "crates/docbin" }
 vdoc-formats = { path = "crates/formats" }
 vdoc-render = { path = "crates/render" }
 vdoc-pdf = { path = "crates/pdf" }
@@ -49,6 +50,7 @@ image = { version = "0.25", default-features = false, features = ["png", "jpeg",
 krilla = { version = "0.8", features = ["pdf"] }
 quick-xml = "0.38"
 zip = { version = "3", default-features = false, features = ["deflate"] }
+cfb = "0.15"
 
 # ui
 egui = "0.36"

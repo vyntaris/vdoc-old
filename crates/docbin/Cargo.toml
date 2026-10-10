@@ -1,0 +1,20 @@
+[package]
+name = "vdoc-docbin"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "VDoc reader for the Word 97-2003 binary file format (.doc, [MS-DOC])"
+
+[lints]
+workspace = true
+
+[dependencies]
+vdoc-doc = { workspace = true }
+vdoc-geom = { workspace = true }
+cfb = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
+serde_json = { workspace = true }
