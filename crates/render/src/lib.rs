@@ -932,7 +932,15 @@ mod tests {
             .unwrap();
         let media = d.add_media(png, "png");
         let mut hp = vdoc_doc::Paragraph::new();
-        let obj = vdoc_doc::para::InlineObject::Image { media, w: 40.0, h: 40.0, alt: String::new(), float: Default::default(), crop: [0.0; 4] };
+        let obj = vdoc_doc::para::InlineObject::Image {
+            media,
+            w: 40.0,
+            h: 40.0,
+            alt: String::new(),
+            float: Default::default(),
+            crop: [0.0; 4],
+            ole: None,
+        };
         hp.insert_object(0, obj, &Default::default()).unwrap();
         let id = d.add_part(vdoc_doc::PartKind::Header, vec![vdoc_doc::para_block(hp)]);
         d.last_section.headers.default = Some(id);
@@ -995,7 +1003,15 @@ mod tests {
         let mut d = Document::new();
         let media = d.add_media(red_right_half_emf(), "emf");
         let mut p = vdoc_doc::Paragraph::new();
-        let obj = vdoc_doc::para::InlineObject::Image { media, w: 70.0, h: 70.0, alt: String::new(), float: Default::default(), crop: [0.0; 4] };
+        let obj = vdoc_doc::para::InlineObject::Image {
+            media,
+            w: 70.0,
+            h: 70.0,
+            alt: String::new(),
+            float: Default::default(),
+            crop: [0.0; 4],
+            ole: None,
+        };
         p.insert_object(0, obj, &Default::default()).unwrap();
         d.body = vec![vdoc_doc::para_block(p)];
         let l = layout(&d, &mut LayoutCache::new(), &LayoutOptions::default());
@@ -1023,7 +1039,15 @@ mod tests {
         let mut d = Document::new();
         let media = d.add_media(emf, "emf");
         let mut p = vdoc_doc::Paragraph::new();
-        let obj = vdoc_doc::para::InlineObject::Image { media, w: 70.0, h: 70.0, alt: String::new(), float: Default::default(), crop: [0.0; 4] };
+        let obj = vdoc_doc::para::InlineObject::Image {
+            media,
+            w: 70.0,
+            h: 70.0,
+            alt: String::new(),
+            float: Default::default(),
+            crop: [0.0; 4],
+            ole: None,
+        };
         p.insert_object(0, obj, &Default::default()).unwrap();
         d.body = vec![vdoc_doc::para_block(p)];
         let l = layout(&d, &mut LayoutCache::new(), &LayoutOptions::default());
@@ -1049,7 +1073,15 @@ mod tests {
         // The header alone has no records, so the metafile does not parse.
         let media = d.add_media(red_right_half_emf()[..88].to_vec(), "emf");
         let mut p = vdoc_doc::Paragraph::new();
-        let obj = vdoc_doc::para::InlineObject::Image { media, w: 70.0, h: 70.0, alt: String::new(), float: Default::default(), crop: [0.0; 4] };
+        let obj = vdoc_doc::para::InlineObject::Image {
+            media,
+            w: 70.0,
+            h: 70.0,
+            alt: String::new(),
+            float: Default::default(),
+            crop: [0.0; 4],
+            ole: None,
+        };
         p.insert_object(0, obj, &Default::default()).unwrap();
         d.body = vec![vdoc_doc::para_block(p)];
         let l = layout(&d, &mut LayoutCache::new(), &LayoutOptions::default());
