@@ -922,6 +922,42 @@
 	Opening print dialog…	Abriendo el cuadro de diálogo de impresión…
 	Print failed: {error}	Error al imprimir: {error}
 	Couldn't open {path}: {error}	No se pudo abrir {path}: {error}
+	Column Selection	Selección de columna
+	New Table Style	Nuevo estilo de tabla
+	Modify Table Style	Modificar estilo de tabla
+	New Table Style…	Nuevo estilo de tabla…
+	Modify Table Style…	Modificar estilo de tabla…
+	Apply formatting to:	Aplicar formato a:
+	Whole Table	Toda la tabla
+	Fill color:	Color de relleno:
+	{count} items highlighted	{count} elementos resaltados
+	{n} pt	{n} pt
+	Not {name}	Sin {name}
+	Level {n}	Nivel {n}
+	Body Text	Texto independiente
+	{n} lines	{n} líneas
+	At least {n}	Mínimo {n}
+	Exactly {n}	Exacto {n}
+	Centered	Centrado
+	Character spacing	Espaciado de caracteres
+	Don't add space between paragraphs of the same style	No agregar espacio entre párrafos del mismo estilo
+	Don't hyphenate	No separar con guiones
+	Double strikethrough	Doble tachado
+	Drop cap	Letra capital
+	First line	Primera línea
+	Font color	Color de fuente
+	Highlight	Resaltado
+	Justified	Justificado
+	Left indent	Sangría izquierda
+	Line spacing	Interlineado
+	Outline level	Nivel de esquema
+	Raised/lowered	Elevado/bajado
+	Right indent	Sangría derecha
+	Scale	Escala
+	Space after	Espacio posterior
+	Space before	Espacio anterior
+	Suppress line numbers	Suprimir números de línea
+	Underline color	Color de subrayado
 	Letters	Cartas
 	E-mail Messages	Mensajes de correo electrónico
 	Directory	Directorio
@@ -975,39 +1011,3 @@
 	Dark	Oscuro
 	Use system setting	Usar la configuración del sistema
 	A file dialog is already open.	Ya hay un cuadro de diálogo de archivo abierto.
-	Column Selection	Selección de columna
-	New Table Style	Nuevo estilo de tabla
-	Modify Table Style	Modificar estilo de tabla
-	New Table Style…	Nuevo estilo de tabla…
-	Modify Table Style…	Modificar estilo de tabla…
-	Apply formatting to:	Aplicar formato a:
-	Whole Table	Toda la tabla
-	Fill color:	Color de relleno:
-	{count} items highlighted	{count} elementos resaltados
-	{n} pt	{n} pt
-	Not {name}	Sin {name}
-	Level {n}	Nivel {n}
-	Body Text	Texto independiente
-	{n} lines	{n} líneas
-	At least {n}	Mínimo {n}
-	Exactly {n}	Exacto {n}
-	Centered	Centrado
-	Character spacing	Espaciado de caracteres
-	Don't add space between paragraphs of the same style	No agregar espacio entre párrafos del mismo estilo
-	Don't hyphenate	No separar con guiones
-	Double strikethrough	Doble tachado
-	Drop cap	Letra capital
-	First line	Primera línea
-	Font color	Color de fuente
-	Highlight	Resaltado
-	Justified	Justificado
-	Left indent	Sangría izquierda
-	Line spacing	Interlineado
-	Outline level	Nivel de esquema
-	Raised/lowered	Elevado/bajado
-	Right indent	Sangría derecha
-	Scale	Escala
-	Space after	Espacio posterior
-	Space before	Espacio anterior
-	Suppress line numbers	Suprimir números de línea
-	Underline color	Color de subrayado
