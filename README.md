@@ -257,6 +257,9 @@ instead, without setting anything. The log file records the choice (lines starti
 | Fedora/RHEL/openSUSE | `vdoc-<ver>-linux-x86_64.rpm` | `vdoc-<ver>-linux-aarch64.rpm` | |
 | Tarball | `vdoc-<ver>-linux-x86_64.tar.gz` | `vdoc-<ver>-linux-aarch64.tar.gz` | Unpack anywhere |
 
+RISC-V (riscv64): `vdoc-<ver>-linux-riscv64.tar.gz`, a tarball cross-compiled for glibc 2.39+
+(Ubuntu 24.04, Debian 13 and newer).
+
 ### FreeBSD
 
 | Build | File |
