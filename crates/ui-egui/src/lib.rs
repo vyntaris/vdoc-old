@@ -192,7 +192,7 @@ impl WordApp {
         }
         // Web: saving and exporting become downloads.
         if self.services.download.is_some() && matches!(id, "file.save" | "file.saveAs" | "file.exportPdf" | "file.exportPng") {
-            let name = params.get("path").and_then(Value::as_str).map(str::to_string).unwrap_or_else(|| format!("{}.docx", self.title_stem()));
+            let name = params.get("path").and_then(Value::as_str).map(str::to_string).unwrap_or_else(|| self.default_save_name());
             let name = if id == "file.exportPdf" && !name.ends_with(".pdf") { format!("{name}.pdf") } else { name };
             let bytes = vdoc_engine::io::save_bytes(&name, &self.session.doc)?;
             if let Some(d) = &self.services.download {
@@ -341,7 +341,7 @@ impl WordApp {
     }
 
     pub fn save_as_dialog(&mut self) {
-        let name = self.title_stem() + ".docx";
+        let name = self.default_save_name();
         let picked = self.services.pick_save.as_ref().and_then(|f| f(&name));
         if let Some(path) = picked {
             let _ = self.run("file.save", json!({"path": path}));
@@ -387,6 +387,16 @@ impl WordApp {
             let _ = self.insert_or_change_picture(json!({"path": path}));
         } else {
             self.change_picture_target = None;
+        }
+    }
+
+    /// The name Save suggests: the open file's own Word format (so a .docm keeps its macros),
+    /// otherwise .docx.
+    fn default_save_name(&self) -> String {
+        let ext = self.session.path.as_ref().and_then(|p| p.extension()).map(|e| e.to_string_lossy().to_string());
+        match ext {
+            Some(e) if vdoc_engine::io::is_word_package(&e) => format!("{}.{e}", self.title_stem()),
+            _ => format!("{}.docx", self.title_stem()),
         }
     }
 
@@ -715,6 +725,41 @@ mod tests {
         // A later rename is what gets saved next, not the name loaded at startup.
         second.run("file.setAuthor", json!({"name": "Grace Hopper"})).unwrap();
         assert_eq!(second.prefs().author, "Grace Hopper");
+    }
+
+    /// Web Save of an opened .docm downloads a .docm, so its macros stay (Codex review, docm lane).
+    #[test]
+    fn web_save_keeps_the_opened_word_format() {
+        let mut doc = vdoc_doc::Document::new();
+        doc.passthrough.insert("word/vbaProject.bin".into(), std::sync::Arc::new(vec![0xD0, 0xCF, 0x11, 0xE0, 1, 2, 3]));
+        doc.passthrough.insert("word/vbaData.xml".into(), std::sync::Arc::new(b"<wne:vbaSuppData/>".to_vec()));
+        // The docx reader's list of parts the project relates to (vdoc_docx VBA_RELATED).
+        let related = "http://schemas.microsoft.com/office/2006/relationships/wordVbaData\tword/vbaData.xml\tapplication/vnd.ms-word.vbaData+xml\n";
+        doc.passthrough.insert("vdoc:vbaProject.related".into(), std::sync::Arc::new(related.as_bytes().to_vec()));
+        let got: std::rc::Rc<std::cell::RefCell<Vec<(String, Vec<u8>)>>> = Default::default();
+        let sink = got.clone();
+        let services =
+            Services { download: Some(Box::new(move |n: &str, b: &[u8]| sink.borrow_mut().push((n.to_string(), b.to_vec())))), ..Default::default() };
+        let mut a = WordApp::new(Session::new(doc), services);
+        for (opened, expect) in
+            [("m.docm", "m.docm"), ("t.DOTM", "t.DOTM"), ("t.dotx", "t.dotx"), ("notes.odt", "notes.docx"), ("readme.txt", "readme.docx")]
+        {
+            a.session.path = Some(opened.into());
+            a.run("file.save", json!({})).unwrap();
+            let (name, bytes) = got.borrow_mut().pop().unwrap();
+            assert_eq!(name, expect);
+            let back = vdoc_engine::io::open_bytes(&name, &bytes).unwrap();
+            let macros = name.to_ascii_lowercase().ends_with('m');
+            for part in ["word/vbaProject.bin", "word/vbaData.xml"] {
+                assert_eq!(back.passthrough.contains_key(part), macros, "{opened}: {part}");
+            }
+        }
+        // Save As with an explicit name is a conversion: a .docx can't hold macros.
+        a.session.path = Some("m.docm".into());
+        a.run("file.saveAs", json!({"path": "m.docx"})).unwrap();
+        let (name, bytes) = got.borrow_mut().pop().unwrap();
+        assert_eq!(name, "m.docx");
+        assert!(!vdoc_engine::io::open_bytes(&name, &bytes).unwrap().passthrough.contains_key("word/vbaProject.bin"));
     }
 
     #[test]

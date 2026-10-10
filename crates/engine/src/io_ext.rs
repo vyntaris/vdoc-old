@@ -12,9 +12,12 @@ pub fn open(ext: &str, bytes: &[u8]) -> Option<Result<Document, String>> {
 
 /// Save to a format other than plain text / JSON.
 pub fn save(ext: &str, doc: &Document) -> Option<Result<Vec<u8>, String>> {
+    // .docx/.docm/.dotx/.dotm: the extension picks the package flavour Word expects.
+    if let Some(flavor) = vdoc_docx::Flavor::from_ext(ext) {
+        return Some(vdoc_docx::write_as(doc, flavor).map_err(|e| e.to_string()));
+    }
     match ext {
         "png" => Some(render_png(doc, 0, 2.0)),
-        "docx" | "docm" | "dotx" => Some(vdoc_docx::write(doc).map_err(|e| e.to_string())),
         "pdf" => Some(vdoc_pdf::export(doc, &Default::default()).map_err(|e| e.to_string())),
         other => vdoc_formats::export(other, doc),
     }
