@@ -4845,10 +4845,12 @@ version = "0.4.0"
 dependencies = [
  "eframe",
  "egui",
+ "getrandom 0.3.4",
  "log",
  "rfd",
  "serde_json",
  "winresource",
+ "vdoc-control-key",
  "vdoc-doc",
  "vdoc-engine",
  "vdoc-ui-egui",
@@ -4864,6 +4866,10 @@ dependencies = [
  "vdoc-mcp",
  "vdoc-render",
 ]
+
+[[package]]
+name = "vdoc-control-key"
+version = "0.4.0"
 
 [[package]]
 name = "vdoc-doc"
@@ -4966,6 +4972,7 @@ version = "0.4.0"
 dependencies = [
  "log",
  "serde_json",
+ "vdoc-control-key",
  "vdoc-doc",
  "vdoc-engine",
  "vdoc-render",

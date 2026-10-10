@@ -23,6 +23,7 @@ vdoc-pdf = { path = "crates/pdf" }
 vdoc-proof = { path = "crates/proof" }
 vdoc-engine = { path = "crates/engine" }
 vdoc-mcp = { path = "crates/mcp" }
+vdoc-control-key = { path = "crates/control-key" }
 vdoc-ui-egui = { path = "crates/ui-egui" }
 
 # foundation

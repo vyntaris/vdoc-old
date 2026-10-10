@@ -192,7 +192,13 @@ fn run(args: &[String]) -> Result<(), String> {
         "mcp" => {
             validate_options("mcp", &rest, MCP_OPTIONS)?;
             let backend: Box<dyn vdoc_mcp::Backend> = match arg_value(&rest, "--connect") {
-                Some(addr) => Box::new(vdoc_mcp::Remote::connect(&addr).map_err(|e| format!("can't reach the VDoc app at {addr}: {e}"))?),
+                Some(addr) => {
+                    let remote = vdoc_mcp::Remote::connect(&addr).map_err(|e| format!("can't reach the VDoc app at {addr}: {e}"))?;
+                    if let Some(w) = remote.key_warning() {
+                        eprintln!("vdoc-cli: {w}");
+                    }
+                    Box::new(remote)
+                }
                 None => Box::new(vdoc_mcp::Headless::default()),
             };
             let mut server = vdoc_mcp::Server::new(backend);

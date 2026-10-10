@@ -12,5 +12,6 @@ workspace = true
 vdoc-doc = { workspace = true }
 vdoc-engine = { workspace = true }
 vdoc-render = { workspace = true }
+vdoc-control-key = { workspace = true }
 serde_json = { workspace = true }
 log = { workspace = true }
