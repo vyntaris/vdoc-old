@@ -105,6 +105,10 @@ pub struct UiState {
     /// Keytips (Alt) state; not persisted, it resets each session.
     #[serde(skip)]
     pub keytips: crate::keytips::Phase,
+    /// Since the last Alt press, another key or a mouse button was pressed: the Alt release
+    /// that follows ends a chord (Alt+click, Alt+drag column selection), not a keytip tap.
+    #[serde(skip)]
+    pub alt_chord_used: bool,
     /// View › Switch Modes: show pages dark (white text on black), kept between runs.
     pub dark_page: bool,
 }
@@ -128,6 +132,7 @@ impl Default for UiState {
             read_aloud_rate: 1.0,
             read_aloud_skip_citations: true,
             keytips: crate::keytips::Phase::Off,
+            alt_chord_used: false,
             dark_page: false,
         }
     }
