@@ -29,3 +29,6 @@ sync_github_name = false
 
 [people.saeedemperor]
 real_name = "Saeed Azarehgar"
+
+[people.vangel76]
+sync_github_name = true
