@@ -13,6 +13,7 @@ vdoc-geom = { workspace = true }
 vdoc-doc = { workspace = true }
 vdoc-fonts = { workspace = true }
 vdoc-proof = { workspace = true }
+kurbo = { workspace = true }
 unicode-bidi = { workspace = true }
 unicode-linebreak = { workspace = true }
 unicode-segmentation = { workspace = true }
