@@ -5238,6 +5238,7 @@ dependencies = [
  "vdoc-layout",
  "vdoc-render",
  "vdoc-zotero",
+ "zip",
 ]
 
 [[package]]
