@@ -167,7 +167,7 @@ pub fn measure_table_columns(doc: &vdoc_doc::Document, t: &Table) -> Vec<(f32, f
                 field_codes: false,
                 hide_deleted: false,
                 table: text.as_ref(),
-                proofing: false,
+                proofing: None,
                 exclusions: &[],
                 eq_number: 0,
                 grid: crate::para::Grid::default(),

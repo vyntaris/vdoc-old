@@ -27,6 +27,7 @@ pub use ribbon::RibbonLayout;
 pub use session::{ColumnBlock, EditSnapshot, FindState, MathEdit, Prefs, Selection, Session, ViewState};
 pub use vdoc_doc as doc;
 pub use vdoc_layout as layout;
+pub use vdoc_proof as proof;
 pub use vdoc_render as render;
 
 #[derive(Debug, thiserror::Error, Clone, PartialEq)]
