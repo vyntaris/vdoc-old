@@ -2420,3 +2420,10 @@
 	✓ None	✓ Nessuno
 preview	Title	Esempio
 	Do Not Check Spelling or Grammar	Non controllare ortografia e grammatica
+	Couldn't make VDoc the default: {error}	Impossibile rendere VDoc l'app predefinita: {error}
+	In Default apps, choose VDoc for the document types you want it to open.	In App predefinite, scegli VDoc per i tipi di documento che deve aprire.
+	Make VDoc the default for Word documents…	Rendi VDoc l'app predefinita per i documenti Word…
+	Opens .docx, .doc, .rtf and .odt files and Word templates with VDoc from now on.	D'ora in poi i file .docx, .doc, .rtf e .odt e i modelli di Word si aprono con VDoc.
+	Opens Settings › Default apps, where you choose VDoc for .docx and the other document types.	Apre Impostazioni › App predefinite, dove scegli VDoc per .docx e gli altri tipi di documento.
+	To open Word documents with VDoc by default: select one in Finder, choose File › Get Info, pick VDoc under Open with, then click Change All.	Per aprire i documenti Word con VDoc per impostazione predefinita: selezionane uno nel Finder, scegli Archivio › Ottieni informazioni, scegli VDoc in «Apri con», quindi fai clic su «Modifica tutto».
+	VDoc is now the default app for Word documents.	VDoc è ora l'app predefinita per i documenti Word.

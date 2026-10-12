@@ -1623,6 +1623,13 @@
 	Search icons	Simgelerde ara
 	No icons match your search.	Aramanızla eşleşen simge yok.
 	Recolor a one-color picture, such as an icon	Simge gibi tek renkli bir resmi yeniden renklendir
+	Couldn't make VDoc the default: {error}	VDoc varsayılan yapılamadı: {error}
+	In Default apps, choose VDoc for the document types you want it to open.	Varsayılan uygulamalar bölümünde, VDoc'ın açmasını istediğiniz belge türlerini seçin.
+	Make VDoc the default for Word documents…	VDoc'ı Word belgeleri için varsayılan yap…
+	Opens .docx, .doc, .rtf and .odt files and Word templates with VDoc from now on.	Bundan sonra .docx, .doc, .rtf ve .odt dosyalarını ve Word şablonlarını VDoc ile açar.
+	Opens Settings › Default apps, where you choose VDoc for .docx and the other document types.	Ayarlar › Varsayılan uygulamalar bölümünü açar; burada .docx ve diğer belge türleri için VDoc'ı seçersiniz.
+	To open Word documents with VDoc by default: select one in Finder, choose File › Get Info, pick VDoc under Open with, then click Change All.	Word belgelerini varsayılan olarak VDoc ile açmak için: Finder'da bir belge seçin, Dosya › Bilgi Al'ı seçin, Birlikte aç altında VDoc'ı seçin ve Tümünü Değiştir'e tıklayın.
+	VDoc is now the default app for Word documents.	VDoc artık Word belgeleri için varsayılan uygulama.
 	Templates	Şablonlar
 	Templates and Add-ins	Şablonlar ve Eklentiler
 	Attach Template	Şablonu Ekle

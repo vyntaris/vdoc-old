@@ -1998,6 +1998,13 @@ preview	Title	Пример
 	Search icons	Поиск значков
 	No icons match your search.	Нет значков, соответствующих поиску.
 	Recolor a one-color picture, such as an icon	Перекрасить одноцветный рисунок, например значок
+	Couldn't make VDoc the default: {error}	Не удалось сделать VDoc приложением по умолчанию: {error}
+	In Default apps, choose VDoc for the document types you want it to open.	В разделе «Приложения по умолчанию» выберите VDoc для нужных типов документов.
+	Make VDoc the default for Word documents…	Сделать VDoc приложением по умолчанию для документов Word…
+	Opens .docx, .doc, .rtf and .odt files and Word templates with VDoc from now on.	Отныне файлы .docx, .doc, .rtf и .odt и шаблоны Word будут открываться в VDoc.
+	Opens Settings › Default apps, where you choose VDoc for .docx and the other document types.	Открывает «Параметры» › «Приложения по умолчанию», где можно выбрать VDoc для .docx и других типов документов.
+	To open Word documents with VDoc by default: select one in Finder, choose File › Get Info, pick VDoc under Open with, then click Change All.	Чтобы открывать документы Word в VDoc по умолчанию: выберите документ в Finder, выберите «Файл» › «Свойства», укажите VDoc в разделе «Открывать в программе» и нажмите «Изменить все».
+	VDoc is now the default app for Word documents.	VDoc теперь приложение по умолчанию для документов Word.
 	Templates	Шаблоны
 	Templates and Add-ins	Шаблоны и надстройки
 	Attach Template	Присоединить шаблон

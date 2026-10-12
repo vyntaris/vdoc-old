@@ -76,6 +76,80 @@
         <RegistryValue Root="HKLM" Key="Software\Microsoft\Windows\CurrentVersion\App Paths\vdoc.exe" Value="[#VdocExe]" Type="string" />
       </Component>
 
+      <!-- File associations (#295). Each document type gets a VDoc ProgId (name, icon, open
+           command) and is listed under the extension's OpenWithProgids, so VDoc shows in
+           Explorer's "Open with". The Word, RTF and ODT types are also VDoc's Capabilities
+           (RegisteredApplications), so it appears in Settings › Default apps, where the user
+           makes it the default (File › Options › General opens that page). Nothing here sets an
+           extension's default: the installer never takes over .docx from another app. Markdown and
+           plain text are only "Open with" candidates. Removed again on uninstall. -->
+      <Component Id="VdocFileTypes" Guid="EFF89E6A-F9B8-49F9-B3AE-E243347484B4">
+        <RegistryValue Root="HKLM" Key="Software\RegisteredApplications" Name="VDoc" Value="Software\VDoc\Capabilities" Type="string" KeyPath="yes" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities" Name="ApplicationName" Value="VDoc" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities" Name="ApplicationDescription" Value="Write and design documents; open and save Word files." Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities" Name="ApplicationIcon" Value="&quot;[#VdocExe]&quot;,0" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe" Name="FriendlyAppName" Value="VDoc" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+
+        <ProgId Id="VDoc.Document" Description="Word Document" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.Document\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.docx\OpenWithProgids" Name="VDoc.Document" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".docx" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".docx" Value="VDoc.Document" Type="string" />
+
+        <ProgId Id="VDoc.DocumentMacroEnabled" Description="Word Macro-Enabled Document" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.DocumentMacroEnabled\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.docm\OpenWithProgids" Name="VDoc.DocumentMacroEnabled" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".docm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".docm" Value="VDoc.DocumentMacroEnabled" Type="string" />
+
+        <ProgId Id="VDoc.Template" Description="Word Template" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.Template\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.dotx\OpenWithProgids" Name="VDoc.Template" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".dotx" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".dotx" Value="VDoc.Template" Type="string" />
+
+        <ProgId Id="VDoc.TemplateMacroEnabled" Description="Word Macro-Enabled Template" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.TemplateMacroEnabled\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.dotm\OpenWithProgids" Name="VDoc.TemplateMacroEnabled" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".dotm" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".dotm" Value="VDoc.TemplateMacroEnabled" Type="string" />
+
+        <ProgId Id="VDoc.LegacyDocument" Description="Legacy Word Document" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.LegacyDocument\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.doc\OpenWithProgids" Name="VDoc.LegacyDocument" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".doc" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".doc" Value="VDoc.LegacyDocument" Type="string" />
+
+        <ProgId Id="VDoc.LegacyTemplate" Description="Legacy Word Template" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.LegacyTemplate\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.dot\OpenWithProgids" Name="VDoc.LegacyTemplate" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".dot" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".dot" Value="VDoc.LegacyTemplate" Type="string" />
+
+        <ProgId Id="VDoc.RichText" Description="Rich Text Document" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.RichText\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.rtf\OpenWithProgids" Name="VDoc.RichText" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".rtf" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".rtf" Value="VDoc.RichText" Type="string" />
+
+        <ProgId Id="VDoc.OpenDocumentText" Description="OpenDocument Text" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.OpenDocumentText\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.odt\OpenWithProgids" Name="VDoc.OpenDocumentText" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".odt" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\VDoc\Capabilities\FileAssociations" Name=".odt" Value="VDoc.OpenDocumentText" Type="string" />
+
+        <ProgId Id="VDoc.Markdown" Description="Markdown Document" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.Markdown\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.md\OpenWithProgids" Name="VDoc.Markdown" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".md" Value="" Type="string" />
+
+        <ProgId Id="VDoc.PlainText" Description="Text Document" Icon="VdocExe" IconIndex="0" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\VDoc.PlainText\shell\open\command" Value="&quot;[#VdocExe]&quot; &quot;%1&quot;" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\.txt\OpenWithProgids" Name="VDoc.PlainText" Value="" Type="string" />
+        <RegistryValue Root="HKLM" Key="Software\Classes\Applications\vdoc.exe\SupportedTypes" Name=".txt" Value="" Type="string" />
+      </Component>
+
       <Component Id="VdocCli">
         <File Id="VdocCliExe" Source="$(var.BinDir)\vdoc-cli.exe" KeyPath="yes" />
       </Component>

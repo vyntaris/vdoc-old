@@ -2035,3 +2035,10 @@
 	Your system has animation effects turned off.	Auf Ihrem System sind Animationseffekte deaktiviert.
 	Your system doesn't report an animation setting, so animation effects stay on.	Ihr System meldet keine Animationseinstellung, daher bleiben Animationseffekte aktiviert.
 	Do Not Check Spelling or Grammar	Rechtschreibung und Grammatik nicht prüfen
+	Couldn't make VDoc the default: {error}	VDoc konnte nicht als Standard festgelegt werden: {error}
+	In Default apps, choose VDoc for the document types you want it to open.	Wählen Sie unter „Standard-Apps“ VDoc für die Dokumenttypen, die es öffnen soll.
+	Make VDoc the default for Word documents…	VDoc als Standard für Word-Dokumente festlegen…
+	Opens .docx, .doc, .rtf and .odt files and Word templates with VDoc from now on.	Öffnet .docx-, .doc-, .rtf- und .odt-Dateien sowie Word-Vorlagen ab jetzt mit VDoc.
+	Opens Settings › Default apps, where you choose VDoc for .docx and the other document types.	Öffnet Einstellungen › Standard-Apps, wo Sie VDoc für .docx und die anderen Dokumenttypen wählen.
+	To open Word documents with VDoc by default: select one in Finder, choose File › Get Info, pick VDoc under Open with, then click Change All.	Um Word-Dokumente standardmäßig mit VDoc zu öffnen: Wählen Sie eines im Finder aus, wählen Sie Ablage › Informationen, wählen Sie VDoc unter „Öffnen mit“ und klicken Sie auf „Alle ändern“.
+	VDoc is now the default app for Word documents.	VDoc ist jetzt die Standard-App für Word-Dokumente.
