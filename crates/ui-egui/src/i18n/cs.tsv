@@ -2048,3 +2048,8 @@
 	Opens Settings › Default apps, where you choose VDoc for .docx and the other document types.	Otevře Nastavení › Výchozí aplikace, kde zvolíte VDoc pro .docx a další typy dokumentů.
 	To open Word documents with VDoc by default: select one in Finder, choose File › Get Info, pick VDoc under Open with, then click Change All.	Chcete-li dokumenty Word otevírat ve VDocu jako výchozí: vyberte jeden ve Finderu, zvolte Soubor › Informace, v části „Otevřít v aplikaci“ vyberte VDoc a klikněte na „Změnit vše“.
 	VDoc is now the default app for Word documents.	VDoc je nyní výchozí aplikací pro dokumenty Word.
+	Numerals:	Číslice:
+	Numerals	Číslice
+	Hindi	Hindské
+	Context	Podle kontextu
+	System	Systémové
