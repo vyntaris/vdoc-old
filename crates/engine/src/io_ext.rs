@@ -9,7 +9,13 @@ pub fn open(ext: &str, bytes: &[u8]) -> Option<Result<Document, String>> {
         "doc" | "dot" => Some(vdoc_docbin::read(bytes).map_err(|e| e.to_string())),
         // Word XML Document (Flat OPC) or Word 2003 XML, told apart by the root element.
         "xml" => Some(vdoc_docx::read_xml(bytes).map_err(|e| e.to_string())),
-        other => vdoc_formats::import(other, bytes),
+        // HTML, Markdown, ODT, RTF…: pictures fit the text width (see `io::fit_pictures`).
+        other => vdoc_formats::import(other, bytes).map(|r| {
+            r.map(|mut doc| {
+                crate::io::fit_pictures(&mut doc);
+                doc
+            })
+        }),
     }
 }
 
