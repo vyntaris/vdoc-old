@@ -12,6 +12,8 @@ workspace = true
 vdoc-doc = { workspace = true }
 vdoc-geom = { workspace = true }
 cfb = { workspace = true }
+image = { workspace = true }
+miniz_oxide = { workspace = true }
 thiserror = { workspace = true }
 log = { workspace = true }
 
