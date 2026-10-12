@@ -27,7 +27,7 @@ pub use io::Password;
 pub use keymap::KeyMap;
 pub use ribbon::RibbonLayout;
 pub use session::{
-    ColumnBlock, EditSnapshot, FindState, MathEdit, Prefs, Selection, Session, UNDO_LIST_MAX, ViewState, blank_document, set_system_locale,
+    CellRange, ColumnBlock, EditSnapshot, FindState, MathEdit, Prefs, Selection, Session, UNDO_LIST_MAX, ViewState, blank_document, set_system_locale,
 };
 pub use vdoc_doc as doc;
 pub use vdoc_geom::Region;
