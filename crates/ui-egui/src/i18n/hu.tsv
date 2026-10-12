@@ -2451,6 +2451,9 @@
 	Reading Column Width	Olvasási oszlopszélesség
 	Reading Line Spacing	Olvasási sorköz
 	Reading Text Size	Olvasási szövegméret
+	Start-up	Indítás
+	Show the Start screen when VDoc starts	Kezdőképernyő megjelenítése a VDoc indításakor
+	On: VDoc opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document.	Be: a VDoc a Fájl › Kezdőlap oldalon nyílik meg, üres dokumentummal, a sablonokkal és a legutóbbi dokumentumokkal. Ki: üres dokumentumot nyit meg.
 	Correct TWo INitial CApitals	KÉt KEzdő NAgybetű javítása
 	Correct accidental usage of cAPS LOCK key	A cAPS LOCK billentyű véletlen használatának javítása
 	Region:	Régió:

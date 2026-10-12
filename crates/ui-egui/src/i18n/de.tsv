@@ -2037,6 +2037,9 @@
 	Your system has animation effects turned off.	Auf Ihrem System sind Animationseffekte deaktiviert.
 	Your system doesn't report an animation setting, so animation effects stay on.	Ihr System meldet keine Animationseinstellung, daher bleiben Animationseffekte aktiviert.
 	Do Not Check Spelling or Grammar	Rechtschreibung und Grammatik nicht prüfen
+	Start-up	Programmstart
+	Show the Start screen when VDoc starts	Startbildschirm beim Start von VDoc anzeigen
+	On: VDoc opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document.	Ein: VDoc öffnet sich auf Datei › Start mit einem leeren Dokument, den Vorlagen und Ihren zuletzt verwendeten Dokumenten. Aus: Es öffnet ein leeres Dokument.
 	Couldn't make VDoc the default: {error}	VDoc konnte nicht als Standard festgelegt werden: {error}
 	In Default apps, choose VDoc for the document types you want it to open.	Wählen Sie unter „Standard-Apps“ VDoc für die Dokumenttypen, die es öffnen soll.
 	Make VDoc the default for Word documents…	VDoc als Standard für Word-Dokumente festlegen…

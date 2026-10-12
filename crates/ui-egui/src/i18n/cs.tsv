@@ -2043,6 +2043,9 @@
 	Your system has animation effects turned off.	Efekty animace jsou v systému vypnuté.
 	Your system doesn't report an animation setting, so animation effects stay on.	Systém neuvádí žádné nastavení animací, proto efekty animace zůstávají zapnuté.
 	Do Not Check Spelling or Grammar	Nekontrolovat pravopis ani gramatiku
+	Start-up	Spuštění
+	Show the Start screen when VDoc starts	Při spuštění VDocu zobrazit úvodní obrazovku
+	On: VDoc opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document.	Zapnuto: VDoc se otevře na kartě Soubor › Domů s prázdným dokumentem, šablonami a nedávnými dokumenty. Vypnuto: otevře prázdný dokument.
 	Couldn't make VDoc the default: {error}	VDoc se nepodařilo nastavit jako výchozí: {error}
 	In Default apps, choose VDoc for the document types you want it to open.	Ve Výchozích aplikacích vyberte VDoc pro typy dokumentů, které má otevírat.
 	Make VDoc the default for Word documents…	Nastavit VDoc jako výchozí pro dokumenty Word…

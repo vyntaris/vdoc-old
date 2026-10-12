@@ -2422,6 +2422,9 @@
 	✓ None	✓ Nessuno
 preview	Title	Esempio
 	Do Not Check Spelling or Grammar	Non controllare ortografia e grammatica
+	Start-up	Avvio
+	Show the Start screen when VDoc starts	Mostra la schermata iniziale all'avvio di VDoc
+	On: VDoc opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document.	Attivo: VDoc si apre su File › Home, con un documento vuoto, i modelli e i documenti recenti. Disattivo: apre un documento vuoto.
 	Couldn't make VDoc the default: {error}	Impossibile rendere VDoc l'app predefinita: {error}
 	In Default apps, choose VDoc for the document types you want it to open.	In App predefinite, scegli VDoc per i tipi di documento che deve aprire.
 	Make VDoc the default for Word documents…	Rendi VDoc l'app predefinita per i documenti Word…
