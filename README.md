@@ -260,6 +260,17 @@ instead, without setting anything. The log file records the choice (lines starti
 RISC-V (riscv64): `vdoc-<ver>-linux-riscv64.tar.gz`, a tarball cross-compiled for glibc 2.39+
 (Ubuntu 24.04, Debian 13 and newer).
 
+**Arch Linux (AUR).** Community members maintain three AUR packages; the project doesn't publish
+to the AUR itself. Install one of them:
+
+| Package | What it installs | Choose it when |
+|---|---|---|
+| [`vdoc-bin`](https://aur.archlinux.org/packages/vdoc-bin) | The release tarball above, prebuilt (x86_64, aarch64) | You want the latest release without compiling (quickest) |
+| [`vdoc`](https://aur.archlinux.org/packages/vdoc) | The latest release, built from source with `cargo` | You prefer to build releases yourself |
+| [`vdoc-git`](https://aur.archlinux.org/packages/vdoc-git) | The current `main` branch, built from source | You want unreleased changes and accept an occasional broken build |
+
+For example `yay -S vdoc-bin` or `paru -S vdoc-bin`.
+
 ### FreeBSD
 
 | Build | File |
