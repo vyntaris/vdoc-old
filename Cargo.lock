@@ -5020,6 +5020,7 @@ dependencies = [
  "vdoc-doc",
  "vdoc-engine",
  "vdoc-fonts",
+ "vdoc-proof",
  "vdoc-ui-egui",
  "zbus",
 ]

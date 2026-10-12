@@ -13,6 +13,7 @@ workspace = true
 [dependencies]
 vdoc-doc = { workspace = true }
 vdoc-engine = { workspace = true }
+vdoc-proof = { workspace = true }
 # Fonts the user added (#582) load from the settings folder at start-up.
 vdoc-fonts = { workspace = true }
 vdoc-ui-egui = { workspace = true }
