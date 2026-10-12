@@ -151,6 +151,7 @@ VDoc was designed to be driven by people *and* by AI agents.
 
 ```sh
 claude mcp add vdoc -- vdoc-cli mcp                  # headless documents
+# confine the agent to folders: vdoc-cli mcp --automation-read-root DIR --automation-write-root DIR
 vdoc --control 7981 &                                     # or drive the running app…
 claude mcp add vdoc-app -- vdoc-cli mcp --connect 127.0.0.1:7981
 ```
