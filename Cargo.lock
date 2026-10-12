@@ -5013,12 +5013,14 @@ dependencies = [
  "pollster 0.4.0",
  "rfd",
  "serde_json",
+ "windows",
  "winresource",
  "vdoc-control-key",
  "vdoc-doc",
  "vdoc-engine",
  "vdoc-fonts",
  "vdoc-ui-egui",
+ "zbus",
 ]
 
 [[package]]
