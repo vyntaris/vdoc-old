@@ -172,6 +172,7 @@ pub fn measure_table_columns(doc: &vdoc_doc::Document, t: &Table) -> Vec<(f32, f
                 numeral: crate::NumeralMode::default(),
                 exclusions: &[],
                 eq_number: 0,
+                read_line_spacing: None,
                 grid: crate::para::Grid::default(),
             };
             let (mut min, mut max) = (EMPTY_TEXT, EMPTY_TEXT);
