@@ -410,12 +410,13 @@ fn mi_text(ui: &mut Ui, app: &mut WordApp, text: &str, id: &str, params: Value) 
 }
 
 /// The proofing languages the Language menu offers: tag and English name (translated when drawn).
-pub(crate) const PROOFING_LANGUAGES: [(&str, &str); 5] = [
+pub(crate) const PROOFING_LANGUAGES: [(&str, &str); 6] = [
     ("en-US", "English (United States)"),
     ("en-GB", "English (United Kingdom)"),
     ("pl-PL", "Polish"),
     ("pt-BR", "Portuguese (Brazil)"),
     ("it-IT", "Italian"),
+    ("hr-HR", "Croatian"),
 ];
 
 /// The English name of a proofing language tag, as the status bar shows it (no tag: VDoc's
@@ -427,6 +428,7 @@ pub(crate) fn language_name(tag: Option<&str>) -> String {
     }
     match vdoc_engine::proof::ProofLang::from_tag(Some(tag)) {
         vdoc_engine::proof::ProofLang::Pl => "Polish".into(),
+        vdoc_engine::proof::ProofLang::Hr => "Croatian".into(),
         vdoc_engine::proof::ProofLang::Pt => "Portuguese (Brazil)".into(),
         vdoc_engine::proof::ProofLang::It => "Italian".into(),
         vdoc_engine::proof::ProofLang::En if tag.eq_ignore_ascii_case("en") => "English (United States)".into(),
