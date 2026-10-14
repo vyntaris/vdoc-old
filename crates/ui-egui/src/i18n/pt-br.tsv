@@ -514,6 +514,8 @@
 	Labels	Etiquetas
 	Landscape	Paisagem
 	Language	Idioma
+	{language} (no dictionary)	{language} (sem dicionário)
+	No spelling dictionary for {language} is installed, so it isn't checked. VDoc looks for the Hunspell dictionary {name} in the VDOC_DICTIONARIES folder and in the usual system locations.	Não há dicionário ortográfico instalado para {language}, então o texto não é verificado. O VDoc procura o dicionário Hunspell {name} na pasta VDOC_DICTIONARIES e nos locais habituais do sistema.
 	Lasso	Laço
 	Last Column	Última coluna
 	Last commit	Último commit

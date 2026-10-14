@@ -565,6 +565,8 @@
 	Labels	Налепнице
 	Landscape	Положено
 	Language	Језик
+	{language} (no dictionary)	{language} (нема речника)
+	No spelling dictionary for {language} is installed, so it isn't checked. VDoc looks for the Hunspell dictionary {name} in the VDOC_DICTIONARIES folder and in the usual system locations.	Правописни речник за {language} није инсталиран, па се текст не проверава. VDoc тражи Hunspell речник {name} у фасцикли VDOC_DICTIONARIES и на уобичајеним системским локацијама.
 	Lasso	Ласо
 	Last Column	Задња колона
 	Last commit	Задњи commit
