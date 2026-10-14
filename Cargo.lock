@@ -5133,6 +5133,7 @@ name = "vdoc-cli"
 version = "0.7.0"
 dependencies = [
  "serde_json",
+ "sys-locale",
  "vdoc-doc",
  "vdoc-engine",
  "vdoc-mcp",
