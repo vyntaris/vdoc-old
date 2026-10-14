@@ -1389,9 +1389,10 @@ fn sectpr_body(w: &mut W, s: &SectionProps) {
             w.empty("w:cols", &refs);
         }
         match s.valign {
-            vdoc_doc::props::VAlign::Top => {}
-            vdoc_doc::props::VAlign::Center => w.val("w:vAlign", "center"),
-            vdoc_doc::props::VAlign::Bottom => w.val("w:vAlign", "bottom"),
+            vdoc_doc::section::PageVAlign::Top => {}
+            vdoc_doc::section::PageVAlign::Center => w.val("w:vAlign", "center"),
+            vdoc_doc::section::PageVAlign::Justify => w.val("w:vAlign", "both"),
+            vdoc_doc::section::PageVAlign::Bottom => w.val("w:vAlign", "bottom"),
         }
         if s.title_page {
             w.empty("w:titlePg", &[]);
