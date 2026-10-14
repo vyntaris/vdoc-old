@@ -2092,6 +2092,12 @@
 	Start-up	Pokretanje
 	Show the Start screen when VDoc starts	Prikaži početni ekran pri pokretanju programa VDoc
 	On: VDoc opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document.	Uključeno: VDoc se otvara na Fajl › Početak, sa praznim dokumentom, šablonima i nedavnim dokumentima. Isključeno: otvara prazan dokument.
+
+# Document naming and account controls.
+	Rename Document	Preimenuj dokument
+	Document name	Ime dokumenta
+	Rename	Preimenuj
+	Account	Nalog
 	Privacy Options	Opcije privatnosti
 	Trust Center	Centar za bezbednost
 	Privacy for this document	Privatnost ovog dokumenta
