@@ -30,6 +30,8 @@ pub mod rt {
     pub const ENDNOTES: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/endnotes";
     pub const COMMENTS: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/comments";
     pub const COMMENTS_EX: &str = "http://schemas.microsoft.com/office/2011/relationships/commentsExtended";
+    pub const COMMENTS_IDS: &str = "http://schemas.microsoft.com/office/2016/09/relationships/commentsIds";
+    pub const COMMENTS_EXTENSIBLE: &str = "http://schemas.microsoft.com/office/2018/08/relationships/commentsExtensible";
     pub const HEADER: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/header";
     pub const FOOTER: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/footer";
     pub const IMAGE: &str = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/image";
@@ -66,6 +68,18 @@ pub const CUSTOM_XML_ROOTS: &str = "vdoc:customXml.roots";
 /// The original `word/settings.xml` when it holds settings the model doesn't (merged into on
 /// save by `write::settings_merge`). Not a package part: VDoc's own bookkeeping.
 pub const SETTINGS_ORIG: &str = "vdoc:settings.orig";
+/// Extended properties (`docProps/app.xml`) the model doesn't hold but a save keeps
+/// ([`APP_KEPT_PROPS`]): `name\tvalue` lines. Not a package part: VDoc's own bookkeeping.
+pub const APP_KEPT: &str = "vdoc:app.kept";
+/// The `docProps/app.xml` properties carried over from the file. Counts (pages, lines,
+/// characters, editing time) and the producing application's version are not: they describe
+/// the file Word saved, not the one VDoc writes.
+pub const APP_KEPT_PROPS: &[&str] =
+    &["Template", "Manager", "Company", "HyperlinkBase", "ScaleCrop", "LinksUpToDate", "SharedDoc", "HyperlinksChanged"];
+/// Parts VDoc doesn't model, carried verbatim: `owner\ttype\tpart` lines (owner `P` for
+/// the package, `D` for the main document), with their bytes and relationships in the
+/// [`EmbeddedManifest`]. Not a package part: VDoc's own bookkeeping.
+pub const UNMODELLED_ROOTS: &str = "vdoc:unmodelled.roots";
 /// Most parts we carry along for a file's embedded objects.
 pub const MAX_EMBEDDED_PARTS: usize = 4096;
 /// Most relationships we keep for one such part.
