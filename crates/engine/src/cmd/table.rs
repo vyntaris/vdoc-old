@@ -835,7 +835,7 @@ fn formula(s: &mut Session, v: &Value) -> CmdResult {
     let at = s.sel.focus.clone();
     let end = s.doc.insert_object(
         &at,
-        vdoc_doc::InlineObject::Field { instr: f.clone(), result: text.clone(), locked: false, code: false },
+        vdoc_doc::InlineObject::Field { instr: f.clone(), result: text.clone(), locked: false, code: false, form: String::new() },
         &props,
     )?;
     s.sel = Selection::caret(end);
