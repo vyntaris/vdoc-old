@@ -2116,6 +2116,7 @@
 	Start-up	Käivitamine
 	Show the Start screen when VDoc starts	Näita VDoci käivitamisel avakuva
 	On: VDoc opens on File › Home, with a blank document, the templates and your recent documents. Off: it opens a blank document.	Sees: VDoc avaneb vaates Fail › Avaleht, kus on tühi dokument, mallid ja hiljutised dokumendid. Väljas: avaneb tühi dokument.
+	Copy to	Kopeeri asukohta
 
 # Document naming and account controls.
 	Rename Document	Nimeta dokument ümber
