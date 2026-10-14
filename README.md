@@ -289,6 +289,21 @@ to the AUR itself. Install one of them:
 | [`vdoc`](https://aur.archlinux.org/packages/vdoc) | The latest release, built from source with `cargo` | You prefer to build releases yourself |
 | [`vdoc-git`](https://aur.archlinux.org/packages/vdoc-git) | The current `main` branch, built from source | You want unreleased changes and accept an occasional broken build |
 For example `yay -S vdoc-bin` or `paru -S vdoc-bin`.
+
+#### Community packages
+
+These packages are maintained by community members, not by the VDoc team.
+
+On Gentoo, the [::snakebyte overlay](https://github.com/switch87/snakebyte-overlay) packages the
+Linux release as `app-office/vdoc-bin` (prebuilt) and `app-office/vdoc` (built from source):
+
+```sh
+eselect repository add snakebyte git https://github.com/switch87/snakebyte-overlay.git
+emaint sync -r snakebyte
+echo 'app-office/vdoc-bin ~amd64' >> /etc/portage/package.accept_keywords/vdoc
+emerge --ask app-office/vdoc-bin
+```
+
 ### FreeBSD
 
 | Build | File |
