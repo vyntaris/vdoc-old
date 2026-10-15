@@ -117,7 +117,7 @@ Every screenshot below is VDoc itself, rendered offscreen by its own UI test har
 | **References** | Table of contents, footnotes and endnotes, citations and bibliography (APA, MLA, Chicago, IEEE), captions, table of figures, cross-references, index, table of authorities |
 | **Review** | Spelling and grammar with suggestions (English and Polish, by each run's language), thesaurus, word count, comments in margin balloons or a pane, track changes, accept/reject, compare documents, restrict editing, accessibility checker, document inspector |
 | **Mailings** | Mail merge from CSV, merge fields, address block, greeting line, rules, preview, finish to a document; envelopes and labels |
-| **View** | Print layout, web layout, draft, read mode, focus, zoom, one/multiple pages, page width, Navigation pane, rulers, gridlines, dark mode; interface in English, 简体中文, 繁體中文, 日本語, Português (Brasil), Español, Українська, Српски / Srpski, Eesti, Türkçe, Русский, Italiano, Deutsch, Polski, Čeština, Magyar, Français or Български (follows the system language by default) |
+| **View** | Print layout, web layout, draft, read mode, focus, zoom, one/multiple pages, page width, Navigation pane, rulers, gridlines, dark mode; interface in English, 简体中文, 繁體中文, 日本語, Português (Brasil), Español, Українська, Српски / Srpski, Eesti, Türkçe, Русский, Italiano, Deutsch, Polski, Čeština, Magyar, Français, Български or Tiếng Việt (follows the system language by default) |
 | **Files** | .docx read/write (opens in Word), Word 97-2003 .doc import, PDF export, .odt, .rtf, .html, .md, .tex, .txt import/export, page images |
 
 The honest picture, area by area, is in [ROADMAP.md](ROADMAP.md), the
@@ -289,6 +289,21 @@ to the AUR itself. Install one of them:
 | [`vdoc`](https://aur.archlinux.org/packages/vdoc) | The latest release, built from source with `cargo` | You prefer to build releases yourself |
 | [`vdoc-git`](https://aur.archlinux.org/packages/vdoc-git) | The current `main` branch, built from source | You want unreleased changes and accept an occasional broken build |
 For example `yay -S vdoc-bin` or `paru -S vdoc-bin`.
+
+#### Community packages
+
+These packages are maintained by community members, not by the VDoc team.
+
+On Gentoo, the [::snakebyte overlay](https://github.com/switch87/snakebyte-overlay) packages the
+Linux release as `app-office/vdoc-bin` (prebuilt) and `app-office/vdoc` (built from source):
+
+```sh
+eselect repository add snakebyte git https://github.com/switch87/snakebyte-overlay.git
+emaint sync -r snakebyte
+echo 'app-office/vdoc-bin ~amd64' >> /etc/portage/package.accept_keywords/vdoc
+emerge --ask app-office/vdoc-bin
+```
+
 ### FreeBSD
 
 | Build | File |
