@@ -20,3 +20,4 @@ vdoc-render = { workspace = true }
 vdoc-mcp = { workspace = true }
 vdoc-zotero = { workspace = true }
 serde_json = { workspace = true }
+sys-locale = "0.3"
