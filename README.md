@@ -188,7 +188,7 @@ covers every target starting with it (`vdoc*=debug`). The logger is
 | L0 | `vdoc-geom` | units and measurements |
 | L1 | `vdoc-doc`, `vdoc-fonts`, `vdoc-proof` | document model and editing; fonts and shaping; spelling, grammar, hyphenation |
 | L2 | `vdoc-layout`, `vdoc-docx`, `vdoc-formats` | line breaking, pagination, tables, notes, hit testing; OOXML; ODT/RTF/HTML/Markdown/TXT |
-| L3 | `vdoc-render`, `vdoc-pdf` | rasteriser (vello_cpu); PDF (krilla) |
+| L3 | `vdoc-render`, `vdoc-pdf` | rasteriser (vello_cpu); PDF ([craft-pdf](docs/shared-pdf.md), Krilla) |
 | L4 | `vdoc-engine` | session, undo, 422 commands, Word feature catalog |
 | L5 | `vdoc-mcp` | MCP server |
 | L6 | `vdoc-ui-egui` | the Word-style front end (swappable) |
