@@ -197,6 +197,7 @@ pub fn measure_table_columns(doc: &vdoc_doc::Document, t: &Table) -> Vec<(f32, f
                 hide_deleted: Default::default(),
                 table: text.as_ref(),
                 proofing: None,
+                typing_word: None,
                 // Measurement uses a fixed environment (like show_hidden/proofing above).
                 numeral: crate::NumeralMode::default(),
                 exclusions: &[],
