@@ -141,6 +141,7 @@ vdoc-cli text report.docx                      # plain text
 vdoc-cli inspect report.docx                   # structure as JSON
 vdoc-cli run --template sample \
   --cmd 'select.text={"text":"Membership"}' --cmd format.bold --save out.docx
+vdoc-cli run --script job.json                 # the same from a file: commands, then save to docx and pdf
 ```
 
 Web: `cd apps/vdoc-web && trunk serve`, then open <http://127.0.0.1:8771/?sample>.
