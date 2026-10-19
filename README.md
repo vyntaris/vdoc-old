@@ -229,7 +229,8 @@ closer pagination fidelity, a stability sweep and native printing. Details and e
 
 The all-users installer puts VDoc in Program Files and needs administrator rights. The
 just-me installer needs none: it installs into `%LOCALAPPDATA%\Programs\VDoc` for your
-account only. Installers and executables are code-signed.
+account only. Choose one: installing both gives two VDoc entries in Settings › Apps and two
+in the Start menu. Installers and executables are code-signed.
 
 **If the app doesn't open on Windows:** the desktop app initializes only DirectX 12 by default.
 Letting wgpu also create an OpenGL instance can crash some graphics drivers (AMD's
