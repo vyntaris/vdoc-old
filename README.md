@@ -221,13 +221,15 @@ closer pagination fidelity, a stability sweep and native printing. Details and e
 
 ### Windows
 
-| Build | Installer | Portable |
-|---|---|---|
-| x64 (64-bit Intel/AMD) | `vdoc-<ver>-windows-x64.msi` | `vdoc-<ver>-windows-x64-portable.zip` |
-| arm64 (Snapdragon and other ARM PCs) | `vdoc-<ver>-windows-arm64.msi` | `vdoc-<ver>-windows-arm64-portable.zip` |
-| x86 (32-bit) | `vdoc-<ver>-windows-x86.msi` | `vdoc-<ver>-windows-x86-portable.zip` |
+| Build | Installer (all users) | Installer (just me) | Portable |
+|---|---|---|---|
+| x64 (64-bit Intel/AMD) | `vdoc-<ver>-windows-x64.msi` | `vdoc-<ver>-windows-user-x64.msi` | `vdoc-<ver>-windows-x64-portable.zip` |
+| arm64 (Snapdragon and other ARM PCs) | `vdoc-<ver>-windows-arm64.msi` | `vdoc-<ver>-windows-user-arm64.msi` | `vdoc-<ver>-windows-arm64-portable.zip` |
+| x86 (32-bit) | `vdoc-<ver>-windows-x86.msi` | `vdoc-<ver>-windows-user-x86.msi` | `vdoc-<ver>-windows-x86-portable.zip` |
 
-Installers and executables are code-signed.
+The all-users installer puts VDoc in Program Files and needs administrator rights. The
+just-me installer needs none: it installs into `%LOCALAPPDATA%\Programs\VDoc` for your
+account only. Installers and executables are code-signed.
 
 **If the app doesn't open on Windows:** the desktop app initializes only DirectX 12 by default.
 Letting wgpu also create an OpenGL instance can crash some graphics drivers (AMD's
