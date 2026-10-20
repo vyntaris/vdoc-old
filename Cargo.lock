@@ -5312,6 +5312,7 @@ dependencies = [
  "vdoc-doc",
  "vdoc-fonts",
  "vdoc-geom",
+ "vdoc-metafile",
  "vdoc-proof",
 ]
 
