@@ -986,7 +986,7 @@ mod tests {
             kind: ShapeKind::Rectangle,
             w: 100.0,
             h: 60.0,
-            fill: Some(vdoc_doc::props::Rgb(0xE2, 0xEF, 0xDA)),
+            fill: Some(vdoc_doc::fill::Fill::solid(vdoc_doc::props::Rgb(0xE2, 0xEF, 0xDA))),
             stroke: None,
             stroke_width: 0.0,
             float: Default::default(),
