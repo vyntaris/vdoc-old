@@ -2412,6 +2412,7 @@
 	{name} already exists. Choose Save again to replace it.	{name} вече съществува. Изберете „Запазване“ отново, за да го замените.
 	This folder can't be read: {error}	Тази папка не може да бъде прочетена: {error}
 	Showing the first {count} items.	Показани са първите {count} елемента.
+	No items to show.	Няма елементи за показване.
 	File name:	Име на файла:
 	Browse in VDoc…	Разглеждане в VDoc…
 	Open a file with VDoc's own browser when the system file dialog doesn't appear.	Отваряне на файл чрез собствения браузър на VDoc, когато системният диалогов прозорец за файлове не се появява.
