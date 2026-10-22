@@ -1,7 +1,9 @@
 //! Sprms → model properties, and style-chain resolution.
 
 use vdoc_doc::Rgb;
-use vdoc_doc::props::{Align, Border, Borders, BorderStyle, CharProps, Highlight, LineSpacing, ParaProps, TabAlign, TabLeader, TabStop, TextColor, Underline, VertAlign};
+use vdoc_doc::props::{
+    Align, Border, BorderStyle, Borders, CharProps, Highlight, LineSpacing, ParaProps, TabAlign, TabLeader, TabStop, TextColor, Underline, VertAlign,
+};
 use vdoc_doc::styles::{Style, StyleKind, StyleSheet};
 
 use crate::sprm::{self, Prl, Toggle};
