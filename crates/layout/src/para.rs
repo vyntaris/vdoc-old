@@ -780,12 +780,15 @@ const MISSING_ROMAN_FONT: &str = "Cambria";
 
 /// The family to look `font` up as: [`MISSING_ROMAN_FONT`] for a missing roman font, else `font`.
 /// A missing Thai font keeps its name: it is drawn in a Thai face, not in Cambria (#1549).
+/// A font with substitutes of its own keeps them: Times New Roman is roman in every font table,
+/// and where it isn't installed Liberation Serif has its metrics; Word never meets it missing.
 fn lookup_family<'f>(doc: &Document, font: &'f str) -> &'f str {
     let db = vdoc_fonts::FontDb::global();
     let roman = doc.settings.roman_fonts.iter().any(|f| f.eq_ignore_ascii_case(font));
     if roman
         && !vdoc_fonts::word::is_thai_family(font)
         && !vdoc_doc::symbol_fonts::is_symbol_font(font)
+        && !vdoc_fonts::word::has_named_substitutes(font)
         && !db.has_family(font)
         && !db.has_family(vdoc_fonts::word::charset_base_family(font))
     {
