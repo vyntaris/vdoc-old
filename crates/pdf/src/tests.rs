@@ -6,6 +6,7 @@ use vdoc_doc::{Block, CharProps, Document, ListKind, Paragraph, Table, Watermark
 
 use crate::*;
 
+/// Verify preset lines and connectors emit the requested PDF line-cap operator.
 #[test]
 fn shape_line_caps_reach_pdf_content() {
     use vdoc_doc::{
