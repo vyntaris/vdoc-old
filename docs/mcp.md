@@ -13,7 +13,10 @@ Claude Code: `claude mcp add vdoc -- vdoc-cli mcp`.
 
 With `--connect`, the bridge sends the app's control key, which it reads from
 `VDOC_CONTROL_KEY` or from the key file the app writes at start. It sends the key only to
-loopback addresses; see [Keys](control-protocol.md#keys).
+loopback addresses; see [Keys](control-protocol.md#keys). The bridge serves even when the app
+isn't open yet: tool calls return "not reachable … will retry on each call" and succeed once the
+app's port opens (#4078), so a client that starts before VDoc doesn't lose the server for
+its whole session.
 
 ## Scripts from the command line
 
