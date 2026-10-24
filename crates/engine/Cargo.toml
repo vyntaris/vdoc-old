@@ -8,6 +8,12 @@ description = "VDoc engine: session, selection, undo, the command registry (ever
 [lints]
 workspace = true
 
+[features]
+# Front-end producer tests need to simulate a globally exhausted IME revision allocator. It only
+# ever makes receipt classification fail closed. Never enable this for a production build; the
+# UI's dev-dependencies enable it for its tests.
+test-support = []
+
 [dependencies]
 vdoc-geom = { workspace = true }
 vdoc-doc = { workspace = true }
