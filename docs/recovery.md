@@ -75,7 +75,7 @@ user restores over dirty work use the existing Save Changes prompt.
 `{"answer":"cancel"}` answers it.
 
 Focused tests are `cargo test -p vdoc-engine recovery`,
-`cargo test -p vdoc-engine --test recovery_format`, and
+`cargo test -p vdoc-engine --test it recovery_format::`, and
 `cargo test -p vdoc-ui-egui recovery`. They cover lifecycle, preservation, original-file
 protection, failed writes, corruption, locks, password cleanup and the actual recovery buttons.
 The contribution also uses a native SIGKILL/restart replay in temporary profiles for both new
