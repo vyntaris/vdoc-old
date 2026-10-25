@@ -181,3 +181,8 @@ sync_github_name = true
 
 [people.pakiat]
 display_name = "OtorO"
+
+[people.ovezthaking]
+real_name = "Oliwer Urbaniak"
+sync_github_name = true
+
