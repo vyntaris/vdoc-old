@@ -15,7 +15,7 @@ workspace = true
 test-support = []
 
 [dependencies]
-vdoc-geom = { workspace = true }
+vdoc-geom = { workspace = true, features = ["image"] }
 vdoc-doc = { workspace = true }
 vdoc-fonts = { workspace = true }
 vdoc-layout = { workspace = true }
