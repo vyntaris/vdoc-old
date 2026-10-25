@@ -19,7 +19,7 @@ vdoc-fonts = { workspace = true }
 vdoc-ui-egui = { workspace = true }
 # The control key file's location (shared with the MCP bridge).
 vdoc-control-key = { workspace = true }
-eframe = { workspace = true, features = ["default_fonts", "wgpu", "accesskit", "wayland", "x11", "links"] }
+eframe = { workspace = true, features = ["default_fonts", "wgpu", "accesskit", "clipboard", "wayland", "x11", "links"] }
 egui = { workspace = true }
 serde_json = { workspace = true }
 log = { workspace = true }
