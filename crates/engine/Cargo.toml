@@ -9,7 +9,7 @@ description = "VDoc engine: session, selection, undo, the command registry (ever
 workspace = true
 
 [dependencies]
-vdoc-geom = { workspace = true }
+vdoc-geom = { workspace = true, features = ["image"] }
 vdoc-doc = { workspace = true }
 vdoc-fonts = { workspace = true }
 vdoc-layout = { workspace = true }
