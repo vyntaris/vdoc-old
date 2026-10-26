@@ -2,6 +2,8 @@ use super::*;
 use vdoc_layout::display::page_display;
 use vdoc_layout::{LayoutCache, LayoutOptions, layout};
 
+mod color_glyphs;
+
 /// The first and last pixel rows with ink in a black-on-white [`render_text_line`] raster.
 fn ink_rows(img: &Rendered) -> Option<(usize, usize)> {
     let w = img.width as usize * 4;

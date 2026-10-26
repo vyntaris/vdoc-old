@@ -5,7 +5,7 @@ use vdoc_fonts::FontDb;
 use vdoc_layout::display::{DisplayOptions, Draw, page_display};
 use vdoc_layout::{LayoutCache, LayoutOptions, layout};
 
-use super::{RenderOptions, Rendered, render_page};
+use crate::{RenderOptions, Rendered, render_page};
 
 /// Colour emoji families the system fallback may pick.
 const COLOR_EMOJI: &[&str] = &["Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji"];
