@@ -4371,5 +4371,6 @@ fn page_valign_value(v: vdoc_doc::section::PageVAlign) -> &'static str {
     }
 }
 
+pub mod dialogs_chart;
 #[cfg(test)]
 mod tests;
