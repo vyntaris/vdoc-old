@@ -1,5 +1,8 @@
-use super::doc_state::{ColumnBlock, Selection, Undo};
-use super::*;
+use crate::doc_state::{ColumnBlock, Selection, Undo};
+use std::sync::Arc;
+
+use vdoc_doc::Document;
+use vdoc_layout::{DocLayout, NumeralMode, ViewMode};
 
 /// What [`Session::restore`] needs to take commands back exactly: the document, the selection,
 /// the undo and redo stacks (also the oldest undo steps the undo limit pushes out meanwhile), the
