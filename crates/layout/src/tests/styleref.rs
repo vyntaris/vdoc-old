@@ -1,6 +1,6 @@
 //! STYLEREF fields in headers and footers (#775): each page shows its own result.
 
-use super::*;
+use crate::*;
 use vdoc_doc::para::InlineObject;
 use vdoc_doc::props::{CharProps, NumRef};
 use vdoc_doc::{ListKind, PartKind, Pos, para_block};

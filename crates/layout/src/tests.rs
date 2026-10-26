@@ -4,6 +4,21 @@ use vdoc_doc::para::InlineObject;
 use vdoc_doc::props::{Align, Border, BorderStyle, Borders, ParaProps, TextDirection};
 use vdoc_doc::{Pos, Table};
 
+mod autospace;
+mod bidi;
+mod budget;
+mod complex;
+mod grid;
+mod ligature;
+pub(crate) mod linear;
+mod nbsp;
+mod numeral;
+mod pages;
+mod styleref;
+mod table_contact;
+mod textbox;
+mod vertical;
+
 const WRAP_TEST_FONT: &str = "Source Sans 3";
 
 fn lay(doc: &Document) -> DocLayout {

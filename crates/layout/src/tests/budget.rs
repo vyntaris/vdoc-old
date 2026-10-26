@@ -1,7 +1,7 @@
 //! Hostile documents whose layout work or memory would otherwise grow far past their size: each
 //! is bounded by a cap, and real documents stay well under it.
 
-use super::*;
+use crate::*;
 use vdoc_doc::props::HeightRule;
 use vdoc_doc::table::{MAX_COLS, Table};
 use vdoc_doc::{Block, PartKind, Pos, TextBody, para_block};
