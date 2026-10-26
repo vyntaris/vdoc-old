@@ -49,6 +49,7 @@ modules:
     build-commands:
       - cargo --offline build --release --locked -p vdoc -p vdoc-cli
       - install -Dm755 target/release/vdoc /app/bin/vdoc
+      - install -Dm644 NOTICE /app/share/doc/vdoc/NOTICE
       - install -Dm755 target/release/vdoc-cli /app/bin/vdoc-cli
       - install -Dm644 packaging/linux/ai.storyteller.vdoc.desktop /app/share/applications/ai.storyteller.vdoc.desktop
       - install -Dm644 packaging/linux/ai.storyteller.vdoc.mime.xml /app/share/mime/packages/ai.storyteller.vdoc.xml
@@ -70,6 +71,6 @@ modules:
       # The interface translations at the commit in craft-i18n.rev (a test keeps the two equal).
       - type: git
         url: https://github.com/storytold/craft-i18n
-        commit: 04600cbb1508f1b15927ec574a5e32e5f376fd8b
+        commit: 9205108cfdced5177706264038848b68b2422d2b
         dest: craft-i18n
       - cargo-sources.json
