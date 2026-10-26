@@ -1,5 +1,6 @@
 //! Text boxes' text direction, alignment and linked boxes (Shape Format › Text).
 
+#[allow(unused_imports)]
 use super::*;
 use vdoc_doc::props::{TextVert, VAlign};
 use vdoc_doc::{PartKind, Pos, TextBody, para_block};
