@@ -73,6 +73,82 @@ Local test: `python3 -m http.server 8765` inside the folder, then open http://lo
   downloads) are blocked.
 - Don't send `X-Frame-Options: DENY` or a `frame-ancestors` CSP that excludes the embedding page.
 
+## The parent bridge (`?host=parent`)
+
+A page framing VDoc in a **same-origin** iframe can add `?host=parent` to the iframe's URL
+(`https://example.com/vdoc/?host=parent`) and have VDoc hand its files over instead of
+downloading them. The two sides talk `postMessage` with plain window messages that carry a `type`:
+
+| Message | Direction | Fields |
+|---|---|---|
+| `vdoc:ready` | app → page | `version`: the app is running and listening; send a file now |
+| `vdoc:open` | page → app | `name`, `bytes` (an `ArrayBuffer` or `Uint8Array`): open like File › Open |
+| `vdoc:save` | app → page | `name`, `saveAs`, `bytes` (a transferred `ArrayBuffer`): every file the app would otherwise download (Save, Save As, Export as PDF, Export Page as PNG). The page stores it and reports failures itself. `saveAs` says whether the file becomes the document's file: `false` after Save (the page's own file, written under its name) and for exports that are only copies (PDF, Markdown, plain text); `true` after Save As and for exports to a format that keeps everything (.docx, .odt, .rtf), after which the next Save carries that name with `false` |
+| `vdoc:dirty` | app → page | `dirty`: unsaved changes appeared or went away |
+| `vdoc:failed` | app → page | `error`: the app couldn't start (no WebGPU or WebGL2, for example) |
+
+In host mode the app opens no sample document, so the framing page should send the file to edit
+and guard leaving the page while changes are unsaved. `&author=` on the iframe's URL names the
+user for the comments and tracked changes the app creates. Opening `?host=parent` outside an
+iframe gives the normal app with downloads.
+
+## Same-document host mode (no iframe)
+
+A host application can also run VDoc from its own document: it loads the wasm-bindgen module
+itself and gives VDoc one of its own canvases, so there is no iframe and no `?host=parent`.
+It opts in with `data-host="page"` on that canvas — the exact value `page` — and the canvas keeps
+the id the app looks up (`id="vdoc_canvas"`).
+
+```html
+<canvas id="vdoc_canvas" data-host="page" style="width: 100%; height: 720px; display: block;"></canvas>
+```
+
+The page and the app then talk with DOM `CustomEvent`s on the canvas instead of `postMessage`.
+The app dispatches the same messages it would post to a parent — `vdoc:ready`,
+`vdoc:save`, `vdoc:dirty`, `vdoc:failed` — with the message fields (without the
+`type`) as the event's `detail`, and it opens a document when the page dispatches a
+`vdoc:open` event with `detail: { name, bytes }`. Events do not bubble, so listen on the
+canvas itself (two editors on one page can't hear each other).
+
+Add the listeners before `init`: the app announces itself with `vdoc:ready` while `init` is
+still running, and a file sent in reply would otherwise be missed.
+
+```js
+import init from "./vdoc-web-<hash>.js"; // the wasm-bindgen glue shipped with the app
+
+const canvas = document.getElementById("vdoc_canvas");
+
+canvas.addEventListener("vdoc:ready", async () => {
+  // The app is listening; hand it a document now, if you have one.
+  const bytes = await documentBytes(); // an ArrayBuffer or Uint8Array
+  canvas.dispatchEvent(new CustomEvent("vdoc:open", {
+    detail: { name: "Report.docx", bytes },
+  }));
+});
+
+// Every file VDoc would otherwise download (Save, Save As, Export as PDF) arrives here.
+canvas.addEventListener("vdoc:save", (event) => {
+  const { name, saveAs, bytes } = event.detail; // bytes is an ArrayBuffer
+  // Store the file under `name`; `saveAs` says whether it becomes the document's file.
+  // Report your own errors.
+  storeFile(name, bytes, saveAs);
+});
+canvas.addEventListener("vdoc:dirty", (event) => {
+  unsaved = event.detail.dirty; // warn before leaving, as you like
+});
+canvas.addEventListener("vdoc:failed", (event) => {
+  showError(event.detail.error); // the app couldn't start
+});
+
+await init({ module_or_path: "./vdoc-web-<hash>_bg.wasm" });
+```
+
+- Saves are not downloads in this mode: the `bytes` in `vdoc:save` hold the saved document,
+  and the host decides where the file goes.
+- `?author=` on the page's URL still names the user for new comments and tracked changes.
+- An unframed page that uses `?host=parent` keeps the normal app with downloads; only the exact
+  `data-host` value `page` turns this mode on.
+
 ## Renderer selection and fallback flags
 
 VDoc renders with wgpu. It uses **WebGPU** when the browser has it and falls back to
