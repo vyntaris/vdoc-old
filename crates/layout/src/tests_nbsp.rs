@@ -37,7 +37,8 @@ fn wide_nbsp_family() -> &'static str {
 /// The width of the first line of `text` set in the wide-nbsp font.
 fn line_width(text: &str) -> f32 {
     let chr = vdoc_doc::CharProps { font: Some(wide_nbsp_family().into()), size: Some(12.0), ..Default::default() };
-    let d = Document { body: vec![vdoc_doc::para_block(vdoc_doc::Paragraph::with_text(text, chr))], ..Document::new() };
+    let mut d = Document::new();
+    d.body = vec![vdoc_doc::para_block(vdoc_doc::Paragraph::with_text(text, chr))];
     let mut c = LayoutCache::new();
     let l = layout(&d, &mut c, &LayoutOptions::default());
     for p in &l.pages {
