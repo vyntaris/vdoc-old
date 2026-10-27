@@ -9,7 +9,7 @@ description = "VDoc layout: shaping, line breaking, tabs, lists, tables, paginat
 workspace = true
 
 [dependencies]
-vdoc-geom = { workspace = true }
+vdoc-geom = { workspace = true, features = ["image"] }
 vdoc-doc = { workspace = true }
 vdoc-fonts = { workspace = true }
 vdoc-proof = { workspace = true }
