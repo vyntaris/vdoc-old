@@ -221,13 +221,13 @@ closer pagination fidelity, a stability sweep and native printing. Details and e
 
 ### Windows
 
-| Build | Installer (all users) | Installer (just me) | Portable |
-|---|---|---|---|
-| x64 (64-bit Intel/AMD) | `vdoc-<ver>-windows-x64.msi` | `vdoc-<ver>-windows-user-x64.msi` | `vdoc-<ver>-windows-x64-portable.zip` |
-| arm64 (Snapdragon and other ARM PCs) | `vdoc-<ver>-windows-arm64.msi` | `vdoc-<ver>-windows-user-arm64.msi` | `vdoc-<ver>-windows-arm64-portable.zip` |
-| x86 (32-bit) | `vdoc-<ver>-windows-x86.msi` | `vdoc-<ver>-windows-user-x86.msi` | `vdoc-<ver>-windows-x86-portable.zip` |
+| Build | Installer | Portable |
+|---|---|---|
+| x64 (64-bit Intel/AMD) | `vdoc-<ver>-windows-x64.msi` | `vdoc-<ver>-windows-x64-portable.zip` |
+| arm64 (Snapdragon and other ARM PCs) | `vdoc-<ver>-windows-arm64.msi` | `vdoc-<ver>-windows-arm64-portable.zip` |
+| x86 (32-bit) | `vdoc-<ver>-windows-x86.msi` | `vdoc-<ver>-windows-x86-portable.zip` |
 
-Both installers are the same dual-scope package. By default it installs for your account only,
+The installer is one dual-scope package. By default it installs for your account only,
 into `%LOCALAPPDATA%\Programs\ArtCraft\VDoc`, and needs no administrator rights; choosing
 "Everyone on this computer" on the first page installs into `C:\Program Files\ArtCraft\VDoc`
 and asks for an administrator. Install only one copy: a copy for another scope is refused, so
