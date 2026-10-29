@@ -227,7 +227,11 @@ closer pagination fidelity, a stability sweep and native printing. Details and e
 | arm64 (Snapdragon and other ARM PCs) | `vdoc-<ver>-windows-arm64.msi` | `vdoc-<ver>-windows-arm64-portable.zip` |
 | x86 (32-bit) | `vdoc-<ver>-windows-x86.msi` | `vdoc-<ver>-windows-x86-portable.zip` |
 
-Installers and executables are code-signed.
+The installer is one dual-scope package. By default it installs for your account only,
+into `%LOCALAPPDATA%\Programs\ArtCraft\VDoc`, and needs no administrator rights; choosing
+"Everyone on this computer" on the first page installs into `C:\Program Files\ArtCraft\VDoc` (`Program Files (x86)` for the 32-bit build)
+and asks for an administrator. Install only one copy: a copy for another scope is refused, so
+uninstall first to change who VDoc is installed for. Installers and executables are code-signed.
 
 **If the app doesn't open on Windows:** the desktop app initializes only DirectX 12 by default.
 Letting wgpu also create an OpenGL instance can crash some graphics drivers (AMD's
