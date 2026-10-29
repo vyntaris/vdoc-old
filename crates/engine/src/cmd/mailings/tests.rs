@@ -399,17 +399,18 @@ fn recipient_labels_continue_on_product_sheets() {
                 })
                 .collect();
             assert_eq!(tables.len(), sheets);
-            let names: Vec<_> = tables
+            let label_text: Vec<_> = tables
                 .iter()
                 .flat_map(|t| t.rows.iter())
                 .flat_map(|r| &r.cells)
                 .flat_map(|c| &c.blocks)
                 .filter_map(|b| match &**b {
-                    Block::Para(p) if p.text.starts_with("Recipient") => Some(p.text.clone()),
+                    Block::Para(p) if !p.text.is_empty() => Some(p.text.clone()),
                     _ => None,
                 })
                 .collect();
-            assert_eq!(names, (0..count).map(|i| format!("Recipient{i:03}")).collect::<Vec<_>>());
+            let expected: Vec<_> = (0..count).flat_map(|i| [format!("Recipient{i:03}"), "Original Street".to_string()]).collect();
+            assert_eq!(label_text, expected);
             assert!(tables.windows(2).all(|t| t[0].grid == t[1].grid && t[0].props == t[1].props));
         }
     }
