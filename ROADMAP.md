@@ -202,6 +202,7 @@ Imported Word 97–2003 `.doc`/`.dot` files now ask for a supported DOCX target 
 - 2026-10-15: Find opens Navigation on Results; editing the query restores Results after manual Headings/Pages navigation. Typed and selected-text searches retain document contents (#2096).
 
 | Date | What landed |
+| 2026-10-28 | The Traditional Chinese interface draws hanzi to the Taiwan standard: on the desktop an installed Traditional Chinese font (PingFang TC on macOS, Microsoft JhengHei on Windows, Noto Sans CJK TC on Linux) comes before the embedded Noto Sans CJK SC, which drew 說, 這, 為, 戶 in mainland shapes; without one, and on the web, nothing changes. |
 | 2026-10-17 | macOS launch arguments (`-psn_*`, `-NS*`, `-Apple*`) are no longer opened as files, and a file that fails to open names the file and the real cause on the status bar and in the log (#1103). The reported "corrupt" error could not be reproduced. |
 | 2026-10-17 | Password-protected Word files from Word 2007 (Standard encryption: AES-128/192/256, SHA-1) open with their password, also when named `.doc` or `.dot`; a wrong or missing password is reported as for newer files. Word 97-2003 files with an AES header, which the public spec doesn't define, are refused with a clear message (gap 9) |
 | 2026-10-23 | A command that changes nothing is not an edit: it adds no undo step, marks no unsaved changes and forces no relayout, so the redo stack survives it and five hundred of them can no longer push the user's own edits out of the undo history. |
