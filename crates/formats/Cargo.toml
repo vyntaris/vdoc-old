@@ -11,6 +11,7 @@ workspace = true
 [dependencies]
 vdoc-doc = { workspace = true }
 vdoc-geom = { workspace = true, features = ["image"] }
+vdoc-metafile = { workspace = true }
 image = { workspace = true }
 quick-xml = { workspace = true }
 zip = { workspace = true }
