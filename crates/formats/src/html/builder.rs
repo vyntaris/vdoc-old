@@ -66,9 +66,9 @@ fn apply_font_attributes(attrs: &[(String, String)], fmt: &mut Fmt) {
     let Some(size) = attr(attrs, "size") else { return };
     let size = size.trim();
     let points = if let Some(rest) = size.strip_prefix('+') {
-        rest.parse::<i32>().ok().map(|delta| 3 + delta)
+        rest.parse::<i32>().ok().map(|delta| 3i32.saturating_add(delta))
     } else if let Some(rest) = size.strip_prefix('-') {
-        rest.parse::<i32>().ok().map(|delta| 3 - delta)
+        rest.parse::<i32>().ok().map(|delta| 3i32.saturating_sub(delta))
     } else {
         size.parse::<i32>().ok()
     };
