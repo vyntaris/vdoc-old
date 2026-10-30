@@ -2,6 +2,32 @@ use super::arrange::group_menu_command;
 use super::*;
 use vdoc_engine::Session;
 
+/// #4412: the Shading button's bar is the colour a click applies (the last one picked), as
+/// the Font Color and Text Highlight Color buttons' bars are, not always the icon's yellow.
+#[test]
+fn the_shading_button_shows_the_last_picked_colour() {
+    let mut a = WordApp::new(Session::new(vdoc_doc::Document::from_text("Text")), crate::Services::default());
+    a.run("view.commentsPane", json!({"value": false})).unwrap();
+    let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(1440.0, 900.0)).build_ui_state(
+        |ui, app: &mut WordApp| {
+            let ctx = ui.ctx().clone();
+            app.logic(&ctx);
+            app.ui(ui);
+        },
+        a,
+    );
+    let ribbon_bars = |h: &egui_kittest::Harness<'_, WordApp>, hex: &str| {
+        let want = crate::theme::c32(vdoc_doc::Rgb::parse(hex).unwrap());
+        h.output().shapes.iter().any(|s| matches!(&s.shape, egui::Shape::Rect(r) if r.fill == want && r.rect.height() < 4.0 && r.rect.width() > 10.0))
+    };
+    h.run_steps(6);
+    assert!(ribbon_bars(&h, "FFF2CC"), "the default colour");
+    h.state_mut().canvas.last_shading = "00B0F0".into();
+    h.run_steps(3);
+    assert!(ribbon_bars(&h, "00B0F0"), "the picked colour");
+    assert!(!ribbon_bars(&h, "FFF2CC"), "and not the old one");
+}
+
 /// Two clicks arm and disarm the painter; the double-click handling then leaves it sticky (#2785).
 #[test]
 fn double_click_on_format_painter_makes_it_sticky() {
