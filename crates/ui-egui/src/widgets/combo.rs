@@ -39,6 +39,8 @@ pub fn color_grid(ui: &mut Ui, theme: &[vdoc_doc::Rgb]) -> Option<String> {
     picked
 }
 
+/// A colour grid's square of colour `c`, outlined in the accent colour while hovered and named
+/// by its hex code ("#C00000") for screen readers and its tooltip. True when it is clicked.
 pub(crate) fn swatch(ui: &mut Ui, c: vdoc_doc::Rgb) -> bool {
     let (r, resp) = ui.allocate_exact_size(vec2(15.0, 15.0), Sense::click());
     ui.painter().rect_filled(r, 0.0, Color32::from_rgb(c.0, c.1, c.2));

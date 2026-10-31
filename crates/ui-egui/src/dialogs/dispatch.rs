@@ -95,6 +95,9 @@ fn rename_document_dialog(app: &mut WordApp, ui: &mut Ui, d: &mut Dialog) -> boo
     false
 }
 
+/// Home › Font › Font… (Ctrl+D): font, size, colour (a colour field named "Font color:"),
+/// spacing, kerning and the effects, with a preview. OK applies them; true when OK or Cancel
+/// closes the dialog.
 fn font_dialog(app: &mut WordApp, ui: &mut Ui, d: &mut Dialog) -> bool {
     let Dialog::Font {
         font,
