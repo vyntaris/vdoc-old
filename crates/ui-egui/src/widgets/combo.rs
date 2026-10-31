@@ -49,7 +49,10 @@ pub(crate) fn swatch(ui: &mut Ui, c: vdoc_doc::Rgb) -> bool {
         Stroke::new(if resp.hovered() { 1.5 } else { 0.5 }, if resp.hovered() { t.accent } else { t.border_strong }),
         egui::StrokeKind::Inside,
     );
-    resp.on_hover_text(format!("#{}", c.hex())).clicked()
+    // Named by its colour for screen readers, as its tooltip shows it: a swatch is a drawn square.
+    let name = format!("#{}", c.hex());
+    resp.widget_info(|| egui::WidgetInfo::labeled(egui::Role::Button, true, &name));
+    resp.on_hover_text(name).clicked()
 }
 
 /// A ribbon-style text field with a dropdown list. Returns a chosen/typed value; Enter commits
