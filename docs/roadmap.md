@@ -27,7 +27,7 @@ Opus 5.5 agent wall-clock.
 
 ## Alpha gate (core workflows)
 
-The core-workflow gate from the craftrules progress-docs standard: what a typical Word user does
+The core-workflow gate: what a typical Word user does
 every day, checked end to end on the main platform (macOS desktop), including save and reopen.
 "Partial" here means rough but not blocking: the workflow completes.
 

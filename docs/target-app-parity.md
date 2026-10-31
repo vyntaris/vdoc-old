@@ -86,7 +86,7 @@ Weighted feature depth: **~68%** (Σ weight × parity / 100 over the table).
 
 ## Readiness numbers: full, mainstream practitioner, essentials user
 
-Three numbers, each with its own hours (craftrules `standards/progress-docs.md`, "Numbers"). The
+Three numbers, each with its own hours. The
 **full** number is the additive weighted sum over the dimension table below. **Mainstream** and
 **essentials** average depth over the areas in scope, then multiply by written-down discounts for
 what still stops real work. The stage follows the full number and the core-workflow gate.
