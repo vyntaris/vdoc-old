@@ -148,6 +148,9 @@ pub fn show(app: &mut WordApp, ctx: &egui::Context) {
         close = body(app, ui, &mut d);
     });
     if let Some(shown) = &shown {
+        // A dialog to screen readers, as Word's are ("Font, dialog"): an egui window is a window,
+        // so NVDA neither said it was a dialog nor read the text in it (Word Count's figures).
+        ctx.accesskit_node_builder(shown.response.id, |node| node.set_role(egui::accesskit::Role::Dialog));
         if let Dialog::SaveChanges { name, message, .. } = &d {
             let question = crate::i18n::fmt(tl!("Do you want to save changes to {name}?"), &[("name", name)]);
             let mut description = tl!("Your changes will be lost if you don't save them.").to_string();

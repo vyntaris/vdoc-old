@@ -1633,18 +1633,21 @@ fn the_custom_properties_dialog_leaves_imported_non_text_properties_alone() {
     assert_eq!(kinds, [("Status", "lpwstr"), ("Count", "i4")], "Cancel leaves the imported property as it was");
 }
 
-/// Screen readers hear what the dialogs' drawn controls are. A dialog's tabs are tabs, the one
+/// Screen readers hear what the dialogs and their drawn controls are. A dialog is a dialog: it was
+/// only a window, so NVDA read none of its text. Its tabs are tabs, the one
 /// shown selected, as Word's ("Indents and Spacing, tab, selected"): they were buttons, read as
 /// pressed or unpressed toggles. A colour field says its label and its colour: its text alone was
 /// the colour's hex digits. Each swatch of the colour grid says its colour: it had no name.
 #[test]
-fn dialog_tabs_and_colour_fields_say_what_they_are() {
+fn dialogs_their_tabs_and_colour_fields_say_what_they_are() {
     use egui::accesskit::Role;
     use egui_kittest::kittest::{NodeT, Queryable};
     let mut h = app_harness(app_with("Lanterns"));
     h.run_steps(2);
     h.state_mut().run("ui.dialog", json!({"name": "paragraph"})).unwrap();
     h.run_steps(4);
+    assert!(h.query_by_role_and_label(Role::Dialog, "Paragraph").is_some(), "Paragraph is a dialog");
+    assert!(h.query_by_role_and_label(Role::Window, "Paragraph").is_none(), "not only a window");
     let selected =
         |h: &egui_kittest::Harness<'static, WordApp>, label: &str| h.get_by_role_and_label(Role::Tab, label).accesskit_node().is_selected();
     assert_eq!(selected(&h, "Indents and Spacing"), Some(true), "the tab shown is selected");
