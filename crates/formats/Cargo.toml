@@ -12,6 +12,7 @@ workspace = true
 vdoc-doc = { workspace = true }
 vdoc-geom = { workspace = true, features = ["image"] }
 vdoc-metafile = { workspace = true }
+base64 = { workspace = true }
 image = { workspace = true }
 quick-xml = { workspace = true }
 zip = { workspace = true }
