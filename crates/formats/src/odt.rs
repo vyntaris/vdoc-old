@@ -23,7 +23,7 @@ use std::sync::Arc;
 
 use quick_xml::XmlVersion;
 use quick_xml::events::{BytesStart, Event};
-use vdoc_doc::props::VAlign;
+use vdoc_doc::props::{Borders, VAlign};
 use vdoc_doc::section::{Columns, SectionStart};
 use vdoc_doc::{Align, Document, RevisionKind, Rgb, SectionProps};
 
