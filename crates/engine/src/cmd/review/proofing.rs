@@ -64,7 +64,7 @@ fn issue_json(s: &Session, a: &Pos, b: &Pos, i: &vdoc_proof::Issue) -> Value {
     json!({
         "start": pos_json(a), "end": pos_json(b), "text": word,
         "kind": if i.kind == vdoc_proof::IssueKind::Spelling { "spelling" } else { "grammar" },
-        "message": i.message, "suggestions": sugg, "lang": i.lang.code(),
+        "message": i.message, "suggestions": sugg, "lang": i.lang.tag(),
     })
 }
 
