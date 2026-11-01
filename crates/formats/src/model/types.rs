@@ -211,6 +211,8 @@ pub enum Inline {
         float: Option<Box<vdoc_doc::para::Float>>,
         blocks: Vec<FBlock>,
         look: BoxLook,
+        /// A freeform's paths ([`vdoc_doc::para::ShapeKind::Freeform`]).
+        path: Option<std::sync::Arc<vdoc_doc::freeform::Freeform>>,
     },
     /// Drawing shapes, text boxes and pictures grouped into one object: its size in points, its
     /// placement when it floats, and its members, each at its offset in the group. Only flows
