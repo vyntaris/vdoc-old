@@ -26,7 +26,7 @@ vdoc-pdf = { path = "crates/pdf" }
 # `vdoc-proof` name here so `vdoc_proof::` paths are unchanged.
 # Pinned like the other craft-libs crates (each has its own rev). This rev is the head of
 # storytold/craft-libs#482, which adds craft-proof; move it to that PR's merge commit once merged.
-vdoc-proof = { package = "craft-proof", git = "https://github.com/storytold/craft-libs", rev = "961162ad15b5992166d0f310763cd09a596772e8", version = "=0.1.0" }
+vdoc-proof = { package = "craft-proof", git = "https://github.com/storytold/craft-libs", rev = "48ed6f8cbd4104225a9ecde122d9fb8d1353b5a6", version = "=0.1.0" }
 vdoc-engine = { path = "crates/engine" }
 vdoc-mcp = { path = "crates/mcp" }
 vdoc-zotero = { path = "crates/zotero" }
