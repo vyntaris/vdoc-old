@@ -148,7 +148,7 @@ fn a_header_starts_at_the_page_margin_and_the_text_after_it() {
 fn a_headers_spacing_stays_below_content_taller_than_it() {
     // LibreOffice's report templates: a header taller than its band keeps its spacing below it,
     // unless the spacing is dynamic (taken by the content first, as in Word). A style that
-    // doesn't say is the profile's: LibreOffice keeps it, VDoc (as Word) doesn't.
+    // doesn't say is the profile's: both presets keep it; a custom profile may grow into it.
     let content = format!(
         r#"<office:document-content {}><office:body><office:text><text:p>x</text:p></office:text></office:body></office:document-content>"#,
         crate::odt::tests::NS_T
@@ -169,8 +169,15 @@ fn a_headers_spacing_stays_below_content_taller_than_it() {
     let dynamic = styles_with_header(hf).replace(r#"fo:margin-bottom="0.25cm""#, r#"fo:margin-bottom="0.25cm" style:dynamic-spacing="true""#);
     let s = crate::odt::tests::import_as(&crate::odt::tests::package(&content, Some(&dynamic)), &lo).last_section;
     assert_eq!((s.header_gap, near(s.footer_gap, cm(0.5))), (0.0, true));
-    // Unstated, VDoc's: grown into.
+    // Unstated: VDoc's keeps it too; a custom profile can grow into it.
     let s = import(&crate::odt::tests::package(&content, Some(&styles_with_header(hf)))).unwrap().last_section;
+    assert!(near(s.header_gap, cm(0.25)) && near(s.footer_gap, cm(0.5)), "{s:?}");
+    let grow = vdoc_doc::odf_profile::OdfProfile {
+        preset: vdoc_doc::odf_profile::OdfPreset::Custom,
+        dynamic_spacing: true,
+        ..vdoc_doc::odf_profile::OdfProfile::vdoc()
+    };
+    let s = crate::odt::tests::import_as(&crate::odt::tests::package(&content, Some(&styles_with_header(hf))), &grow).last_section;
     assert_eq!((s.header_gap, s.footer_gap), (0.0, 0.0));
 }
 
