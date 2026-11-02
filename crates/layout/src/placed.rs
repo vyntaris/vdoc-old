@@ -48,7 +48,7 @@ pub enum Placed {
         effects: vdoc_doc::effects::ShapeEffects,
         spin: Spin,
         /// Arrowheads and text warp (see [`vdoc_doc::connector::ShapeExtra`]).
-        extra: vdoc_doc::connector::ShapeExtra,
+        extra: Box<vdoc_doc::connector::ShapeExtra>,
         /// The floating object it draws (a Drawing Canvas's members: the canvas's), for leaving
         /// exactly one object out of a page (see [`crate::display::DisplayOptions::hide_object`]).
         object: Option<vdoc_doc::Pos>,
