@@ -809,6 +809,17 @@ pub struct Cell {
     pub margins: Option<[f32; 4]>,
     /// Which way its text runs (turned down or up).
     pub direction: vdoc_doc::props::TextDirection,
+    /// A picture behind its content (ODT).
+    pub picture: Option<Box<CellPic>>,
+}
+
+/// A cell's background picture: the picture at its own size, how it fills the cell, and where an
+/// unrepeated one sits (see [`vdoc_doc::props::CellPicture`]).
+#[derive(Clone, Debug, PartialEq)]
+pub struct CellPic {
+    pub img: Img,
+    pub repeat: vdoc_doc::props::PictureRepeat,
+    pub align: [f32; 2],
 }
 
 impl Default for Cell {
@@ -824,6 +835,7 @@ impl Default for Cell {
             valign: None,
             margins: None,
             direction: Default::default(),
+            picture: None,
         }
     }
 }
