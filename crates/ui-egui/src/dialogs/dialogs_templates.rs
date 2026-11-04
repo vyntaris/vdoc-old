@@ -284,7 +284,7 @@ mod tests {
         std::fs::create_dir_all(&dir).unwrap();
         let path = dir.join("House.dotx");
         let mut t = vdoc_doc::Document::new();
-        t.styles.upsert(vdoc_doc::styles::Style {
+        std::sync::Arc::make_mut(&mut t.styles).upsert(vdoc_doc::styles::Style {
             id: "Memo".into(),
             name: "Memo".into(),
             kind: vdoc_doc::styles::StyleKind::Paragraph,
