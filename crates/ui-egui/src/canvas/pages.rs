@@ -221,6 +221,14 @@ pub(crate) fn preview_sel(app: &WordApp) -> Option<&vdoc_engine::Selection> {
     app.canvas.table_preview_layout.as_ref().map(|(_, _, sel, _)| sel)
 }
 
+/// Whether the pages are drawn dark: View › Switch Modes, or in Read Mode the Page color's
+/// Inverse (Switch Modes is ignored there). Drawing over the pages (ink, drag previews) follows it.
+pub(crate) fn dark_page(app: &WordApp) -> bool {
+    use vdoc_engine::cmd::view::ReadPageColor;
+    let v = &app.session.view;
+    if v.read_mode { v.read_page_color == ReadPageColor::Inverse } else { v.dark_mode }
+}
+
 /// Render options for this view's page rasters: marks, markup, dark page, header/body dimming.
 pub(super) fn page_render_options(app: &WordApp, dim_body: bool) -> vdoc_render::RenderOptions {
     let mut opts = screen_render_options();
@@ -231,14 +239,13 @@ pub(super) fn page_render_options(app: &WordApp, dim_body: bool) -> vdoc_render:
     // Ink Replay draws the ink itself, stroke by stroke, over pages without it.
     opts.display.hide_ink = app.session.view.hide_ink || app.session.view.draw.replay;
     opts.display.revisions = app.session.prefs.markup.clone();
-    opts.dark = app.session.view.dark_mode;
+    opts.dark = dark_page(app);
     opts.dark_paper = vdoc_render::DARK_PAPER;
-    // In Read Mode the Page color sets the paper and the dark page, and Switch Modes is ignored.
+    // In Read Mode the Page color sets the paper.
     if app.session.view.read_mode {
         use vdoc_engine::cmd::view::ReadPageColor;
         let color = app.session.view.read_page_color;
         opts.read_paper = Some(if color == ReadPageColor::Sepia { vdoc_render::SEPIA_PAPER } else { vdoc_doc::props::Rgb::WHITE });
-        opts.dark = color == ReadPageColor::Inverse;
     }
     opts.display.dim_header = !dim_body;
     opts.display.dim_body = dim_body;
