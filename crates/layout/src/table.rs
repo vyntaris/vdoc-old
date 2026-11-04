@@ -1288,6 +1288,7 @@ fn cell_picture(pic: &vdoc_doc::props::CellPicture, rect: Rect, story: StoryRef,
         path: vdoc_doc::Path(path.to_vec()),
         off: usize::MAX,
         spin: vdoc_geom::Spin::default(),
+        fx: Default::default(),
     };
     let sized = w.is_finite() && h.is_finite() && w > 0.1 && h > 0.1;
     match pic.repeat {
