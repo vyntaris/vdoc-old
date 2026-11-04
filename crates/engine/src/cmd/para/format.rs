@@ -1,4 +1,4 @@
-use super::*;
+use super::{Align, CmdError, CmdResult, LineSpacing, NumRef, ParaProps, Pos, Session, Value, json, p, sel_result};
 
 /// Resolved paragraph props at the caret.
 pub(super) fn cur(s: &Session) -> vdoc_doc::resolve::ResolvedPara {
