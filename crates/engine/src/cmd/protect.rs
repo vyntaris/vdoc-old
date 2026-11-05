@@ -9,6 +9,7 @@
 
 use serde_json::{Value, json};
 use std::collections::HashSet;
+use std::sync::Arc;
 use vdoc_doc::para::{InlineObject, OBJ};
 use vdoc_doc::props::{CellProps, CharProps, RowProps, TableProps};
 use vdoc_doc::{Block, Blocks, Document, Path, PermRange, Pos, StoryRef};
@@ -78,7 +79,7 @@ fn restrict(s: &mut Session, v: &Value) -> CmdResult {
             return Err(CmdError::Disabled("stop protection before changing the formatting restrictions".into()));
         }
         let names: Vec<&str> = list.iter().filter_map(Value::as_str).take(10_000).collect();
-        for st in &mut s.doc.styles.styles {
+        for st in &mut Arc::make_mut(&mut s.doc.styles).styles {
             st.locked = names.iter().any(|n| *n == st.id || n.eq_ignore_ascii_case(&st.name));
         }
     }
