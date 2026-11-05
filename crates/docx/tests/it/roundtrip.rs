@@ -7,7 +7,7 @@ use vdoc_doc::numbering::ListKind;
 use vdoc_doc::para::{Anchor, Float, FloatAlign, NoteKind, ShapeKind, Wrap};
 use vdoc_doc::props::{
     Align, Border, BorderStyle, Borders, CharProps, HeightRule, Highlight, LineSpacing, NumRef, ParaProps, Rgb, RowProps, TabAlign, TabLeader,
-    TabStop, TableLook, TextColor, TextDirection, Underline, VAlign, VMerge, VertAlign,
+    TabStop, TableLook, TextAlignment, TextColor, TextDirection, Underline, VAlign, VMerge, VertAlign,
 };
 use vdoc_doc::section::{Columns, DocGrid, DocGridType, LineNumberRestart, LineNumbering, NumFormat, PageVAlign, SectionProps, SectionStart};
 use vdoc_doc::styles::{Style, StyleKind};
@@ -221,6 +221,7 @@ fn every_para_prop_round_trips() {
         num_change: None,
         fmt_change: None,
         snap_to_grid: Some(false),
+        text_alignment: Some(TextAlignment::Top),
     };
     let variants = [
         ParaProps { line_spacing: Some(LineSpacing::AtLeast(14.0)), indent_first: Some(24.0), align: Some(Align::Center), ..Default::default() },
