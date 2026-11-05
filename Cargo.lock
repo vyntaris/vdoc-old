@@ -6824,6 +6824,7 @@ dependencies = [
  "vdoc-engine",
  "vdoc-fonts",
  "vdoc-ui-egui",
+ "x11rb",
  "zbus",
 ]
 
