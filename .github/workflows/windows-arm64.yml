@@ -31,3 +31,5 @@ jobs:
     with:
       app-name: vdoc
       app-dir: VDoc
+      install-relative-path: Programs/ArtCraft/VDoc
+      install-scope: perUser

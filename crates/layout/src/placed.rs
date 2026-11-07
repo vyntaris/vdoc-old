@@ -1,4 +1,4 @@
-use super::*;
+use super::{Arc, Border, ParaLayout, Path, Rect, Rgb, Spin, StoryRef, TextDirection, Wrap};
 
 /// Something placed on a page (page coordinates, points, y down).
 #[derive(Clone, Debug)]
@@ -36,6 +36,8 @@ pub enum Placed {
         path: Path,
         off: usize,
         spin: Spin,
+        /// Brightness, contrast and transparency (see [`vdoc_doc::picfx`]).
+        fx: vdoc_doc::picfx::PicFx,
     },
     Shape {
         rect: Rect,
@@ -48,7 +50,7 @@ pub enum Placed {
         effects: vdoc_doc::effects::ShapeEffects,
         spin: Spin,
         /// Arrowheads and text warp (see [`vdoc_doc::connector::ShapeExtra`]).
-        extra: vdoc_doc::connector::ShapeExtra,
+        extra: Box<vdoc_doc::connector::ShapeExtra>,
         /// The floating object it draws (a Drawing Canvas's members: the canvas's), for leaving
         /// exactly one object out of a page (see [`crate::display::DisplayOptions::hide_object`]).
         object: Option<vdoc_doc::Pos>,
