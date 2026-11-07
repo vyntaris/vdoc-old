@@ -7620,6 +7620,7 @@ fn chart_text_the_font_lacks_is_drawn_in_a_fallback_face() {
     // #4720: a Chinese legend in a chart drawn in the body font (which has no Chinese) showed boxes.
     use vdoc_doc::graphic::{Graphic, GraphicItem, GraphicKind, TextAlign};
     use vdoc_doc::props::Rgb;
+    crate::test_fonts();
     if vdoc_fonts::FontDb::global().fallback_for('销', 0).is_none() {
         eprintln!("skipped: no Chinese font installed");
         return;
