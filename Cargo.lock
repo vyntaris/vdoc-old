@@ -6846,13 +6846,16 @@ dependencies = [
 name = "vdoc-cli"
 version = "0.15.1"
 dependencies = [
+ "image",
  "serde_json",
  "sys-locale",
  "vdoc-doc",
  "vdoc-engine",
+ "vdoc-fonts",
  "vdoc-mcp",
  "vdoc-render",
  "vdoc-zotero",
+ "zip 3.0.0",
 ]
 
 [[package]]
