@@ -329,7 +329,7 @@ fn turned_off(mut chr: vdoc_doc::props::CharProps, off: [bool; 4]) -> vdoc_doc::
         chr.underline = Some(vdoc_doc::props::Underline::None);
     }
     if strike {
-        chr.strike = Some(false);
+        (chr.strike, chr.double_strike) = (Some(false), Some(false));
     }
     chr
 }
