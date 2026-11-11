@@ -36,6 +36,8 @@ pub enum Placed {
         path: Path,
         off: usize,
         spin: Spin,
+        /// Brightness, contrast and transparency (see [`vdoc_doc::picfx`]).
+        fx: vdoc_doc::picfx::PicFx,
     },
     Shape {
         rect: Rect,
