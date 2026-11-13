@@ -22,8 +22,7 @@ use vdoc_doc::graphic::{Graphic, GraphicKind};
 use vdoc_doc::numbering::{AbstractNum, Level, LevelSuffix, Num};
 use vdoc_doc::para::NoteKind;
 use vdoc_doc::para::OBJ;
-use vdoc_doc::props::Rgb;
-use vdoc_doc::props::VAlign;
+use vdoc_doc::props::{PropChange, Rgb, VAlign};
 use vdoc_doc::section::NumFormat;
 use vdoc_doc::styles::{PartFormat, Style, StyleKind, StyleSheet, TablePart, TableStyleParts};
 use vdoc_doc::{
