@@ -4,6 +4,7 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex, Weak};
 
+use craft_metafile::{Item, Picture, PlacedItem, Seg};
 use vello_cpu::kurbo::{self, Affine, BezPath, Shape};
 use vello_cpu::peniko;
 use vello_cpu::{Pixmap, RenderContext, Resources};
@@ -14,7 +15,6 @@ use vdoc_fonts::FontDb;
 use vdoc_layout::Page;
 use vdoc_layout::display::Paint;
 use vdoc_layout::display::{DisplayOptions, Draw, Stroke, page_layers};
-use vdoc_metafile::{Item, Picture, PlacedItem, Seg};
 
 mod media;
 
@@ -858,7 +858,7 @@ fn draw_image(ctx: &mut RenderContext, fr: &Frame, it: &Draw) {
         return;
     };
     let (pw, ph) = (pm.width().max(1) as f64, pm.height().max(1) as f64);
-    let [cl, ct, vis_w, vis_h] = vdoc_metafile::crop_window(*crop);
+    let [cl, ct, vis_w, vis_h] = vdoc_layout::crop_window(*crop);
     let sx = r.width() / (pw * vis_w);
     let sy = r.height() / (ph * vis_h);
     ctx.set_transform(view);

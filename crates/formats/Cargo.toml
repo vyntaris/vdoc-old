@@ -13,7 +13,7 @@ vdoc-doc = { workspace = true }
 vdoc-docx = { workspace = true }
 craft-rtf = { workspace = true }
 vdoc-geom = { workspace = true, features = ["image"] }
-vdoc-metafile = { workspace = true }
+craft-metafile = { workspace = true }
 base64 = { workspace = true }
 image = { workspace = true }
 quick-xml = { workspace = true }
