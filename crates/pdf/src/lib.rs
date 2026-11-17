@@ -28,6 +28,7 @@ use std::collections::{HashMap, HashSet};
 use std::num::NonZeroU16;
 use std::sync::Arc;
 
+use craft_metafile::{Picture, PlacedItem};
 use craft_pdf::write::{self, Metadata, WriteError, Writer, backend as krilla};
 use krilla::annotation::{Annotation, LinkAnnotation, Target};
 use krilla::color::rgb;
@@ -52,7 +53,6 @@ use vdoc_layout::display::Paint;
 use vdoc_layout::display::{Draw, ItemDisplay, Stroke as LineStyle};
 use vdoc_layout::para::{ClKind, LineEnd};
 use vdoc_layout::{DocLayout, LayoutCache, NumeralMode, Page, Placed, layout};
-use vdoc_metafile::{Picture, PlacedItem};
 
 mod export;
 mod exporter;
