@@ -8,6 +8,11 @@ description = "VDoc import/export: plain text, Markdown, HTML, RTF, OpenDocument
 [lints]
 workspace = true
 
+[features]
+# `sheet::xls_fixture`, the binary workbook builder other crates' tests share; turned on only as a
+# dev-dependency, so never built into the app.
+test-support = ["craft-xls/test-support"]
+
 [dependencies]
 vdoc-doc = { workspace = true }
 vdoc-docx = { workspace = true }
