@@ -188,6 +188,7 @@ pub fn show(app: &mut WordApp, ctx: &egui::Context) {
         Dialog::Icons { .. } => "Icons",
         Dialog::PasteSpecial { .. } => "Paste Special",
         Dialog::About { .. } => "About VDoc",
+        Dialog::FontDownload { .. } => "Get the Missing Fonts",
         Dialog::SaveChanges { .. } => "VDoc",
         Dialog::DiscardRecovery { .. } => "Discard recovery copy",
         Dialog::RecipientList { .. } => "Recipient List",
