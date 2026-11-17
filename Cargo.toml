@@ -31,6 +31,7 @@ vdoc-pdf = { path = "crates/pdf" }
 vdoc-proof = { package = "craft-proof", git = "https://github.com/storytold/craft-libs", rev = "93dac78c93a7f1fd66e2022edeb089233b1dc45a", version = "=0.1.0" }
 craft-font-store = { git = "https://github.com/storytold/craft-libs", rev = "93dac78c93a7f1fd66e2022edeb089233b1dc45a", version = "=0.1.0" }
 craft-font-catalog = { git = "https://github.com/storytold/craft-libs", rev = "93dac78c93a7f1fd66e2022edeb089233b1dc45a", version = "=0.1.0" }
+craft-ssip = { git = "https://github.com/storytold/craft-libs", rev = "93dac78c93a7f1fd66e2022edeb089233b1dc45a", version = "=0.1.0" }
 vdoc-engine = { path = "crates/engine" }
 vdoc-mcp = { path = "crates/mcp" }
 vdoc-zotero = { path = "crates/zotero" }
