@@ -21,3 +21,9 @@ vdoc-mcp = { workspace = true }
 vdoc-zotero = { workspace = true }
 serde_json = { workspace = true }
 sys-locale = "0.3"
+
+[dev-dependencies]
+vdoc-fonts = { workspace = true }
+vdoc-geom = { workspace = true, features = ["image"] }
+image = { workspace = true }
+craft-zip = { workspace = true }
