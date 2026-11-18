@@ -28,6 +28,7 @@ use std::collections::{HashMap, HashSet};
 use std::num::NonZeroU16;
 use std::sync::Arc;
 
+use craft_metafile::{Picture, PlacedItem};
 use craft_pdf::write::{self, Metadata, WriteError, Writer, backend as krilla};
 use krilla::annotation::{Annotation, LinkAnnotation, Target};
 use krilla::color::rgb;
@@ -49,10 +50,9 @@ use vdoc_doc::{Document, Path as DocPath, Rgb, StoryRef};
 use vdoc_fonts::FaceRef;
 use vdoc_geom::Rect;
 use vdoc_layout::display::Paint;
-use vdoc_layout::display::{DisplayOptions, Draw, ItemDisplay, Stroke as LineStyle};
+use vdoc_layout::display::{Draw, ItemDisplay, Stroke as LineStyle};
 use vdoc_layout::para::{ClKind, LineEnd};
-use vdoc_layout::{DocLayout, LayoutCache, LayoutOptions, NumeralMode, Page, Placed, layout};
-use vdoc_metafile::{Picture, PlacedItem};
+use vdoc_layout::{DocLayout, LayoutCache, NumeralMode, Page, Placed, layout};
 
 mod export;
 mod exporter;
@@ -72,7 +72,7 @@ use exporter::Exporter;
 use glyphs::{baseline, cluster_ends, left_to_right, split_clusters, visual_order};
 #[cfg(test)]
 use metadata::{civil, parse_iso};
-pub use options::{PdfError, PdfOptions};
+pub use options::{PdfError, PdfOptions, WATERMARK_MAX_CHARS};
 #[cfg(test)]
 use paint::shape_path;
 #[cfg(test)]
