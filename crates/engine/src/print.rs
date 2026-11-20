@@ -11,7 +11,7 @@
 
 use serde_json::{Value, json};
 use vdoc_layout::DocLayout;
-pub use vdoc_pdf::imposition::Imposition;
+pub use vdoc_pdf::imposition::{Imposition, Sheet};
 
 use crate::{CmdError, Session, p};
 
