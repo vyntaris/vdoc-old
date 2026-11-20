@@ -16,6 +16,8 @@ test-support = []
 
 [dependencies]
 craft-mime.workspace = true
+craft-keymap.workspace = true
+craft-codepage.workspace = true
 vdoc-geom = { workspace = true, features = ["image"] }
 vdoc-doc = { workspace = true }
 vdoc-fonts = { workspace = true }

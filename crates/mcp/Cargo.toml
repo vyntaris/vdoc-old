@@ -12,7 +12,12 @@ workspace = true
 vdoc-doc = { workspace = true }
 vdoc-engine = { workspace = true }
 vdoc-render = { workspace = true }
-vdoc-control-key = { workspace = true }
 craft-mcp-server = { workspace = true }
 serde_json = { workspace = true }
 log = { workspace = true }
+
+# The bridge to a running app (`Remote`): the control channel's authenticate-once client and token
+# lookup, which do not build for wasm32.
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+vdoc-control-key = { workspace = true }
+craft = { workspace = true, features = ["automation"] }
