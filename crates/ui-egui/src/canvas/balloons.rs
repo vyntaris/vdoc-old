@@ -76,7 +76,7 @@ fn apply(app: &mut WordApp, cards: &[Card], edit: CommentEdit) {
                 _ => None,
             });
             if let Some(pos) = pos {
-                app.session.sel = vdoc_engine::Selection::caret(pos);
+                app.session.set_selection(vdoc_engine::Selection::caret(pos));
             }
         }
         CommentEdit::Edit { thread, index, text, .. } => {

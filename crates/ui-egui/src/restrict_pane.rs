@@ -245,7 +245,7 @@ fn enforced_ui(app: &mut WordApp, ui: &mut Ui, st: &mut RestrictPane, mode: &str
     if (regions > 0 || fields > 0) && Button::new(tl!("Find Next Editable Region")).show(ui).clicked() {
         let from = app.session.sel.ordered().1;
         if let Some((a, b)) = vdoc_engine::cmd::protect::next_region(&app.session, &from) {
-            app.session.sel = vdoc_engine::Selection { anchor: a, focus: b };
+            app.session.set_selection(vdoc_engine::Selection { anchor: a, focus: b });
             app.canvas.focus_page(ui.ctx());
         }
     }
