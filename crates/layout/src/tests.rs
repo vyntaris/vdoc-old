@@ -5,6 +5,7 @@ use vdoc_doc::props::{Align, Border, BorderStyle, Borders, ParaProps, TextDirect
 use vdoc_doc::{Pos, Table};
 
 mod autospace;
+mod balanced_tail;
 mod bidi;
 mod budget;
 mod cell_floats;
