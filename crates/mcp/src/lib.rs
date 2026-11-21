@@ -21,7 +21,8 @@ use vdoc_engine::Session;
 use vdoc_engine::file_access::{self, AutomationRoots};
 
 /// Methods that need the desktop app.
-pub const NEEDS_APP: &str = "needs the desktop app: start `vdoc --control 7981` and run `vdoc-cli mcp --connect 127.0.0.1:7981`";
+pub const NEEDS_APP: &str =
+    "needs the desktop app; `vdoc-cli mcp --connect` is refused until the app confines its control channel to automation roots (#3695)";
 
 /// An in-process session.
 pub struct Headless {
