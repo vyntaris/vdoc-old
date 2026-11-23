@@ -66,8 +66,7 @@ impl WordApp {
 /// for Updates shows.
 #[cfg(not(target_arch = "wasm32"))]
 fn refused_check() -> craft::update::updater::CheckSource {
-    let why = tl!("Updates are off in this window: VDoc was started with another program's AppImage settings. Start VDoc from its own menu entry to update it.")
-        .to_string();
+    let why = tl!("VDoc is updated with the system: sudo pacman -Syu").to_string();
     std::sync::Arc::new(move || Err(why.clone()))
 }
 
@@ -188,7 +187,7 @@ mod tests {
             std::thread::sleep(std::time::Duration::from_millis(5));
         }
         let status = app.updates_rt.updater.status();
-        assert!(matches!(status, Status::Failed(why) if why.contains("another program's AppImage")), "{status:?}");
+        assert!(matches!(status, Status::Failed(why) if why.contains("updated with the system")), "{status:?}");
         assert!(!app.updates_rt.updater.prompt_open(), "no update offered");
     }
 

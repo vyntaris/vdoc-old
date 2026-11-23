@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=VDoc
+GenericName=Word Processor
+GenericName[sr]=Обрађивач текста
+GenericName[sr@latin]=Obrađivač teksta
+Comment=Write documents; open and save .docx, .odt, .rtf and more
+Comment[sr]=Пишите документе; отварајте и чувајте .docx, .odt, .rtf и друге
+Comment[sr@latin]=Pišite dokumente; otvarajte i čuvajte .docx, .odt, .rtf i druge
+Exec=vdoc %F
+TryExec=vdoc
+Icon=org.vyntaris.VDoc
+Terminal=false
+StartupNotify=true
+StartupWMClass=org.vyntaris.VDoc
+Categories=Office;WordProcessor;
+Keywords=word;processor;document;docx;odt;writer;text;letter;report;vdoc;tekst;dokument;
+MimeType=application/vnd.openxmlformats-officedocument.wordprocessingml.document;application/vnd.openxmlformats-officedocument.wordprocessingml.template;application/msword;application/vnd.oasis.opendocument.text;application/rtf;text/markdown;text/x-tex;text/html;text/plain;

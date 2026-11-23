@@ -229,7 +229,7 @@ fn app_icon() -> Option<egui::IconData> {
     #[cfg(target_os = "macos")]
     let png: &[u8] = include_bytes!("../../../assets/app-icon/vdoc-macos-512.png");
     #[cfg(not(target_os = "macos"))]
-    let png: &[u8] = include_bytes!("../../../assets/app-icon/hicolor/256x256/apps/ai.storyteller.vdoc.png");
+    let png: &[u8] = include_bytes!("../../../assets/app-icon/hicolor/256x256/apps/org.vyntaris.VDoc.png");
     eframe::icon_data::from_png_bytes(png).map_err(|e| log::warn!("app icon: {e}")).ok()
 }
 
@@ -443,7 +443,7 @@ fn main() -> eframe::Result {
     let mut options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
             .with_title("VDoc")
-            .with_app_id("ai.storyteller.vdoc")
+            .with_app_id("org.vyntaris.VDoc")
             .with_inner_size([1440.0, 920.0])
             .with_min_inner_size(vdoc_ui_egui::window_geometry::MIN_SIZE)
             .with_drag_and_drop(true)
@@ -528,7 +528,7 @@ fn main() -> eframe::Result {
             );
             let shell = ShellInfo::current().backend(if x11 { Backend::X11 } else { Backend::from_env() });
             let spec = InstallSpec::new(shell, Arc::new(SystemWindows))
-                .app_id("ai.storyteller.vdoc")
+                .app_id("org.vyntaris.VDoc")
                 .system(SystemReader::start(wake))
                 .clipboard(Clipboard::new(SystemClipboard::new().decoder(decode_png)))
                 .placement(placement);
@@ -553,11 +553,9 @@ fn main() -> eframe::Result {
             if std::env::var("VDOC_FILE_DIALOG").is_ok_and(|v| v.trim().eq_ignore_ascii_case("builtin")) {
                 app = app.with_fallback_chooser(true);
             }
-            app.set_startup_update_check(true);
-            // After the preferences, so the reason it gives is in the interface language.
-            if updates_unsafe {
-                app.disable_self_update();
-            }
+            // Vyntaris: VDoc comes from pacman and is updated with the system, never by itself.
+            let _ = updates_unsafe;
+            app.disable_self_update();
             // Language packs from the suite's font store; an Install click is the person's own.
             vdoc_engine::packs::use_font_store(true);
             // A region chosen in File › Options replaces the system's for the first blank
@@ -793,7 +791,7 @@ mod smoke {
                     .build(),
             );
             let spec = InstallSpec::new(ShellInfo::current(), Arc::new(SystemWindows))
-                .app_id("ai.storyteller.vdoc")
+                .app_id("org.vyntaris.VDoc")
                 .placement(Arc::new(Mutex::new(Store::in_memory())));
             embed::install(&ctx, spec, &vdoc_ui_egui::ui_fonts(lang)).map_err(|e| e.to_string()).unwrap();
             let mut frames = Frames::over(ctx.clone());

@@ -734,7 +734,9 @@ fn print_preview_fills_the_page_beside_the_settings() {
 /// #6639: when the whole side menu fits, About sits in its footer, below the last page row.
 #[test]
 fn about_stays_at_the_bottom_of_a_side_menu_that_fits() {
-    let h = file_page(new_app(), "home");
+    let mut app = new_app();
+    app.ui.show_discord = true; // Vyntaris hides it by default
+    let h = file_page(app, "home");
     let about = h.get_by_label("About").rect();
     let options = h.get_by_label("Options").rect();
     assert!(about.min.y >= options.max.y, "About is below Options: {about:?} {options:?}");

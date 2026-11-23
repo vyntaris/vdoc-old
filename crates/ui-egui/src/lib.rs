@@ -9,9 +9,9 @@
 /// prompt shows both, and an AppImage's menu entry gets the icon.
 #[cfg(not(target_arch = "wasm32"))]
 pub const UPDATE_APP: craft::update::app::App = craft::update::app::App {
-    icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/ai.storyteller.vdoc.png")),
+    icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/org.vyntaris.VDoc.png")),
     accent: Some([0x3f, 0x5f, 0xe0]),
-    ..craft::update::suite::VDOC
+    ..craft::update::suite::WORDCRAFT
 };
 
 /// VDoc as the host and the theme pins know it. [`UPDATE_APP`] stays beside it: the updater
@@ -27,6 +27,8 @@ macro_rules! tl {
 }
 
 pub mod a11y;
+#[cfg(not(target_arch = "wasm32"))]
+pub mod vyntaris_theme;
 pub mod a11y_pane;
 pub mod backstage;
 pub mod canvas;

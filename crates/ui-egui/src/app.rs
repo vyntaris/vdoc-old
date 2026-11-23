@@ -209,6 +209,11 @@ impl WordApp {
             .set(ComponentSet::Productivity);
         env.motion = self.ui.animations.motion();
         env.sizes = std::sync::Arc::clone(&APP_SIZES);
+        // Vyntaris: the desktop's colours (`vyntaris_theme`).
+        #[cfg(not(target_arch = "wasm32"))]
+        if let Some(theme) = crate::vyntaris_theme::current() {
+            env = env.library_theme(theme);
+        }
         env
     }
 

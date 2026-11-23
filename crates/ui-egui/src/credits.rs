@@ -73,13 +73,12 @@ pub fn about_info() -> AboutInfo {
     let version = crate::i18n::fmt(tl!("{version} ({build})"), &[("version", env!("CARGO_PKG_VERSION")), ("build", build)]);
     AboutInfo::new(
         tl!("VDoc").to_string(),
-        tl!("A free, open-source word processor written from scratch in Rust.\nPart of the Crafting Apps from the ArtCraft team.").to_string(),
+        tl!("The word processor of Vyntaris Office, based on WordCraft by the ArtCraft team.").to_string(),
         version.to_string(),
     )
     .links([
-        AboutLink::new(tl!("getartcraft.com/apps/vdoc").to_string(), "https://getartcraft.com/apps/vdoc"),
-        AboutLink::new(tl!("Join us on Discord: discord.gg/artcraft").to_string(), "https://discord.gg/artcraft"),
-        AboutLink::new(tl!("Source code: github.com/storytold/wordcraft").to_string(), "https://github.com/storytold/wordcraft"),
+        AboutLink::new(tl!("Source code: github.com/vyntaris/vdoc").to_string(), "https://github.com/vyntaris/vdoc"),
+        AboutLink::new(tl!("WordCraft: github.com/storytold/wordcraft").to_string(), "https://github.com/storytold/wordcraft"),
     ])
     .built_with(tl!("MIT OR Apache-2.0. Copyright (c) 2026 ArtCraft Team and the VDoc contributors.").to_string())
 }

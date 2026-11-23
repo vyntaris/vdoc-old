@@ -8010,6 +8010,326 @@ dependencies = [
 ]
 
 [[package]]
+name = "vdoc"
+version = "0.18.1"
+dependencies = [
+ "craft",
+ "craft-proof",
+ "eframe",
+ "egui",
+ "log",
+ "serde_json",
+ "tempfile",
+ "vdoc-control-key",
+ "vdoc-doc",
+ "vdoc-engine",
+ "vdoc-fonts",
+ "vdoc-geom",
+ "vdoc-ui-egui",
+ "winit",
+ "winresource",
+ "x11-dl",
+ "xkbcommon-dl",
+]
+
+[[package]]
+name = "vdoc-cli"
+version = "0.18.1"
+dependencies = [
+ "craft-zip",
+ "image",
+ "serde_json",
+ "sys-locale",
+ "vdoc-doc",
+ "vdoc-engine",
+ "vdoc-fonts",
+ "vdoc-geom",
+ "vdoc-mcp",
+ "vdoc-render",
+ "vdoc-zotero",
+]
+
+[[package]]
+name = "vdoc-control-key"
+version = "0.18.1"
+
+[[package]]
+name = "vdoc-doc"
+version = "0.18.1"
+dependencies = [
+ "base64 0.23.1",
+ "craft-codepage",
+ "craft-zip",
+ "log",
+ "proptest",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.21",
+ "unicode-segmentation",
+ "vdoc-geom",
+]
+
+[[package]]
+name = "vdoc-docbin"
+version = "0.18.1"
+dependencies = [
+ "cfb",
+ "craft-doc-binary",
+ "craft-wordmodel",
+ "serde",
+ "serde_json",
+ "vdoc-doc",
+]
+
+[[package]]
+name = "vdoc-docx"
+version = "0.18.1"
+dependencies = [
+ "base64 0.23.1",
+ "cfb",
+ "craft-docx",
+ "craft-wordmodel",
+ "craft-xml",
+ "craft-zip",
+ "image",
+ "log",
+ "proptest",
+ "serde",
+ "serde_json",
+ "vdoc-doc",
+ "vdoc-geom",
+]
+
+[[package]]
+name = "vdoc-engine"
+version = "0.18.1"
+dependencies = [
+ "cfb",
+ "chrono",
+ "craft-codepage",
+ "craft-font-catalog",
+ "craft-font-store",
+ "craft-keymap",
+ "craft-mime",
+ "craft-proof",
+ "craft-ssip",
+ "craft-zip",
+ "encoding_rs",
+ "getrandom 0.3.4",
+ "image",
+ "js-sys",
+ "libc",
+ "log",
+ "regex",
+ "regex-automata",
+ "rustix 1.1.5",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.21",
+ "vdoc-doc",
+ "vdoc-docbin",
+ "vdoc-docx",
+ "vdoc-fonts",
+ "vdoc-formats",
+ "vdoc-geom",
+ "vdoc-layout",
+ "vdoc-pdf",
+ "vdoc-render",
+ "zeroize",
+]
+
+[[package]]
+name = "vdoc-fonts"
+version = "0.18.1"
+dependencies = [
+ "brotli-decompressor 5.0.3",
+ "harfrust 0.13.3",
+ "kurbo",
+ "log",
+ "serde_json",
+ "skrifa 0.47.0",
+ "unicode-bidi",
+ "unicode-script",
+ "wuff",
+]
+
+[[package]]
+name = "vdoc-formats"
+version = "0.18.1"
+dependencies = [
+ "chardetng",
+ "chrono",
+ "craft-flow",
+ "craft-html",
+ "craft-image-codecs",
+ "craft-latex",
+ "craft-markdown",
+ "craft-math",
+ "craft-metafile",
+ "craft-mime",
+ "craft-odf",
+ "craft-ods",
+ "craft-rtf",
+ "craft-sheet",
+ "craft-wordmodel",
+ "craft-xls",
+ "craft-xlsx",
+ "craft-zip",
+ "encoding_rs",
+ "log",
+ "proptest",
+ "vdoc-doc",
+ "vdoc-docx",
+ "vdoc-geom",
+]
+
+[[package]]
+name = "vdoc-geom"
+version = "0.18.1"
+dependencies = [
+ "craft-image-codecs",
+ "craft-tiff",
+ "image",
+ "serde",
+]
+
+[[package]]
+name = "vdoc-layout"
+version = "0.18.1"
+dependencies = [
+ "craft-metafile",
+ "craft-proof",
+ "image",
+ "js-sys",
+ "kurbo",
+ "log",
+ "serde",
+ "serde_json",
+ "unicode-bidi",
+ "unicode-linebreak",
+ "unicode-segmentation",
+ "vdoc-doc",
+ "vdoc-fonts",
+ "vdoc-geom",
+]
+
+[[package]]
+name = "vdoc-mcp"
+version = "0.18.1"
+dependencies = [
+ "craft",
+ "craft-mcp-server",
+ "log",
+ "serde_json",
+ "vdoc-control-key",
+ "vdoc-doc",
+ "vdoc-engine",
+ "vdoc-render",
+]
+
+[[package]]
+name = "vdoc-pdf"
+version = "0.18.1"
+dependencies = [
+ "chrono",
+ "craft-metafile",
+ "craft-pdf",
+ "hayro-cmap",
+ "hayro-interpret",
+ "hayro-syntax",
+ "image",
+ "js-sys",
+ "kurbo",
+ "log",
+ "thiserror 2.0.21",
+ "vdoc-doc",
+ "vdoc-fonts",
+ "vdoc-geom",
+ "vdoc-layout",
+]
+
+[[package]]
+name = "vdoc-render"
+version = "0.18.1"
+dependencies = [
+ "craft-metafile",
+ "image",
+ "log",
+ "vdoc-doc",
+ "vdoc-fonts",
+ "vdoc-geom",
+ "vdoc-layout",
+ "vello_cpu",
+]
+
+[[package]]
+name = "vdoc-ui-egui"
+version = "0.18.1"
+dependencies = [
+ "cfb",
+ "chrono",
+ "craft",
+ "craft-fonts-build",
+ "craft-ui-test-kit",
+ "craft-zip",
+ "eframe",
+ "egui",
+ "egui_extras",
+ "egui_kittest",
+ "image",
+ "js-sys",
+ "log",
+ "serde",
+ "serde_json",
+ "sys-locale",
+ "toml",
+ "toml_edit",
+ "vdoc-doc",
+ "vdoc-engine",
+ "vdoc-fonts",
+ "vdoc-geom",
+ "vdoc-layout",
+ "vdoc-render",
+ "vdoc-zotero",
+ "web-time",
+ "zbus",
+]
+
+[[package]]
+name = "vdoc-web"
+version = "0.18.1"
+dependencies = [
+ "craft",
+ "eframe",
+ "egui",
+ "js-sys",
+ "log",
+ "serde_json",
+ "vdoc-doc",
+ "vdoc-engine",
+ "vdoc-fonts",
+ "vdoc-ui-egui",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "web-sys",
+ "web-time",
+]
+
+[[package]]
+name = "vdoc-zotero"
+version = "0.18.1"
+dependencies = [
+ "log",
+ "proptest",
+ "serde_json",
+ "thiserror 2.0.21",
+ "vdoc-doc",
+ "vdoc-docx",
+ "vdoc-engine",
+ "vdoc-formats",
+]
+
+[[package]]
 name = "vectorcraft-geom"
 version = "0.18.0"
 source = "git+https://github.com/storytold/vectorcraft.git?rev=6b3a6b8788ebcb420d69449199cbdf323888d27e#6b3a6b8788ebcb420d69449199cbdf323888d27e"
@@ -8943,326 +9263,6 @@ dependencies = [
  "wayland-client",
  "wayland-protocols",
  "wayland-protocols-wlr",
-]
-
-[[package]]
-name = "vdoc"
-version = "0.18.1"
-dependencies = [
- "craft",
- "craft-proof",
- "eframe",
- "egui",
- "log",
- "serde_json",
- "tempfile",
- "winit",
- "winresource",
- "vdoc-control-key",
- "vdoc-doc",
- "vdoc-engine",
- "vdoc-fonts",
- "vdoc-geom",
- "vdoc-ui-egui",
- "x11-dl",
- "xkbcommon-dl",
-]
-
-[[package]]
-name = "vdoc-cli"
-version = "0.18.1"
-dependencies = [
- "craft-zip",
- "image",
- "serde_json",
- "sys-locale",
- "vdoc-doc",
- "vdoc-engine",
- "vdoc-fonts",
- "vdoc-geom",
- "vdoc-mcp",
- "vdoc-render",
- "vdoc-zotero",
-]
-
-[[package]]
-name = "vdoc-control-key"
-version = "0.18.1"
-
-[[package]]
-name = "vdoc-doc"
-version = "0.18.1"
-dependencies = [
- "base64 0.23.1",
- "craft-codepage",
- "craft-zip",
- "log",
- "proptest",
- "serde",
- "serde_json",
- "thiserror 2.0.21",
- "unicode-segmentation",
- "vdoc-geom",
-]
-
-[[package]]
-name = "vdoc-docbin"
-version = "0.18.1"
-dependencies = [
- "cfb",
- "craft-doc-binary",
- "craft-wordmodel",
- "serde",
- "serde_json",
- "vdoc-doc",
-]
-
-[[package]]
-name = "vdoc-docx"
-version = "0.18.1"
-dependencies = [
- "base64 0.23.1",
- "cfb",
- "craft-docx",
- "craft-wordmodel",
- "craft-xml",
- "craft-zip",
- "image",
- "log",
- "proptest",
- "serde",
- "serde_json",
- "vdoc-doc",
- "vdoc-geom",
-]
-
-[[package]]
-name = "vdoc-engine"
-version = "0.18.1"
-dependencies = [
- "cfb",
- "chrono",
- "craft-codepage",
- "craft-font-catalog",
- "craft-font-store",
- "craft-keymap",
- "craft-mime",
- "craft-proof",
- "craft-ssip",
- "craft-zip",
- "encoding_rs",
- "getrandom 0.3.4",
- "image",
- "js-sys",
- "libc",
- "log",
- "regex",
- "regex-automata",
- "rustix 1.1.5",
- "serde",
- "serde_json",
- "thiserror 2.0.21",
- "vdoc-doc",
- "vdoc-docbin",
- "vdoc-docx",
- "vdoc-fonts",
- "vdoc-formats",
- "vdoc-geom",
- "vdoc-layout",
- "vdoc-pdf",
- "vdoc-render",
- "zeroize",
-]
-
-[[package]]
-name = "vdoc-fonts"
-version = "0.18.1"
-dependencies = [
- "brotli-decompressor 5.0.3",
- "harfrust 0.13.3",
- "kurbo",
- "log",
- "serde_json",
- "skrifa 0.47.0",
- "unicode-bidi",
- "unicode-script",
- "wuff",
-]
-
-[[package]]
-name = "vdoc-formats"
-version = "0.18.1"
-dependencies = [
- "chardetng",
- "chrono",
- "craft-flow",
- "craft-html",
- "craft-image-codecs",
- "craft-latex",
- "craft-markdown",
- "craft-math",
- "craft-metafile",
- "craft-mime",
- "craft-odf",
- "craft-ods",
- "craft-rtf",
- "craft-sheet",
- "craft-wordmodel",
- "craft-xls",
- "craft-xlsx",
- "craft-zip",
- "encoding_rs",
- "log",
- "proptest",
- "vdoc-doc",
- "vdoc-docx",
- "vdoc-geom",
-]
-
-[[package]]
-name = "vdoc-geom"
-version = "0.18.1"
-dependencies = [
- "craft-image-codecs",
- "craft-tiff",
- "image",
- "serde",
-]
-
-[[package]]
-name = "vdoc-layout"
-version = "0.18.1"
-dependencies = [
- "craft-metafile",
- "craft-proof",
- "image",
- "js-sys",
- "kurbo",
- "log",
- "serde",
- "serde_json",
- "unicode-bidi",
- "unicode-linebreak",
- "unicode-segmentation",
- "vdoc-doc",
- "vdoc-fonts",
- "vdoc-geom",
-]
-
-[[package]]
-name = "vdoc-mcp"
-version = "0.18.1"
-dependencies = [
- "craft",
- "craft-mcp-server",
- "log",
- "serde_json",
- "vdoc-control-key",
- "vdoc-doc",
- "vdoc-engine",
- "vdoc-render",
-]
-
-[[package]]
-name = "vdoc-pdf"
-version = "0.18.1"
-dependencies = [
- "chrono",
- "craft-metafile",
- "craft-pdf",
- "hayro-cmap",
- "hayro-interpret",
- "hayro-syntax",
- "image",
- "js-sys",
- "kurbo",
- "log",
- "thiserror 2.0.21",
- "vdoc-doc",
- "vdoc-fonts",
- "vdoc-geom",
- "vdoc-layout",
-]
-
-[[package]]
-name = "vdoc-render"
-version = "0.18.1"
-dependencies = [
- "craft-metafile",
- "image",
- "log",
- "vello_cpu",
- "vdoc-doc",
- "vdoc-fonts",
- "vdoc-geom",
- "vdoc-layout",
-]
-
-[[package]]
-name = "vdoc-ui-egui"
-version = "0.18.1"
-dependencies = [
- "cfb",
- "chrono",
- "craft",
- "craft-fonts-build",
- "craft-ui-test-kit",
- "craft-zip",
- "eframe",
- "egui",
- "egui_extras",
- "egui_kittest",
- "image",
- "js-sys",
- "log",
- "serde",
- "serde_json",
- "sys-locale",
- "toml",
- "toml_edit",
- "web-time",
- "vdoc-doc",
- "vdoc-engine",
- "vdoc-fonts",
- "vdoc-geom",
- "vdoc-layout",
- "vdoc-render",
- "vdoc-zotero",
- "zbus",
-]
-
-[[package]]
-name = "vdoc-web"
-version = "0.18.1"
-dependencies = [
- "craft",
- "eframe",
- "egui",
- "js-sys",
- "log",
- "serde_json",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "web-sys",
- "web-time",
- "vdoc-doc",
- "vdoc-engine",
- "vdoc-fonts",
- "vdoc-ui-egui",
-]
-
-[[package]]
-name = "vdoc-zotero"
-version = "0.18.1"
-dependencies = [
- "log",
- "proptest",
- "serde_json",
- "thiserror 2.0.21",
- "vdoc-doc",
- "vdoc-docx",
- "vdoc-engine",
- "vdoc-formats",
 ]
 
 [[package]]

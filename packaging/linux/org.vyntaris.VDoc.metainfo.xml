@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.vyntaris.VDoc</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>LicenseRef-proprietary</project_license>
+  <name>VDoc</name>
+  <summary>The word processor of Vyntaris Office</summary>
+  <developer id="org.vyntaris">
+    <name>Vyntaris</name>
+  </developer>
+  <description>
+    <p>
+      VDoc writes and edits documents with styles, tables, tracked changes, references and mail
+      merge, and opens and saves .docx, .doc, .odt, .rtf, HTML, Markdown and PDF. It wears the
+      desktop's GTK theme.
+    </p>
+  </description>
+  <launchable type="desktop-id">org.vyntaris.VDoc.desktop</launchable>
+  <icon type="stock">org.vyntaris.VDoc</icon>
+  <categories>
+    <category>Office</category>
+    <category>WordProcessor</category>
+  </categories>
+  <requires>
+    <display_length compare="ge">760</display_length>
+  </requires>
+  <supports>
+    <control>keyboard</control>
+    <control>pointing</control>
+  </supports>
+  <provides>
+    <binary>vdoc</binary>
+  </provides>
+  <content_rating type="oars-1.1"/>
+</component>

@@ -199,7 +199,7 @@ impl Default for Prefs {
             pane_places: Default::default(),
             pane_order: Vec::new(),
             nav_collapsed: Default::default(),
-            show_discord: true,
+            show_discord: false, // Vyntaris: no ArtCraft Discord button by default
             author: None,
             language: i18n::AUTO.into(),
             editing: vdoc_engine::Prefs::default(),

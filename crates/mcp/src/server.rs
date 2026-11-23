@@ -80,7 +80,7 @@ struct VdocTools {
 impl Tools for VdocTools {
     fn instructions(&self) -> String {
         format!(
-            "{INSTRUCTIONS} Backend: {}. Community: https://discord.gg/artcraft · https://getartcraft.com/apps/vdoc · https://github.com/storytold/wordcraft",
+            "{INSTRUCTIONS} Backend: {}. Source: https://github.com/vyntaris/vdoc · based on https://github.com/storytold/wordcraft",
             self.backend.describe()
         )
     }
@@ -126,7 +126,7 @@ impl Server {
     pub fn new(backend: Box<dyn Backend>) -> Self {
         let info = Info { name: "vdoc", title: "VDoc", version: env!("CARGO_PKG_VERSION"), max_line: MAX_REQUEST_LINE };
         let options = Options {
-            website_url: Some("https://getartcraft.com/apps/vdoc".into()),
+            website_url: Some("https://vyntarisos.com/".into()),
             // Clients read every tool failure from the result, as before the shared core.
             tool_errors_as_results: true,
             strict_request_ids: true,
